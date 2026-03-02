@@ -1,0 +1,18 @@
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+section {
+    height: 100%;
+    border: 1px solid var(--primary-color);
+    background-color: aqua;
+}
+
+section.side-view {
+    flex: 1;
+}
+
+section.main-view {
+    flex: 2;
+}
