@@ -1,11 +1,21 @@
 :root {
-    --primary-color: red;
-    --secondary-color: black;
-    --foreground-color: rgb(0, 0, 0);
+    --primary-color: #09090b; /* Deep Zinc Black */
+    --secondary-color: #fafafa; /* Clean Off-White */
+    --tertiary-color: #dc2626; /* Vibrant Modern Red */
+    --quadratery-color: #991b1b; /* Deep Crimson */
+    --pentarery-color: rgba(220, 38, 38, 0.2); /* Soft Red Glow */
+}
+
+html {
+    height: 100%;
 }
 
 body {
+    background-color: var(--tertiary-color);
+    padding: 3px;
     margin: 0;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 h1,
@@ -16,5 +26,5 @@ h5,
 h6,
 p,
 span {
-    color: var(--foreground-color);
+    color: var(--secondary-color);
 }

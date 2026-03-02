@@ -1,12 +1,26 @@
-main {
+.layout-row {
     display: flex;
     flex-direction: row;
+    flex: 1;
+    gap: 3px;
+}
+
+.layout-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 3px;
+}
+
+header,
+section {
+    background-color: var(--primary-color);
+    clip-path: polygon(17px 0%, calc(100% - 17px) 0%, 100% 17px, 100% calc(100% - 17px), calc(100% - 17px) 100%, 17px 100%, 0% calc(100% - 17px), 0% 17px);
+    margin: 0;
 }
 
 section {
-    height: 100%;
-    border: 1px solid var(--primary-color);
-    background-color: aqua;
+    padding: 2rem;
 }
 
 section.side-view {
