@@ -1,6 +1,5 @@
 header {
     background-color: var(--primary-color);
-    color: white;
     padding: 1rem;
     text-align: center;
 }
@@ -8,5 +7,5 @@ header {
 header h1,
 header p {
     margin: 0;
-    color: white;
+    color: var(--secondary-color);
 }

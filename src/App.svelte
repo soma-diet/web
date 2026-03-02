@@ -3,19 +3,14 @@
 </script>
 
 <Header />
-<div class="layout-row">
+<main>
   <section class="side-view">
     <h2>All food</h2>
   </section>
-  <div class="layout-col">
-    <section class="main-view">
-      <h2>Your log</h2>
-    </section>
-    <section>
-      <h3>Test</h3>
-    </section>
-  </div>
+  <section class="main-view">
+    <h2>Your log</h2>
+  </section>
   <section class="side-view">
     <h2>Graph</h2>
   </section>
-</div>
+</main>

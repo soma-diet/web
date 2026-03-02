@@ -1,18 +1,19 @@
 :root {
-    --primary-color: #09090b; /* Deep Zinc Black */
-    --secondary-color: #fafafa; /* Clean Off-White */
-    --tertiary-color: #dc2626; /* Vibrant Modern Red */
-    --quadratery-color: #991b1b; /* Deep Crimson */
-    --pentarery-color: rgba(220, 38, 38, 0.2); /* Soft Red Glow */
+    --primary-color: #ffffff;
+    --secondary-color: #000000;
+    --tertiary-color: #df2531;
+    --quadratery-color: #86232a;
+    --pentarery-color: #df253171;
 }
 
-html {
+html,
+body {
     height: 100%;
+    margin: 0;
 }
 
 body {
-    background-color: var(--tertiary-color);
-    padding: 3px;
+    background-color: var(--secondary-color);
     margin: 0;
     height: 100%;
     box-sizing: border-box;
