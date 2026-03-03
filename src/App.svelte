@@ -1,49 +1,12 @@
 <script lang="ts">
+  import FoodSearch from "./lib/features/search/FoodSearch.svelte";
   import Header from "./lib/Header.svelte";
-  import { onMount } from "svelte";
-  import { fetchFoodSearchResults, type FoodItem } from "./lib/api/food_search";
-
-  let foodItems = $state<FoodItem[]>([]);
-  let query = $state("");
-
-  $effect(() => {
-    (async () => {
-      try {
-        foodItems = await fetchFoodSearchResults(query);
-        console.log($state.snapshot(foodItems));
-      } catch (e) {
-        console.error(
-          "Authenticated fetch failed:",
-          e instanceof Error ? e.message : String(e),
-        );
-      }
-    })();
-  });
 </script>
 
 <Header />
 <main>
   <section class="side-view">
-    <input type="text" class="field" bind:value={query} />
-    <ul>
-      <hr />
-      {#if foodItems.length > 0}
-        {#each foodItems as item}
-          <li>
-            <div class="col">
-              <h5 class="item-name">
-                {item.name}
-              </h5>
-              <span>{item.brand}</span>
-            </div>
-            <span>{item.macronutrients.kcal} kcal</span>
-          </li>
-          <hr />
-        {/each}
-      {:else}
-        <span>No items found</span>
-      {/if}
-    </ul>
+    <FoodSearch />
   </section>
   <section class="main-view">
     <h2>Your log</h2>
@@ -52,3 +15,60 @@
     <h2>Graph</h2>
   </section>
 </main>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 1px;
+    min-height: 0;
+  }
+
+  section {
+    background-color: var(--primary-color);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    height: 100%;
+  }
+
+  section.side-view {
+    flex: 2;
+  }
+
+  section.main-view {
+    flex: 3;
+  }
+
+  section:last-child {
+    border-right: 1px solid var(--border-color);
+  }
+
+  /* bevel border edges */
+  section:first-child {
+    clip-path: polygon(
+      0% 0%,
+      calc(100% - 7px) 0%,
+      100% 7px,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  section:not(:first-child):not(:last-child) {
+    clip-path: polygon(
+      7px 0%,
+      calc(100% - 7px) 0%,
+      100% 7px,
+      100% 100%,
+      0% 100%,
+      0% 7px
+    );
+  }
+
+  section:last-child {
+    clip-path: polygon(7px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 7px);
+  }
+</style>

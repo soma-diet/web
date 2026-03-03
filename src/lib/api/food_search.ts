@@ -31,9 +31,13 @@ export interface FoodItem {
     servings: Serving[]
 }
 
-export async function fetchFoodSearchResults(query: string, page = 0): Promise<FoodItem[]> {
-    console.log(`fetching <${query}>`)
-    if (!query.trim()) return [];
+export interface FoodSearchResponse {
+    foodItems: FoodItem[],
+    hasMore: boolean
+}
+
+export async function fetchFoodSearchResults(query: string, page = 0): Promise<FoodSearchResponse> {
+    query = query.trim()
 
     const params = new URLSearchParams({
         name: query,
@@ -80,5 +84,8 @@ export async function fetchFoodSearchResults(query: string, page = 0): Promise<F
     })
 
     // TODO paging?
-    return foodItems;
+    return {
+        foodItems: foodItems,
+        hasMore: !Boolean(raw.last)
+    };
 }
