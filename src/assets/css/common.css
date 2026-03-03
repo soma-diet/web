@@ -1,22 +1,42 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 :root {
     --primary-color: #ffffff;
     --secondary-color: #000000;
-    --tertiary-color: #df2531;
-    --quadratery-color: #86232a;
+    --tertiary-color: #e0e0e0;
+    --quadratery-color: #bababa;
     --pentarery-color: #df253171;
+    --border-color: #000000;
+    --subtle-color: #878787;
 }
 
 html,
 body {
     height: 100%;
-    margin: 0;
 }
 
 body {
     background-color: var(--secondary-color);
-    margin: 0;
     height: 100%;
-    box-sizing: border-box;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+ul,
+hr {
+    margin: 0;
 }
 
 h1,
@@ -28,4 +48,8 @@ h6,
 p,
 span {
     color: var(--secondary-color);
+}
+
+ul {
+    padding: 0;
 }
