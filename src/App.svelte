@@ -1,13 +1,15 @@
 <script lang="ts">
-  import DailyLog from "./lib/features/log/DailyLog.svelte";
-  import FoodSearch from "./lib/features/search/FoodSearch.svelte";
+  import AddFoodForm from "./lib/features/add_food/AddFoodForm.svelte";
+  import Footer from "./lib/features/layout/Footer.svelte";
   import Header from "./lib/features/layout/Header.svelte";
+  import DailyLog from "./lib/features/log/DailyLog.svelte";
 </script>
 
 <Header />
 <main>
   <section class="side-view">
-    <FoodSearch />
+    <!-- <FoodSearch /> -->
+    <AddFoodForm />
   </section>
   <section class="main-view">
     <DailyLog />
