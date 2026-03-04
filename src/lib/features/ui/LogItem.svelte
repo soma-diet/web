@@ -31,6 +31,7 @@
     .left {
         display: flex;
         gap: 0.5rem;
+        min-width: 0;
     }
 
     .details {
@@ -38,6 +39,7 @@
         flex-direction: column;
         justify-content: center;
         gap: 0.25em;
+        min-width: 0;
     }
 
     .item-name {
