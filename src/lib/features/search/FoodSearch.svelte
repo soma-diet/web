@@ -1,9 +1,9 @@
 <script lang="ts">
     import { fetchFoodSearchResults } from "../../api/food_search";
     import type { FoodItem } from "../../api/interface";
-    import ListLoadingEffect from "../ui/ListLoadingEffect.svelte";
-    import SearchInput from "../ui/SearchInput.svelte";
-    import TabSelection from "../ui/TabSelection.svelte";
+    import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
+    import SearchInput from "../ui/util/SearchInput.svelte";
+    import TabSelection from "../ui/list/TabSelection.svelte";
     import FoodSearchResults from "./FoodSearchResults.svelte";
 
     const TIMEOUT_MS = 300;

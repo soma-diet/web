@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { FoodItem } from "../../api/interface";
     import RecipeIcon from "../ui/icon/RecipeIcon.svelte";
-    import LogItem from "../ui/LogItem.svelte";
+    import LogItem from "../ui/list/LogItem.svelte";
 
     // prijmout itemy z rodice
     let { items = [] as FoodItem[], onLoadMore } = $props();

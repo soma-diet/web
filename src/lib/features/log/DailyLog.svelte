@@ -1,6 +1,6 @@
 <script lang="ts">
     import FoodIcon from "../ui/icon/FoodIcon.svelte";
-    import LogItem from "../ui/LogItem.svelte";
+    import LogItem from "../ui/list/LogItem.svelte";
 
     let testItem = {
         name: "test",

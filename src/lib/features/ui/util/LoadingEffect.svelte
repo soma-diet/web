@@ -1,20 +1,6 @@
-<script lang="ts">
-</script>
-
-<div class="wrapper">
-    <div class="loader"></div>
-</div>
+<div class="loader"></div>
 
 <style>
-    .wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        flex-grow: 1;
-        padding-bottom: 4rem;
-    }
-
     .loader {
         width: 50px;
         aspect-ratio: 1;
