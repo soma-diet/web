@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DailyLog from "./lib/features/log/DailyLog.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
   import Header from "./lib/Header.svelte";
 </script>
@@ -9,7 +10,7 @@
     <FoodSearch />
   </section>
   <section class="main-view">
-    <h2>Your log</h2>
+    <DailyLog />
   </section>
   <section class="side-view">
     <h2>Graph</h2>
@@ -32,6 +33,8 @@
     flex-direction: column;
     justify-content: stretch;
     height: 100%;
+    min-height: 0;
+    min-width: 0;
   }
 
   section.side-view {

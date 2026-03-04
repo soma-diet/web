@@ -4,6 +4,7 @@
         type FoodSearchResponse,
         fetchFoodSearchResults,
     } from "../../api/food_search";
+    import LoadingSymbol from "../ui/LoadingSymbol.svelte";
     import SearchInput from "../ui/SearchInput.svelte";
     import TabSelection from "../ui/TabSelection.svelte";
     import FoodSearchResults from "./FoodSearchResults.svelte";
@@ -65,9 +66,13 @@
     <SearchInput bind:value={query} placeholder="Search foods" />
 </div>
 {#if searching && foodItems.length === 0}
-    <span>searching</span>
+    <div class="center-content offset-center-up">
+        <LoadingSymbol />
+    </div>
 {:else if !searching && foodItems.length === 0}
-    <span>no food items</span>
+    <div class="center-content offset-center-up">
+        <span>No items found</span>
+    </div>
 {:else}
     <FoodSearchResults items={foodItems} onLoadMore={loadMore} />
 {/if}
@@ -78,5 +83,16 @@
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
+    }
+
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .offset-center-up {
+        flex-direction: column;
+        flex-grow: 1;
+        padding-bottom: 4rem;
     }
 </style>

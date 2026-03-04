@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { FoodItem } from "../../api/food_search";
+    import LogItem from "../ui/LogItem.svelte";
 
     // prijmout itemy z rodice
     let { items = [] as FoodItem[], onLoadMore } = $props();
@@ -22,13 +23,11 @@
     {#if items.length > 0}
         {#each items as item}
             <li>
-                <div class="col">
-                    <h5 class="item-name">
-                        {item.name}
-                    </h5>
-                    <span>{item.brand ?? "GENERIC"}</span>
-                </div>
-                <span>{item.macronutrients.kcal} kcal</span>
+                <LogItem
+                    name={item.name}
+                    subtext={item.brand ?? "GENERIC"}
+                    kcal={item.macronutrients.kcal}
+                />
             </li>
             <hr />
         {/each}
@@ -41,6 +40,10 @@
         overflow-y: auto;
     }
 
+    hr {
+        border: 1px solid black;
+    }
+
     li {
         background-color: var(--tertiary-color);
         display: flex;
@@ -51,32 +54,8 @@
         gap: 1em;
     }
 
-    .item-name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 100%;
-        margin: 0;
-    }
-
-    li > div {
-        gap: 0.25em;
-    }
-
-    li span {
-        color: var(--subtle-color);
-        font-size: 80%;
-    }
-
-    hr {
-        border: 1px solid black;
-    }
-
-    li:hover span {
-        color: var(--secondary-color);
-    }
-
     li:hover {
+        --span-color: var(--secondary-color);
         cursor: pointer;
         background-color: var(--quadratery-color);
     }
