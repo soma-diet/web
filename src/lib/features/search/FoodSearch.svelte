@@ -1,10 +1,7 @@
 <script lang="ts">
-    import {
-        type FoodItem,
-        type FoodSearchResponse,
-        fetchFoodSearchResults,
-    } from "../../api/food_search";
-    import LoadingSymbol from "../ui/LoadingSymbol.svelte";
+    import { fetchFoodSearchResults } from "../../api/food_search";
+    import type { FoodItem } from "../../api/interface";
+    import ListLoadingEffect from "../ui/ListLoadingEffect.svelte";
     import SearchInput from "../ui/SearchInput.svelte";
     import TabSelection from "../ui/TabSelection.svelte";
     import FoodSearchResults from "./FoodSearchResults.svelte";
@@ -63,12 +60,11 @@
 -->
 <div class="search-controls">
     <TabSelection selected="All" options={["All", "Private", "Public"]} />
+    <TabSelection selected="All" options={["All", "Foods", "Recipes"]} />
     <SearchInput bind:value={query} placeholder="Search foods" />
 </div>
 {#if searching && foodItems.length === 0}
-    <div class="center-content offset-center-up">
-        <LoadingSymbol />
-    </div>
+    <ListLoadingEffect />
 {:else if !searching && foodItems.length === 0}
     <div class="center-content offset-center-up">
         <span>No items found</span>
@@ -83,16 +79,5 @@
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
-    }
-
-    .center-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .offset-center-up {
-        flex-direction: column;
-        flex-grow: 1;
-        padding-bottom: 4rem;
     }
 </style>

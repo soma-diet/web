@@ -1,20 +1,24 @@
 <script lang="ts">
+    import type { Component } from "svelte";
+
     interface Props {
-        type: TrackableType;
+        Icon: Component;
         name: string;
         subtext: string;
         kcal: number;
     }
 
-    let { name, subtext, kcal }: Props = $props();
+    let { Icon, name, subtext, kcal }: Props = $props();
 </script>
 
-<img src="" alt="">
-<div class="col">
-    <h5 class="item-name">
-        {name}
-    </h5>
-    <span>{subtext}</span>
+<div class="left">
+    <Icon></Icon>
+    <div class="details">
+        <h5 class="item-name">
+            {name}
+        </h5>
+        <span>{subtext}</span>
+    </div>
 </div>
 <span>{kcal} kcal</span>
 
@@ -24,7 +28,15 @@
         font-size: 80%;
     }
 
-    div {
+    .left {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         gap: 0.25em;
     }
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import FoodIcon from "../ui/icon/FoodIcon.svelte";
     import LogItem from "../ui/LogItem.svelte";
 
     let testItem = {
@@ -20,6 +21,7 @@
     {#each items as item}
         <li>
             <LogItem
+                Icon={FoodIcon}
                 name={item.name}
                 subtext={`${item.serving.size} ${item.serving.name}`}
                 kcal={item.macronutrients.kcal}

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import type { FoodItem } from "../../api/food_search";
+    import type { FoodItem } from "../../api/interface";
+    import RecipeIcon from "../ui/icon/RecipeIcon.svelte";
     import LogItem from "../ui/LogItem.svelte";
 
     // prijmout itemy z rodice
@@ -12,8 +13,7 @@
         const isBottom =
             el.scrollTop + el.clientHeight >= el.scrollHeight - 200;
         if (isBottom && onLoadMore) {
-            console.log("loading more");
-            onLoadMore();
+            setTimeout(onLoadMore, 50);
         }
     }
 </script>
@@ -24,6 +24,7 @@
         {#each items as item}
             <li>
                 <LogItem
+                    Icon={RecipeIcon}
                     name={item.name}
                     subtext={item.brand ?? "GENERIC"}
                     kcal={item.macronutrients.kcal}

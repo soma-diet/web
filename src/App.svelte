@@ -1,7 +1,7 @@
 <script lang="ts">
   import DailyLog from "./lib/features/log/DailyLog.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
-  import Header from "./lib/Header.svelte";
+  import Header from "./lib/features/layout/Header.svelte";
 </script>
 
 <Header />
