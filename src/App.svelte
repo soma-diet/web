@@ -1,18 +1,19 @@
 <script lang="ts">
   import AddFoodForm from "./lib/features/add_food/AddFoodForm.svelte";
-  import Footer from "./lib/features/layout/Footer.svelte";
   import Header from "./lib/features/layout/Header.svelte";
-  import DailyLog from "./lib/features/log/DailyLog.svelte";
+  import LogFood from "./lib/features/log/LogFood.svelte";
+  import FoodSearch from "./lib/features/search/FoodSearch.svelte";
 </script>
 
 <Header />
 <main>
   <section class="side-view">
-    <!-- <FoodSearch /> -->
-    <AddFoodForm />
+    <FoodSearch />
+    <!-- <AddFoodForm /> -->
   </section>
   <section class="main-view">
-    <DailyLog />
+    <!-- <DailyLog /> -->
+    <LogFood />
   </section>
   <section class="side-view">
     <h2>Graph</h2>

@@ -26,7 +26,7 @@
                 <LogItem
                     Icon={RecipeIcon}
                     name={item.name}
-                    subtext={item.brand ?? "GENERIC"}
+                    subtext={item.brand}
                     kcal={item.macronutrients.kcal}
                 />
             </li>

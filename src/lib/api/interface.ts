@@ -1,11 +1,11 @@
-interface Macronutrients {
+export interface Macronutrients {
     kcal: number
     fats: number
     carbs: number
     protein: number
 }
 
-interface Micronutrients {
+export interface Micronutrients {
     fiber: number
     sodium: number
 }
