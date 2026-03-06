@@ -3,6 +3,8 @@
   import Header from "./lib/features/layout/Header.svelte";
   import LogFood from "./lib/features/log/LogFood.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
+  import { SAMPLE_FOOD_ITEM } from "./lib/sample/SampleFoodItem";
+  import { SAMPLE_LOG_ENTRY } from "./lib/sample/SampleLogEntry";
 </script>
 
 <Header />
@@ -13,7 +15,7 @@
   </section>
   <section class="main-view">
     <!-- <DailyLog /> -->
-    <LogFood />
+    <LogFood food_item={SAMPLE_FOOD_ITEM} />
   </section>
   <section class="side-view">
     <h2>Graph</h2>

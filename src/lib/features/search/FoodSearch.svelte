@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fetchFoodSearchResults } from "../../api/food_search";
+    import { fetchFoodSearchResults } from "../../api/methods/search_food";
     import type { FoodItem } from "../../api/interface";
     import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
     import SearchInput from "../ui/util/SearchInput.svelte";

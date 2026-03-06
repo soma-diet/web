@@ -33,6 +33,7 @@
         padding: 0.5em;
         gap: 1em;
         background-color: var(--tertiary-color);
+        width: 100%;
     }
 
     .wrapper:hover {
@@ -49,6 +50,10 @@
         font-size: 80%;
     }
 
+    .wrapper > span {
+        white-space: nowrap;
+    }
+
     .left {
         display: flex;
         gap: 0.5rem;
@@ -58,6 +63,7 @@
     .details {
         display: flex;
         flex-direction: column;
+        align-items: start;
         justify-content: center;
         gap: 0.25em;
         min-width: 0;

@@ -1,8 +1,5 @@
 <script lang="ts">
-    import type {
-        Macronutrients,
-        Micronutrients,
-    } from "../../../api/interface";
+    import type { Macronutrients, Micronutrients } from "../../../model";
 
     interface Props {
         grams: number;
@@ -11,9 +8,9 @@
     }
     let { grams, macros, micros }: Props = $props();
 
-    let koeficient = $derived(grams / 100);
-    let recalculate = (val: number) => val * koeficient;
+    let coefficient = $derived(grams / 100);
 
+    // pro urceni poradi a nazvu v tabulce
     let nutrient_visual = $derived({
         Fats: macros.fats,
         Carbohydrates: macros.carbs,
@@ -26,14 +23,14 @@
 <table>
     <thead>
         <tr>
-            <td>nutrient data on QUANTITY SERVING SIZE</td>
+            <td colspan="2">nutrient data on QUANTITY SERVING SIZE</td>
         </tr>
     </thead>
     <tbody>
         {#each Object.entries(nutrient_visual) as [name, base_val]}
             <tr>
                 <td>{name}</td>
-                <td>{recalculate(base_val)} g</td>
+                <td>{(base_val ?? 0) * coefficient} g</td>
             </tr>
         {/each}
     </tbody>
@@ -44,5 +41,13 @@
     td {
         border: 1px solid var(--secondary-color);
         border-collapse: collapse;
+    }
+
+    thead td {
+        text-align: left !important;
+    }
+
+    td:last-child {
+        text-align: right;
     }
 </style>

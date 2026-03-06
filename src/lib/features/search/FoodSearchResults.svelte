@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { FoodItem } from "../../api/interface";
+    import type { Food } from "../../model";
     import RecipeIcon from "../ui/icon/RecipeIcon.svelte";
     import LogItem from "../ui/list/LogItem.svelte";
 
     // prijmout itemy z rodice
-    let { items = [] as FoodItem[], onLoadMore } = $props();
+    let { items = [] as Food[], onLoadMore } = $props();
 
     function handleScroll(e: Event) {
         const el = e.target as HTMLElement;
@@ -26,7 +26,7 @@
                 <LogItem
                     Icon={RecipeIcon}
                     name={item.name}
-                    subtext={item.brand}
+                    subtext={item.brand ?? ""}
                     kcal={item.macronutrients.kcal}
                 />
             </li>
@@ -45,7 +45,7 @@
         border: 1px solid var(--secondary-color);
     }
 
-    li {
+    /* li {
         background-color: var(--tertiary-color);
         display: flex;
         flex-direction: row;
@@ -59,5 +59,5 @@
         --span-color: var(--secondary-color);
         cursor: pointer;
         background-color: var(--quadratery-color);
-    }
+    } */
 </style>

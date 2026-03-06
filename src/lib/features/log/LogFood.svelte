@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { FoodItem } from "../../api/interface";
+    import type { Food } from "../../model";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
     interface Props {
-        food_item: FoodItem;
+        food_item: Food;
     }
     let { food_item }: Props = $props();
 </script>

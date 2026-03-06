@@ -1,4 +1,4 @@
-export const TrackableType = {
-    FOOD: "FOOD",
-    RECIPE: "RECIPE"
+export enum TrackableType {
+    FOOD = "FOOD",
+    RECIPE = "RECIPE"
 }
