@@ -28,11 +28,16 @@
         </div>
     </div>
     <hr />
-    <NutritionalInfo
-        grams={100}
-        macros={food_item.macronutrients}
-        micros={food_item.micronutrients}
-    />
+    {#if food_item}
+        <NutritionalInfo
+            grams={100}
+            macros={food_item.macronutrients}
+            micros={food_item.micronutrients}
+        />
+    {:else}
+        <!-- TODO smazat az bude nacten food item -->
+        <span>no food item loaded</span>
+    {/if}
     <hr />
     <div>
         <span>daily target graph fill</span>

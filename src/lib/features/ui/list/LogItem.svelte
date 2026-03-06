@@ -6,17 +6,13 @@
         name: string;
         subtext: string;
         kcal: number;
-        onclick: () => null;
+        onclick?: () => null;
     }
 
     let { Icon, name, subtext, kcal, onclick = () => null }: Props = $props();
-
-    function handleOnWrapperKeypress() {
-        onclick();
-    }
 </script>
 
-<div class="wrapper" onkeydown={() => {}} tabindex="0">
+<button class="wrapper" {onclick}>
     <div class="left">
         <Icon></Icon>
         <div class="details">
@@ -27,7 +23,7 @@
         </div>
     </div>
     <span>{kcal} kcal</span>
-</div>
+</button>
 
 <style>
     .wrapper {

@@ -20,10 +20,10 @@ export interface FoodItem {
     id: string
     name: string
     author: string
-    barcode: string
+    barcode?: string
     brand: string
     isMass: boolean
-    imageFilename: string
+    imageFilename?: string
     macronutrients: Macronutrients
     micronutrients: Micronutrients
     servings: Serving[]
