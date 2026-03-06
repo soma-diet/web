@@ -28,7 +28,7 @@ export async function fetchFoodSearchResults(query: string, page = 0): Promise<F
         return {
             id: rawItem.id,
             name: rawItem.name,
-            author: rawItem.author,
+            author: rawItem.author ?? "GENERIC",
             barcode: rawItem.barcode,
             brand: rawItem.brand,
             imageFilename: rawItem.imageFilename,
