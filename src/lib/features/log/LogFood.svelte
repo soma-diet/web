@@ -11,7 +11,7 @@
 <div class="wrapper">
     <div id="intro-info" class="apart">
         <img
-            src="https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/7de863efbfe0eef06f7a66c1e97201ec/Derivates/d5754b87aaaccfe716bc2615afd93dad9c6e73d7.jpg"
+            src="https://soma.skaba.dev/api/images/00254ebc-0f73-45c1-8f98-966230dcaa12.jpg"
             alt="obrazek jidla"
         />
         <div>

@@ -34,6 +34,7 @@
         gap: 1em;
         background-color: var(--tertiary-color);
         width: 100%;
+        border: none;
     }
 
     .wrapper:hover {
