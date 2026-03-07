@@ -1,4 +1,4 @@
-import { auth, signInAnonymously } from "../auth/firebase";
+import { auth, signInAnonymously } from "../infra/firebase";
 
 export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     let user = auth.currentUser;

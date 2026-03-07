@@ -1,6 +1,6 @@
 <script lang="ts">
+    import Login from "../auth/Login.svelte";
     import SomaLogoIcon from "../ui/icon/SomaLogoIcon.svelte";
-
 </script>
 
 <header class="apart center">
@@ -10,7 +10,8 @@
     </div>
     <div id="actions" class="right center">
         <a href="#actions">register</a>
-        <a href="#actions">log in</a>
+        <!-- <a href="#actions">log in</a> -->
+        <Login />
         <a href="#actions">targets</a>
     </div>
 </header>
