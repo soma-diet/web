@@ -1,5 +1,5 @@
 import type { LogEntry } from "../model";
-import { TrackableType } from "../model/TrackableType";
+import { TrackableType } from "../model/trackable-type.model";
 
 export const SAMPLE_LOG_ENTRY: LogEntry = {
     id: "SAMPLE_LOG_ENTRY",

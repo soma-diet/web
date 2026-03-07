@@ -1,6 +1,6 @@
 import { auth, signInAnonymously } from "../infra/firebase";
 
-export async function fetchWithAuth(url: string, options: RequestInit = {}) {
+export async function fetchAsAnonymous(url: string, options: RequestInit = {}) {
     let user = auth.currentUser;
 
     if (!user) {
@@ -9,7 +9,6 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     }
 
     const token = await user.getIdToken();
-    console.debug("Sending token:", token.substring(0, 15) + "...");
 
     const headers: Record<string, string> = {
         "Authorization": `Bearer ${token}`,

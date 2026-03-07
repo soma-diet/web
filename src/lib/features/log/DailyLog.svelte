@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { SAMPLE_LOG_ENTRY } from "../../sample/SampleLogEntry";
+    import { SAMPLE_LOG_ENTRY } from "../../sample/log-entry.sample";
     import TransparentButton from "../ui/action/TransparentButton.svelte";
     import LogItem from "../ui/list/LogItem.svelte";
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Food } from "../../model";
-    import { TrackableType } from "../../model/TrackableType";
+    import { TrackableType } from "../../model/trackable-type.model";
     import LogItem from "../ui/list/LogItem.svelte";
 
     // prijmout itemy z rodice

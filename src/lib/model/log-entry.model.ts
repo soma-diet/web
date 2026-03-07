@@ -1,4 +1,4 @@
-import type { TrackableType } from "./TrackableType";
+import type { TrackableType } from "./trackable-type.model";
 
 export interface LogEntry {
     id: string,

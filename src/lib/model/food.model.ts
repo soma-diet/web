@@ -1,5 +1,5 @@
-import type { Macronutrients, Micronutrients } from "./Nutrients"
-import type { Serving } from "./Serving"
+import type { Macronutrients, Micronutrients } from "./nutrients.model"
+import type { Serving } from "./serving.model"
 
 export interface Food {
     id: string

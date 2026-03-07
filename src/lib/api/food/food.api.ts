@@ -1,6 +1,6 @@
-import type { FoodSearchResponse } from "../response/FoodSearchResponse"
-import { fetchWithAuth } from "../auth_calls"
-import { rawItemToFood } from "../mapper/food_mapper"
+import { fetchAsAnonymous } from "../client"
+import type { FoodSearchResponse } from "./food.dto"
+import { rawItemToFood } from "./food.mapper"
 
 const FOOD_ENDPOINT = "/api/foods"
 
@@ -14,7 +14,7 @@ export async function fetchFoodSearchResults(query: string, page = 0): Promise<F
     })
     const endpoint = `${FOOD_ENDPOINT}?${params.toString()}`
     console.log(endpoint)
-    const response = await fetchWithAuth(endpoint)
+    const response = await fetchAsAnonymous(endpoint)
     const raw = await response.json()
 
     console.log(raw)

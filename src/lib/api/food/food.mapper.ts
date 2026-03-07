@@ -1,4 +1,4 @@
-import { SYSTEM_SERVINGS } from "../../constants/SystemServings";
+import { SYSTEM_SERVINGS } from "../../constants/system-servings.const";
 import type { Food, Macronutrients, Micronutrients, Serving } from "../../model"
 
 function rawToMacronutrients(rawMacros: any): Macronutrients {

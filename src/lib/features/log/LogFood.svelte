@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { getImage, SomaImageSize } from "../../api/methods/get_image";
-    import { SYSTEM_SERVINGS } from "../../constants/SystemServings";
+    import { SYSTEM_SERVINGS } from "../../constants/system-servings.const";
     import type { Food, Serving } from "../../model";
     import TransparentButton from "../ui/action/TransparentButton.svelte";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
     import CrossIcon from "../ui/icon/CrossIcon.svelte";
+    import { getImage, SomaImageSize } from "../../utils/image.util";
 
     interface Props {
         food_item: Food;
