@@ -18,7 +18,7 @@
     --secondary-color: #000000;
     --tertiary-color: #e0e0e0;
     --quadratery-color: #bababa;
-    --pentarery-color: #df253171;
+    --pentarery-color: #dd000f;
     --border-color: #000000;
     --subtle-color: #878787;
 }
@@ -68,6 +68,7 @@ ul {
 .row,
 .left,
 .middle,
+.apart,
 .right,
 .top,
 .center,
