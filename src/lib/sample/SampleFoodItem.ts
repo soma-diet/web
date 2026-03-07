@@ -1,3 +1,4 @@
+import { SYSTEM_SERVINGS } from "../constants/SystemServings";
 import type { Food } from "../model";
 
 export const SAMPLE_FOOD_ITEM: Food = {
@@ -8,11 +9,15 @@ export const SAMPLE_FOOD_ITEM: Food = {
     isMass: true,
     imageFilename: undefined,
     author: "SOMA",
-    servings: [{
-        id: "xjaklsjdlajiw",
-        name: "g",
-        amount: 1239,
-    }],
+    servings: [
+        ...SYSTEM_SERVINGS
+        , ...[{
+            id: "xjaklsjdlajiw",
+            name: "kus",
+            size: 30,
+            isSystem: false,
+        }]
+    ],
     macronutrients: {
         kcal: 193,
         protein: 140,

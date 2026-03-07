@@ -10,5 +10,6 @@ export interface LogEntry {
 
     servingId: string,
     servingName: string, // cached hodnota
+    servingSize: number,
     quantity: number,
 }

@@ -1,5 +1,6 @@
 export interface Serving {
     id: string
     name: string
-    amount: number
+    size: number
+    isSystem: boolean
 }

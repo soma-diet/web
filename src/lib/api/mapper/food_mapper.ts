@@ -1,3 +1,4 @@
+import { SYSTEM_SERVINGS } from "../../constants/SystemServings";
 import type { Food, Macronutrients, Micronutrients, Serving } from "../../model"
 
 function rawToMacronutrients(rawMacros: any): Macronutrients {
@@ -20,7 +21,8 @@ function rawToServing(rawServing: any): Serving {
     return {
         id: rawServing.id,
         name: rawServing.name,
-        amount: Number(rawServing.amount)
+        size: Number(rawServing.size),
+        isSystem: false
     }
 }
 
@@ -37,6 +39,8 @@ export function rawItemToFood(rawItem: any): Food {
         isMass: Boolean(rawItem.isMass),
         macronutrients: rawToMacronutrients(rawItem.macronutrients),
         micronutrients: rawToMicronutrients(rawItem.micronutrients),
-        servings: servings.map((serving: any) => rawToServing(serving))
+        servings: [
+            servings.map((serving: any) => rawToServing(serving))
+        ]
     }
 }
