@@ -13,7 +13,7 @@
 </script>
 
 <button class="wrapper" {onclick}>
-    <div class="left">
+    <div class="row left">
         <Icon></Icon>
         <div class="details">
             <h5 class="item-name">
@@ -57,8 +57,7 @@
         white-space: nowrap;
     }
 
-    .left {
-        display: flex;
+    .row.left {
         gap: 0.5rem;
         min-width: 0;
     }

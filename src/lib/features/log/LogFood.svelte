@@ -2,12 +2,14 @@
     import { getImage, SomaImageSize } from "../../api/methods/get_image";
     import { SYSTEM_SERVINGS } from "../../constants/SystemServings";
     import type { Food } from "../../model";
+    import CancelButton from "../ui/action/CancelButton.svelte";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
     interface Props {
         food_item: Food;
+        onCancel: () => null;
     }
-    let { food_item }: Props = $props();
+    let { food_item, onCancel }: Props = $props();
 
     let foodThumbnailSrc = $derived(
         food_item.imageFilename
@@ -19,6 +21,9 @@
 </script>
 
 <div class="wrapper">
+    <div class="row right">
+        <CancelButton onclick={() => onCancel()} />
+    </div>
     <div id="intro-info" class="apart">
         <img src={foodThumbnailSrc} alt={"picture of " + food_item.name} />
         <div>
@@ -68,24 +73,21 @@
         gap: 0.5rem;
     }
 
-    .apart {
-        display: flex;
-        justify-content: space-between;
-    }
-
     #intro-info {
+        height: 12rem;
+        min-width: 0;
         gap: 1rem;
     }
 
     #intro-info > img {
-        flex: 2;
+        flex: 1;
+        height: 100%;
         object-fit: contain;
         min-width: 0;
-        width: 100%;
     }
 
     #intro-info > div {
-        flex: 3;
+        flex: 1;
         min-width: 0;
         width: 100%;
         display: flex;

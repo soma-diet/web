@@ -9,14 +9,17 @@
     let { grams, macros, micros }: Props = $props();
 
     let coefficient = $derived(grams / 100);
+    let recalculate = (val: number) => val * coefficient;
 
     // pro urceni poradi a nazvu v tabulce
+    let kJ = $derived(Math.round(recalculate(macros.kcal) * 4.184 * 10) / 10);
     let nutrient_visual = $derived({
-        Fats: macros.fats,
-        Carbohydrates: macros.carbs,
-        Protein: macros.protein,
-        Fiber: micros.fiber,
-        Sodium: micros.sodium,
+        Energy: `${kJ} kJ / ${recalculate(macros.kcal)} kcal`,
+        Fat: `${recalculate(macros.fats)} g`,
+        Carbohydrate: `${recalculate(macros.carbs)} g`,
+        Protein: `${recalculate(macros.protein)} g`,
+        Fiber: `${micros.fiber ? recalculate(micros.fiber) : "?"} g`,
+        Salt: `${micros.sodium ? recalculate(micros.sodium) : "?"} g`,
     });
 </script>
 
@@ -27,10 +30,10 @@
         </tr>
     </thead>
     <tbody>
-        {#each Object.entries(nutrient_visual) as [name, base_val]}
+        {#each Object.entries(nutrient_visual) as [first_col, second_col]}
             <tr>
-                <td>{name}</td>
-                <td>{(base_val ?? 0) * coefficient} g</td>
+                <td>{first_col}</td>
+                <td>{second_col}</td>
             </tr>
         {/each}
     </tbody>

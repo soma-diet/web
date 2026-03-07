@@ -11,14 +11,14 @@
 <Header />
 <main>
   <section class="side-view">
-    <FoodSearch onItemSelected={(item: Food) => selectedFoodItem = item} />
+    <FoodSearch onItemSelected={(item: Food) => (selectedFoodItem = item)} />
     <!-- <AddFoodForm /> -->
   </section>
   <section class="main-view">
     {#if !selectedFoodItem}
       <DailyLog />
     {:else}
-      <LogFood food_item={selectedFoodItem} />
+      <LogFood food_item={selectedFoodItem} onCancel={() => selectedFoodItem = null} />
     {/if}
   </section>
   <section class="side-view">
