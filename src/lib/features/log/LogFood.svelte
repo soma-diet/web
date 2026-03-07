@@ -1,9 +1,11 @@
 <script lang="ts">
     import { getImage, SomaImageSize } from "../../api/methods/get_image";
     import { SYSTEM_SERVINGS } from "../../constants/SystemServings";
-    import type { Food } from "../../model";
-    import CancelButton from "../ui/action/CancelButton.svelte";
+    import type { Food, Serving } from "../../model";
+    import TransparentButton from "../ui/action/TransparentButton.svelte";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
+
+    import cancelIcon from "../../../assets/icon/cross.svg?raw";
 
     interface Props {
         food_item: Food;
@@ -18,11 +20,15 @@
     );
 
     let servings = $derived([...SYSTEM_SERVINGS, ...food_item.servings]);
+
+    let selectedServing = $derived<Serving>(servings[0]);
+    let quantity = $state<number>(1);
+    let totalSize = $derived(quantity * selectedServing.size);
 </script>
 
 <div class="wrapper">
     <div class="row right">
-        <CancelButton onclick={() => onCancel()} />
+        <TransparentButton onclick={() => onCancel()} icon={cancelIcon} />
     </div>
     <div id="intro-info" class="apart">
         <img src={foodThumbnailSrc} alt={"picture of " + food_item.name} />
@@ -33,14 +39,15 @@
 
             <div>
                 <label for="quantity">Amount: </label>
-                <input type="number" name="quantity" />
+                <input type="number" name="quantity" bind:value={quantity} />
+                <span>{`(${totalSize} g)`}</span>
             </div>
 
             <div>
                 <label for="serving">Serving: </label>
-                <select name="serving" id="">
+                <select name="serving" id="" bind:value={selectedServing}>
                     {#each servings as serving}
-                        <option value={serving.id}>{serving.name}</option>
+                        <option value={serving}>{serving.name}</option>
                     {/each}
                 </select>
             </div>
@@ -50,7 +57,7 @@
     <hr />
     {#if food_item}
         <NutritionalInfo
-            grams={100}
+            grams={totalSize}
             macros={food_item.macronutrients}
             micros={food_item.micronutrients}
         />

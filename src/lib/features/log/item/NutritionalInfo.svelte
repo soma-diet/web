@@ -9,10 +9,10 @@
     let { grams, macros, micros }: Props = $props();
 
     let coefficient = $derived(grams / 100);
-    let recalculate = (val: number) => val * coefficient;
+    let recalculate = (val: number) => Math.round(val * coefficient) / 10;
 
     // pro urceni poradi a nazvu v tabulce
-    let kJ = $derived(Math.round(recalculate(macros.kcal) * 4.184 * 10) / 10);
+    let kJ = $derived(recalculate(macros.kcal * 4.184));
     let nutrient_visual = $derived({
         Energy: `${kJ} kJ / ${recalculate(macros.kcal)} kcal`,
         Fat: `${recalculate(macros.fats)} g`,
@@ -23,17 +23,19 @@
     });
 </script>
 
+<h3>Nutrition Information</h3>
 <table>
     <thead>
         <tr>
-            <td colspan="2">nutrient data on QUANTITY SERVING SIZE</td>
+            <td></td>
+            <td class="text-center">per {grams} g</td>
         </tr>
     </thead>
     <tbody>
         {#each Object.entries(nutrient_visual) as [first_col, second_col]}
             <tr>
-                <td>{first_col}</td>
-                <td>{second_col}</td>
+                <td class="text-left">{first_col}</td>
+                <td class="text-center">{second_col}</td>
             </tr>
         {/each}
     </tbody>
@@ -47,10 +49,14 @@
     }
 
     thead td {
-        text-align: left !important;
+        font-weight: bold;
     }
 
-    td:last-child {
-        text-align: right;
+    .text-left {
+        text-align: left;
+    }
+
+    .text-center {
+        text-align: center;
     }
 </style>

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import SomaLogo from "../ui/icon/SomaLogo.svelte";
+    import somaLogoSvg from "../../../assets/icon/logo.svg?raw";
 </script>
 
 <header class="apart center">
     <div class="left center">
-        <SomaLogo />
+        {@html somaLogoSvg}
         <h1>SOMA</h1>
     </div>
     <div id="actions" class="right center">

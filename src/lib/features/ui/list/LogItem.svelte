@@ -1,20 +1,33 @@
 <script lang="ts">
-    import type { Component } from "svelte";
+    import recipeIcon from "../../../../assets/icon/recipe.svg?raw";
+    import foodIcon from "../../../../assets/icon/food.svg?raw";
+    import { TrackableType } from "../../../model/TrackableType";
 
     interface Props {
-        Icon: Component;
         name: string;
         subtext: string;
+        itemType: TrackableType;
         kcal?: number;
         onclick?: () => null;
     }
 
-    let { Icon, name, subtext, kcal, onclick = () => null }: Props = $props();
+    let {
+        name,
+        subtext,
+        kcal,
+        itemType,
+        onclick = () => null,
+    }: Props = $props();
 </script>
 
 <button class="wrapper" {onclick}>
     <div class="row left">
-        <Icon></Icon>
+        {#if itemType == TrackableType.FOOD}
+            {@html foodIcon}
+        {:else if itemType == TrackableType.RECIPE}
+            {@html recipeIcon}
+        {/if}
+
         <div class="details">
             <h5 class="item-name">
                 {name}

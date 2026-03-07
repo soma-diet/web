@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Food } from "../../model";
-    import RecipeIcon from "../ui/icon/RecipeIcon.svelte";
+    import { TrackableType } from "../../model/TrackableType";
     import LogItem from "../ui/list/LogItem.svelte";
 
     // prijmout itemy z rodice
@@ -24,10 +24,10 @@
         {#each items as item}
             <li>
                 <LogItem
-                    Icon={RecipeIcon}
                     name={item.name}
                     subtext={item.brand ?? ""}
                     kcal={item.macronutrients.kcal}
+                    itemType={TrackableType.FOOD}
                     onclick={() => onItemSelected(item)}
                 />
             </li>
