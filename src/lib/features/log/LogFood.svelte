@@ -1,5 +1,6 @@
 <script lang="ts">
     import { getImage, SomaImageSize } from "../../api/methods/get_image";
+    import { SYSTEM_SERVINGS } from "../../constants/SystemServings";
     import type { Food } from "../../model";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
@@ -13,6 +14,8 @@
             ? getImage(food_item.imageFilename, SomaImageSize.LARGE)
             : "",
     );
+
+    let servings = $derived([...SYSTEM_SERVINGS, ...food_item.servings]);
 </script>
 
 <div class="wrapper">
@@ -31,9 +34,9 @@
             <div>
                 <label for="serving">Serving: </label>
                 <select name="serving" id="">
-                    <option value="test1">test1</option>
-                    <option value="test2">test2</option>
-                    <option value="test3">test3</option>
+                    {#each servings as serving}
+                        <option value={serving.id}>{serving.name}</option>
+                    {/each}
                 </select>
             </div>
             <button>add</button>

@@ -1,21 +1,25 @@
 <script lang="ts">
-  import AddFoodForm from "./lib/features/add_food/AddFoodForm.svelte";
   import Header from "./lib/features/layout/Header.svelte";
+  import DailyLog from "./lib/features/log/DailyLog.svelte";
   import LogFood from "./lib/features/log/LogFood.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
-  import { SAMPLE_FOOD_ITEM, SAMPLE_FOOD_ITEM_2 } from "./lib/sample/SampleFoodItem";
-  import { SAMPLE_LOG_ENTRY } from "./lib/sample/SampleLogEntry";
+  import type { Food } from "./lib/model";
+
+  let selectedFoodItem = $state<Food | null>(null);
 </script>
 
 <Header />
 <main>
   <section class="side-view">
-    <FoodSearch />
+    <FoodSearch onItemSelected={(item: Food) => selectedFoodItem = item} />
     <!-- <AddFoodForm /> -->
   </section>
   <section class="main-view">
-    <!-- <DailyLog /> -->
-    <LogFood food_item={SAMPLE_FOOD_ITEM_2} />
+    {#if !selectedFoodItem}
+      <DailyLog />
+    {:else}
+      <LogFood food_item={selectedFoodItem} />
+    {/if}
   </section>
   <section class="side-view">
     <h2>Graph</h2>

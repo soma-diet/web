@@ -6,6 +6,8 @@
     import FoodSearchResults from "./FoodSearchResults.svelte";
     import type { Food } from "../../model";
 
+    let { onItemSelected } = $props();
+
     const TIMEOUT_MS = 300;
 
     let foodItems = $state<Food[]>([]);
@@ -70,7 +72,11 @@
         <span>No items found</span>
     </div>
 {:else}
-    <FoodSearchResults items={foodItems} onLoadMore={loadMore} />
+    <FoodSearchResults
+        items={foodItems}
+        onLoadMore={loadMore}
+        {onItemSelected}
+    />
 {/if}
 
 <style>

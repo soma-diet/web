@@ -4,7 +4,7 @@
     import LogItem from "../ui/list/LogItem.svelte";
 
     // prijmout itemy z rodice
-    let { items = [] as Food[], onLoadMore } = $props();
+    let { items = [] as Food[], onLoadMore, onItemSelected } = $props();
 
     function handleScroll(e: Event) {
         const el = e.target as HTMLElement;
@@ -28,6 +28,7 @@
                     name={item.name}
                     subtext={item.brand ?? ""}
                     kcal={item.macronutrients.kcal}
+                    onclick={() => onItemSelected(item)}
                 />
             </li>
             <hr />

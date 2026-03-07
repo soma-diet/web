@@ -24,7 +24,6 @@
                 Icon={FoodIcon}
                 name={entry.itemName}
                 subtext={`${entry.quantity} ${entry.servingName}`}
-                kcal={entry.item.kcal}
             />
         </li>
         <hr />

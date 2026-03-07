@@ -5,7 +5,7 @@
         Icon: Component;
         name: string;
         subtext: string;
-        kcal: number;
+        kcal?: number;
         onclick?: () => null;
     }
 
@@ -22,7 +22,9 @@
             <span>{subtext}</span>
         </div>
     </div>
-    <span>{kcal} kcal</span>
+    {#if kcal}
+        <span>{kcal} kcal</span>
+    {/if}
 </button>
 
 <style>
