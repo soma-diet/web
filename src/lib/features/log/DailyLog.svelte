@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { SAMPLE_FOOD_ITEM } from "../../sample/SampleFoodItem";
+    import { SAMPLE_LOG_ENTRY } from "../../sample/SampleLogEntry";
     import FoodIcon from "../ui/icon/FoodIcon.svelte";
     import LogItem from "../ui/list/LogItem.svelte";
 
-    let items = [SAMPLE_FOOD_ITEM, SAMPLE_FOOD_ITEM, SAMPLE_FOOD_ITEM];
+    let entries = [SAMPLE_LOG_ENTRY];
 </script>
 
 <div>
@@ -18,13 +18,13 @@
 </div>
 <ul>
     <hr />
-    {#each items as item}
+    {#each entries as entry}
         <li>
             <LogItem
                 Icon={FoodIcon}
-                name={item.name}
-                subtext={`${item.serving.size} ${item.serving.name}`}
-                kcal={item.macronutrients.kcal}
+                name={entry.itemName}
+                subtext={`${entry.quantity} ${entry.servingName}`}
+                kcal={entry.item.kcal}
             />
         </li>
         <hr />
