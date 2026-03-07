@@ -5,7 +5,7 @@
     import TransparentButton from "../ui/action/TransparentButton.svelte";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
-    import cancelIcon from "../../../assets/icon/cross.svg?raw";
+    import CrossIcon from "../ui/icon/CrossIcon.svelte";
 
     interface Props {
         food_item: Food;
@@ -28,7 +28,7 @@
 
 <div class="wrapper">
     <div class="row right">
-        <TransparentButton onclick={() => onCancel()} icon={cancelIcon} />
+        <TransparentButton onclick={() => onCancel()} Icon={CrossIcon} />
     </div>
     <div id="intro-info" class="apart">
         <img src={foodThumbnailSrc} alt={"picture of " + food_item.name} />

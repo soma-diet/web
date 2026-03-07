@@ -1,15 +1,17 @@
 <script lang="ts">
+    import type { Component } from "svelte";
+
     interface Props {
-        icon: string;
+        Icon: Component;
         onclick: () => void;
         class?: string;
     }
 
-    let { icon, onclick, class: className = "" }: Props = $props();
+    let { Icon, onclick, class: className = "" }: Props = $props();
 </script>
 
 <button {onclick} class=" {className}">
-    {@html icon}
+    <Icon></Icon>
 </button>
 
 <style>

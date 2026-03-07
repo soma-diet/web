@@ -1,7 +1,7 @@
 <script lang="ts">
-    import recipeIcon from "../../../../assets/icon/recipe.svg?raw";
-    import foodIcon from "../../../../assets/icon/food.svg?raw";
     import { TrackableType } from "../../../model/TrackableType";
+    import FoodIcon from "../icon/FoodIcon.svelte";
+    import RecipeIcon from "../icon/RecipeIcon.svelte";
 
     interface Props {
         name: string;
@@ -23,9 +23,9 @@
 <button class="wrapper" {onclick}>
     <div class="row left">
         {#if itemType == TrackableType.FOOD}
-            {@html foodIcon}
+            <FoodIcon></FoodIcon>
         {:else if itemType == TrackableType.RECIPE}
-            {@html recipeIcon}
+            <RecipeIcon></RecipeIcon>
         {/if}
 
         <div class="details">

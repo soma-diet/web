@@ -12,9 +12,8 @@
     let recalculate = (val: number) => Math.round(val * coefficient) / 10;
 
     // pro urceni poradi a nazvu v tabulce
-    let kJ = $derived(recalculate(macros.kcal * 4.184));
     let nutrient_visual = $derived({
-        Energy: `${kJ} kJ / ${recalculate(macros.kcal)} kcal`,
+        Energy: `${recalculate(macros.kcal * 4.184)} kJ / ${recalculate(macros.kcal)} kcal`,
         Fat: `${recalculate(macros.fats)} g`,
         Carbohydrate: `${recalculate(macros.carbs)} g`,
         Protein: `${recalculate(macros.protein)} g`,

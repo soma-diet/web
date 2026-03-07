@@ -3,8 +3,8 @@
     import TransparentButton from "../ui/action/TransparentButton.svelte";
     import LogItem from "../ui/list/LogItem.svelte";
 
-    import backIcon from "../../../assets/icon/back.svg?raw";
-    import forwardIcon from "../../../assets/icon/forward.svg?raw";
+    import BackArrowIcon from "../ui/icon/BackArrowIcon.svelte";
+    import ForwardArrowIcon from "../ui/icon/ForwardArrowIcon.svelte";
 
     let entries = [SAMPLE_LOG_ENTRY];
 </script>
@@ -13,14 +13,14 @@
     <div class="left center">
         <TransparentButton
             onclick={() => null}
-            icon={backIcon}
+            Icon={BackArrowIcon}
             class="date-button"
         />
         <h3>03.06.2026</h3>
     </div>
     <TransparentButton
         onclick={() => null}
-        icon={forwardIcon}
+        Icon={ForwardArrowIcon}
         class="date-button"
     />
 </nav>
