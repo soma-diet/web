@@ -1,14 +1,14 @@
 <script lang="ts">
     import { fetchFoodSearchResults } from "../../api/methods/search_food";
-    import type { FoodItem } from "../../api/interface";
     import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
     import SearchInput from "../ui/util/SearchInput.svelte";
     import TabSelection from "../ui/list/TabSelection.svelte";
     import FoodSearchResults from "./FoodSearchResults.svelte";
+    import type { Food } from "../../model";
 
     const TIMEOUT_MS = 300;
 
-    let foodItems = $state<FoodItem[]>([]);
+    let foodItems = $state<Food[]>([]);
     let query = $state("");
     let searching = $state(false);
 

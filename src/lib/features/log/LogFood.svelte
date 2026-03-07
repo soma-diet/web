@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { getImage, SomaImageSize } from "../../api/methods/get_image";
     import type { Food } from "../../model";
     import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
@@ -6,24 +7,35 @@
         food_item: Food;
     }
     let { food_item }: Props = $props();
+
+    let foodThumbnailSrc = $derived(
+        food_item.imageFilename
+            ? getImage(food_item.imageFilename, SomaImageSize.LARGE)
+            : "",
+    );
 </script>
 
 <div class="wrapper">
     <div id="intro-info" class="apart">
-        <img
-            src="https://soma.skaba.dev/api/images/00254ebc-0f73-45c1-8f98-966230dcaa12.jpg"
-            alt="obrazek jidla"
-        />
+        <img src={foodThumbnailSrc} alt={"picture of " + food_item.name} />
         <div>
             <h3>{food_item.name}</h3>
             <span>{food_item.brand}</span>
             <span>{food_item.author}</span>
-            <input type="number" name="quantity" />
-            <select name="" id="">
-                <option value="test1">test1</option>
-                <option value="test2">test2</option>
-                <option value="test3">test3</option>
-            </select>
+
+            <div>
+                <label for="quantity">Amount: </label>
+                <input type="number" name="quantity" />
+            </div>
+
+            <div>
+                <label for="serving">Serving: </label>
+                <select name="serving" id="">
+                    <option value="test1">test1</option>
+                    <option value="test2">test2</option>
+                    <option value="test3">test3</option>
+                </select>
+            </div>
             <button>add</button>
         </div>
     </div>
@@ -75,7 +87,8 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: end;
+        align-items: stretch;
         gap: 0.25rem;
+        text-align: end;
     }
 </style>
