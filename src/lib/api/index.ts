@@ -1,9 +1,10 @@
 // AUTH
-export { signInWithGoogle as registerWithGoogle } from "./auth/auth.api"
+export { signInWithGoogle } from "./auth/auth.api"
 
 // FOOD
-export { fetchFoodSearchResults } from "./food/food.api";
+export { getFoodSearchResults } from "./food/food.api";
 
 // LOG
+export { postLogEntry } from "./log/log.api";
 
 // RECIPE

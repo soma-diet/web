@@ -1,32 +1,33 @@
 // src/lib/api/auth/auth.api.ts
 
 import { auth } from "../infra/firebase";
+import { UserNotLoggedInError } from "./auth/auth.error";
+import { ApiError } from "./error";
 
-function buildHeaders(token: string, options: RequestInit = {}): Record<string, string> {
-    return {
-        "Authorization": `Bearer ${token}`,
-        ...((options.headers as Record<string, string>) || {}),
-    };
-}
-
-async function getToken(): Promise<string> {
-    // get auth
+export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     await auth.authStateReady();
     const user = auth.currentUser;
     if (!user) {
-        throw new Error("unauthorized: user is not logged in on fetchWithAuth!");
+        throw new UserNotLoggedInError(
+            "User has to be logged in to use fetchWithAuth!",
+        );
     }
 
-    return await user.getIdToken();
-}
+    const token = await user.getIdToken();
+    console.log(token);
 
-export async function fetchWithAuth(url: string, options: RequestInit = {}) {
-    const token = await getToken();
-    const headers: Record<string, string> = buildHeaders(token, options);
+    const headers: Record<string, string> = {
+        Authorization: `Bearer ${token}`,
+        ...((options.headers as Record<string, string>) || {}),
+    };
 
-    // TODO co tohle? k cemu to je
-    if (options.method && options.method !== 'GET' && !headers['Content-Type']) {
-        headers['Content-Type'] = 'application/json';
+    // auto add content-type: json if not specified
+    if (
+        options.method &&
+        options.method !== "GET" &&
+        !headers["Content-Type"]
+    ) {
+        headers["Content-Type"] = "application/json";
     }
 
     const response = await fetch(url, {
@@ -36,8 +37,11 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
 
     if (!response.ok) {
         const errorBody = await response.text();
-        console.error(`API Error: ${response.status} ${response.statusText}`, errorBody);
-        throw new Error(`API Error ${response.status}: ${response.statusText}`);
+        throw new ApiError(
+            `${response.status}: ${response.statusText}`,
+            errorBody,
+            true,
+        );
     }
 
     return response;

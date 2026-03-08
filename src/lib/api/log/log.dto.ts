@@ -4,5 +4,5 @@ export interface LogEntryRequestDto {
     itemId: string,
     servingId: string,
     quantity: number,
-    parentEntryId?: string, // nested elementy (napr. recipe)
+    parentEntryId?: string | null, // nested elementy (napr. recipe)
 }

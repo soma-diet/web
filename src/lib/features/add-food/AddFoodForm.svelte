@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { FoodItem } from "../../api/interface";
+  import type { Food } from "../../model";
     import FileInput from "../ui/form/input/FileInput.svelte";
     import LabeledTextInput from "../ui/form/input/LabeledTextInput.svelte";
 
     interface Props {
-        editedFood?: FoodItem | null;
+        editedFood?: Food | null;
     }
     let { editedFood = null }: Props = $props();
 </script>

@@ -1,20 +1,24 @@
-import { SYSTEM_SERVINGS } from "../../constants/system-servings.const";
-import type { Food, Macronutrients, Micronutrients, Serving } from "../../model"
+import type {
+    Food,
+    Macronutrients,
+    Micronutrients,
+    Serving,
+} from "../../model";
 
 function rawToMacronutrients(rawMacros: any): Macronutrients {
     return {
         kcal: Number(rawMacros.kcal),
         protein: Number(rawMacros.protein),
         fats: Number(rawMacros.fats),
-        carbs: Number(rawMacros.carbs)
+        carbs: Number(rawMacros.carbs),
     };
 }
 
 function rawToMicronutrients(rawMicros: any): Micronutrients {
     return {
         fiber: Number(rawMicros.fiber),
-        sodium: Number(rawMicros.sodium)
-    }
+        sodium: Number(rawMicros.sodium),
+    };
 }
 
 function rawToServing(rawServing: any): Serving {
@@ -22,12 +26,12 @@ function rawToServing(rawServing: any): Serving {
         id: rawServing.id,
         name: rawServing.name,
         size: Number(rawServing.size),
-        isSystem: false
-    }
+        isSystem: false,
+    };
 }
 
 export function rawItemToFood(rawItem: any): Food {
-    const servings = rawItem.servings
+    const servings = rawItem.servings ?? [];
 
     return {
         id: rawItem.id,
@@ -39,7 +43,6 @@ export function rawItemToFood(rawItem: any): Food {
         isMass: Boolean(rawItem.isMass),
         macronutrients: rawToMacronutrients(rawItem.macronutrients),
         micronutrients: rawToMicronutrients(rawItem.micronutrients),
-        servings: servings.map((serving: any) => rawToServing(serving))
-
-    }
+        servings: servings.map((serving: any) => rawToServing(serving)),
+    };
 }

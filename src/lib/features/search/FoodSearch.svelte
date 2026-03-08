@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fetchFoodSearchResults } from "../../api/food/food.api";
+    import { getFoodSearchResults } from "../../api/food/food.api";
     import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
     import TabSelection from "../ui/list/TabSelection.svelte";
     import FoodSearchResults from "./FoodSearchResults.svelte";
@@ -30,7 +30,7 @@
         searching = true;
 
         try {
-            const response = await fetchFoodSearchResults(currentQuery, page);
+            const response = await getFoodSearchResults(currentQuery, page);
             hasMore = response.hasMore;
             foodItems = newQuery
                 ? response.foodItems

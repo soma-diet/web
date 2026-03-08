@@ -3,6 +3,7 @@
   import Header from "./lib/features/layout/Header.svelte";
   import DailyLog from "./lib/features/log/DailyLog.svelte";
   import LogFood from "./lib/features/log/LogFood.svelte";
+  import PostLogEntryTest from "./lib/features/log/PostLogEntryTest.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
   import type { Food } from "./lib/model";
   import { authLoading, authUser, isLoggedIn } from "./lib/stores/auth.store";
@@ -38,12 +39,15 @@
     </section>
     <section class="main-view">
       {#if !selectedFoodItem}
+        <PostLogEntryTest />
         <DailyLog />
       {:else}
-        <LogFood
-          food_item={selectedFoodItem}
-          onCancel={() => (selectedFoodItem = null)}
-        />
+        {#key selectedFoodItem.id}
+          <LogFood
+            food_item={selectedFoodItem}
+            onCancel={() => (selectedFoodItem = null)}
+          />
+        {/key}
       {/if}
     </section>
     <section class="side-view">

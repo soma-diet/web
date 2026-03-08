@@ -1,21 +1,27 @@
-import { fetchWithAuth } from "../client"
-import type { FoodSearchResponse } from "./food.dto"
-import { rawItemToFood } from "./food.mapper"
+import type { Food } from "../../model";
+import { AuthError } from "../auth/auth.error";
+import { fetchWithAuth } from "../client";
+import { ApiError } from "../error";
+import type { FoodRequestDto, FoodSearchResponse } from "./food.dto";
+import { rawItemToFood } from "./food.mapper";
 
-const FOOD_ENDPOINT = "/api/foods"
+const FOOD_ENDPOINT = "/api/foods";
 
-export async function fetchFoodSearchResults(query: string, page = 0): Promise<FoodSearchResponse> {
-    query = query.trim()
+export async function getFoodSearchResults(
+    query: string,
+    page = 0,
+): Promise<FoodSearchResponse> {
+    query = query.trim();
 
     const params = new URLSearchParams({
         name: query,
         page: page.toString(),
-        size: "20" // TODO put in config
-    })
-    const endpoint = `${FOOD_ENDPOINT}?${params.toString()}`
+        size: "20", // TODO put in config
+    });
+    const endpoint = `${FOOD_ENDPOINT}?${params.toString()}`;
     // console.log(endpoint)
-    const response = await fetchWithAuth(endpoint)
-    const raw = await response.json()
+    const response = await fetchWithAuth(endpoint);
+    const raw = await response.json();
 
     // console.log(raw)
 
@@ -23,6 +29,40 @@ export async function fetchFoodSearchResults(query: string, page = 0): Promise<F
 
     return {
         foodItems: foodItems,
-        hasMore: !Boolean(raw.last)
+        hasMore: !Boolean(raw.last),
     };
+}
+
+export async function postFood(food: Food): Promise<boolean> {
+    const foodRequestDto: FoodRequestDto = {
+        id: food.id, // TODO tady vygenerovat ID, food.id by asi nemelo existovat v tenhle moment
+        name: food.name,
+        brand: food.brand,
+        barcode: food.barcode,
+        isMass: food.isMass,
+        macronutrients: food.macronutrients,
+        micronutrients: food.micronutrients,
+        servings: food.servings,
+    };
+
+    try {
+        const response = await fetchWithAuth(FOOD_ENDPOINT, {
+            method: "POST",
+            body: JSON.stringify(foodRequestDto),
+        });
+
+        // TODO optionally return repsonse content?
+        return response.ok;
+    } catch (err: unknown) {
+        if (err instanceof AuthError) {
+            err.log();
+            return false;
+        } else {
+            throw new ApiError(
+                "Unexpected error when posting a food to backend!",
+                null,
+                true,
+            );
+        }
+    }
 }

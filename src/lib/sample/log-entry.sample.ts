@@ -11,5 +11,6 @@ export const SAMPLE_LOG_ENTRY: LogEntry = {
 
     servingId: "SAMPLE_SERVING",
     servingName: "g",
+    servingSize: 50,
     quantity: 140,
-}
+};
