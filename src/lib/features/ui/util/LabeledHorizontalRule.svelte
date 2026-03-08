@@ -19,13 +19,14 @@
         display: flex;
         align-items: center;
         text-align: center;
+        width: 100%;
     }
 
     .separator::before,
     .separator::after {
         content: "";
         flex: 1;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid var(--secondary-color);
     }
 
     .separator:not(:empty)::before {

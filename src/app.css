@@ -1,11 +1,6 @@
 #app {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 1px;
     height: 100%;
     width: 100%;
-    background-color: white;
 }
 
 *,
@@ -70,6 +65,8 @@ ul {
 .left,
 .middle,
 .apart,
+.stretch-h,
+.stretch-v,
 .right,
 .top,
 .center,
@@ -93,6 +90,10 @@ ul {
     justify-content: space-between;
 }
 
+.stretch-h {
+    justify-content: stretch;
+}
+
 .middle {
     justify-content: center;
 }
@@ -111,6 +112,10 @@ ul {
 
 .bottom {
     align-items: end;
+}
+
+.strech-v {
+    align-items: stretch;
 }
 
 /* #endregion */

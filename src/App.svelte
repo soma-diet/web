@@ -29,28 +29,40 @@
   <AuthPrompt />
 {/if}
 
-<Header />
-<main>
-  <section class="side-view">
-    <FoodSearch onItemSelected={(item: Food) => (selectedFoodItem = item)} />
-    <!-- <AddFoodForm /> -->
-  </section>
-  <section class="main-view">
-    {#if !selectedFoodItem}
-      <DailyLog />
-    {:else}
-      <LogFood
-        food_item={selectedFoodItem}
-        onCancel={() => (selectedFoodItem = null)}
-      />
-    {/if}
-  </section>
-  <section class="side-view">
-    <h2>Graph</h2>
-  </section>
-</main>
+<div id="content">
+  <Header />
+  <main>
+    <section class="side-view">
+      <FoodSearch onItemSelected={(item: Food) => (selectedFoodItem = item)} />
+      <!-- <AddFoodForm /> -->
+    </section>
+    <section class="main-view">
+      {#if !selectedFoodItem}
+        <DailyLog />
+      {:else}
+        <LogFood
+          food_item={selectedFoodItem}
+          onCancel={() => (selectedFoodItem = null)}
+        />
+      {/if}
+    </section>
+    <section class="side-view">
+      <h2>Graph</h2>
+    </section>
+  </main>
+</div>
 
 <style>
+  #content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1px;
+    height: 100%;
+    width: 100%;
+    background-color: var(--border-color);
+  }
+
   main {
     display: flex;
     flex-direction: row;

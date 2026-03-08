@@ -1,6 +1,8 @@
 <script lang="ts">
-    import Login from "../auth/Login.svelte";
+    import { authUser, isLoggedIn } from "../../stores/auth.store";
     import SomaLogoIcon from "../ui/icon/SomaLogoIcon.svelte";
+
+    let email = $derived($authUser?.email);
 </script>
 
 <header class="apart center">
@@ -9,10 +11,10 @@
         <h1>SOMA</h1>
     </div>
     <div id="actions" class="right center">
-        <a href="#actions">register</a>
-        <!-- <a href="#actions">log in</a> -->
-        <Login />
-        <a href="#actions">targets</a>
+        {#if $isLoggedIn}
+            <span>logged user: {email}</span>
+            <a href="#actions">targets</a>
+        {/if}
     </div>
 </header>
 

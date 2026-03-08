@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInAnonymously, GoogleAuthProvider, linkWithPopup, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, linkWithPopup, signInWithPopup } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -12,12 +12,12 @@ const firebaseConfig = {
     measurementId: "G-8Q7YE91CV9"
 };
 
-export function isLoggedIn(): boolean {
-    const user = auth.currentUser;
-    return (user && !user.isAnonymous) ?? false;
-}
+// export function isLoggedIn(): boolean {
+//     const user = auth.currentUser;
+//     return (user && !user.isAnonymous) ?? false;
+// }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export { signInAnonymously, GoogleAuthProvider, linkWithPopup, signInWithPopup };
+export { GoogleAuthProvider, linkWithPopup, signInWithPopup };

@@ -14,9 +14,12 @@
 
 <style>
     div {
-        width: 100%;
-        height: 100%;
-        background-color: rgba(1, 1, 1, 0.5);
-        z-index: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.753);
+        z-index: 9999;
     }
 </style>
