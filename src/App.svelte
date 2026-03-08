@@ -1,12 +1,33 @@
 <script lang="ts">
+  import AuthPrompt from "./lib/features/auth/AuthPrompt.svelte";
   import Header from "./lib/features/layout/Header.svelte";
   import DailyLog from "./lib/features/log/DailyLog.svelte";
   import LogFood from "./lib/features/log/LogFood.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
   import type { Food } from "./lib/model";
+  import { authLoading, authUser, isLoggedIn } from "./lib/stores/auth.store";
 
   let selectedFoodItem = $state<Food | null>(null);
+
+  /* isLoggedIn.subscribe((loggedIn: boolean) => {
+    if (loggedIn) {
+      setTimeout(async () => {
+        console.log(
+          "AUTH STATUS: Anonymous: " +
+            $authUser?.isAnonymous +
+            ", token: " +
+            $authUser?.uid +
+            ", equals logged in: " +
+            loggedIn,
+        );
+      });
+    }
+  }); */
 </script>
+
+{#if $authLoading || !$isLoggedIn}
+  <AuthPrompt />
+{/if}
 
 <Header />
 <main>
@@ -18,7 +39,10 @@
     {#if !selectedFoodItem}
       <DailyLog />
     {:else}
-      <LogFood food_item={selectedFoodItem} onCancel={() => selectedFoodItem = null} />
+      <LogFood
+        food_item={selectedFoodItem}
+        onCancel={() => (selectedFoodItem = null)}
+      />
     {/if}
   </section>
   <section class="side-view">

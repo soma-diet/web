@@ -4,7 +4,6 @@
 
 <input {type} bind:value {placeholder} />
 
-<!-- TODO je styl v .svelte spravne? -->
 <style>
     input {
         background-color: var(--tertiary-color);

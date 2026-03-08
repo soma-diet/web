@@ -12,9 +12,8 @@ export const authUser = writable<User | null>(null);
 export const authLoading = writable<boolean>(true);
 
 // DERIVED HELPERS
-export const isLoggedIn = derived(authUser, ($user) => $user !== null);
-export const isAnonymous = derived(authUser, ($user) => $user?.isAnonymous ?? false);
-export const isRegisteredUser = derived(authUser, ($user) => $user !== null && !$user.isAnonymous);
+export const isAuthLoading = derived(authLoading, ($loading) => $loading);
+export const isLoggedIn = derived(authUser, ($user) => $user !== null && !$user.isAnonymous);
 
 onAuthStateChanged(auth, (user) => {
     authUser.set(user);
