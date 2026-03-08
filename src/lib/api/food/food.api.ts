@@ -18,8 +18,8 @@ export async function getFoodSearchResults(
         page: page.toString(),
         size: "20", // TODO put in config
     });
+
     const endpoint = `${FOOD_ENDPOINT}?${params.toString()}`;
-    // console.log(endpoint)
     const response = await fetchWithAuth(endpoint);
     const raw = await response.json();
 

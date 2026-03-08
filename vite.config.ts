@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://soma.skaba.dev',
+        // target: 'https://soma.skaba.dev',
+        target: "http://localhost:8080",
         changeOrigin: true,
         secure: true,
       }
