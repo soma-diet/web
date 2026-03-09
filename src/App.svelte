@@ -44,7 +44,7 @@
       {:else}
         {#key selectedFoodItem.id}
           <LogFood
-            food_item={selectedFoodItem}
+            food={selectedFoodItem}
             onCancel={() => (selectedFoodItem = null)}
           />
         {/key}
