@@ -1,5 +1,5 @@
 export interface Serving {
-    id: string;
+    id?: string | null;
     name: string;
     size: number;
     isSystem: boolean;

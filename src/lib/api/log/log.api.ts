@@ -10,12 +10,11 @@ export async function getLogEntries(): Promise<LogEntry[]> {
     const response = await fetchWithAuth(DIARY_LOG_ENDPOINT);
     const raw = await response.json();
     console.log(raw);
+    // TOOD unfinished
     return [];
 }
 
 export async function postLogEntry(entry: LogEntry): Promise<boolean> {
-    console.log("posting " + entry);
-
     const requestDto: LogEntryRequestDto = entryToRequestDto(entry);
     console.log(requestDto);
     console.log(JSON.stringify(requestDto));

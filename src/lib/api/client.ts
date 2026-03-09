@@ -14,7 +14,6 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     }
 
     const token = await user.getIdToken();
-    console.log(token);
 
     const headers: Record<string, string> = {
         Authorization: `Bearer ${token}`,

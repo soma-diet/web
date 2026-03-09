@@ -10,7 +10,7 @@ export interface LogEntry {
     itemName: string; // cached hodnota, aby se nedelal dalsi request
     itemType: TrackableType; // na rozliseni food a receptu
 
-    servingId: string;
+    servingId?: string | null;
     servingName: string; // cached hodnota
     servingSize: number;
     quantity: number;
