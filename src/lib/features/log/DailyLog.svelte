@@ -6,9 +6,18 @@
   import BackArrowIcon from "../ui/icon/BackArrowIcon.svelte";
   import ForwardArrowIcon from "../ui/icon/ForwardArrowIcon.svelte";
   import { getLogEntries } from "../../api/log/log.api";
+  import type { LogEntry } from "../../model";
+  import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
 
-  let entries = [SAMPLE_LOG_ENTRY];
-  getLogEntries();
+  let loadingEntries = $state(true);
+  let logEntries = $state<LogEntry[]>([]);
+  getLogEntries()
+    .then((entries: LogEntry[]) => {
+      logEntries = entries;
+    })
+    .finally(() => {
+      loadingEntries = false;
+    });
 </script>
 
 <nav class="apart center">
@@ -29,19 +38,23 @@
 <div>
   <span>daily targets progress bar</span>
 </div>
-<ul>
-  <hr />
-  {#each entries as entry}
-    <li>
-      <LogItem
-        name={entry.itemName}
-        subtext={`${entry.quantity} ${entry.servingName}`}
-        itemType={entry.itemType}
-      />
-    </li>
+{#if loadingEntries}
+  <ListLoadingEffect />
+{:else}
+  <ul>
     <hr />
-  {/each}
-</ul>
+    {#each logEntries as entry}
+      <li>
+        <LogItem
+          name={entry.itemName}
+          subtext={`${entry.quantity} ${entry.servingName}`}
+          itemType={entry.itemType}
+        />
+      </li>
+      <hr />
+    {/each}
+  </ul>
+{/if}
 
 <style>
   nav {

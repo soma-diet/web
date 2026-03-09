@@ -14,6 +14,8 @@ export interface LogEntry {
     servingName: string; // cached hodnota
     servingSize: number;
     quantity: number;
+
+    components: LogEntry[];
 }
 
 export function createLogEntry(
@@ -31,5 +33,6 @@ export function createLogEntry(
         servingName: serving.name,
         servingSize: serving.size,
         quantity: quantity,
+        components: [],
     };
 }

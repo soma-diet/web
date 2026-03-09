@@ -1,0 +1,2 @@
+ALTER TABLE diary_entry
+ALTER COLUMN serving_id DROP NOT NULL;

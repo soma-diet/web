@@ -11,3 +11,21 @@ export function entryToRequestDto(entry: LogEntry): LogEntryRequestDto {
         parentEntryId: null, // TODO pridat parent entry, zatim neni ani v LogEntry
     };
 }
+
+export function rawToLogEntry(rawEntry: any): LogEntry {
+    return {
+        id: rawEntry.id,
+        timestamp: rawEntry.timestamp,
+        itemId: rawEntry.itemId,
+        servingId: rawEntry.servingId,
+
+        itemName: rawEntry.itemName,
+        itemType: rawEntry.itemType,
+
+        servingName: rawEntry.servingName,
+        servingSize: rawEntry.servingSize,
+        quantity: rawEntry.quantity,
+
+        components: rawEntry.components,
+    };
+}

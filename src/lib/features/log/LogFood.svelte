@@ -1,11 +1,13 @@
 <script lang="ts">
   import { SYSTEM_SERVINGS } from "../../constants/system-servings.const";
-  import type { Food, Serving } from "../../model";
+  import type { Food, LogEntry, Serving } from "../../model";
   import TransparentButton from "../ui/action/TransparentButton.svelte";
   import NutritionalInfo from "./item/NutritionalInfo.svelte";
 
   import CrossIcon from "../ui/icon/CrossIcon.svelte";
   import { getImage, SomaImageSize } from "../../utils/image.util";
+  import { createLogEntry } from "../../model/log-entry.model";
+  import { postLogEntry } from "../../api";
 
   interface Props {
     food_item: Food;
@@ -25,6 +27,38 @@
   let selectedServing = $derived<Serving>(servings[0]);
 
   let totalSize = $derived(quantity * selectedServing.size);
+
+  // submitting
+  let isSubmitting = $state(false);
+  let errorMsg = $state("");
+
+  async function handleAddFood(event: SubmitEvent) {
+    event.preventDefault();
+    isSubmitting = true;
+    errorMsg = "";
+
+    const logEntry: LogEntry = createLogEntry(
+      food_item,
+      selectedServing,
+      quantity,
+    );
+
+    try {
+      const success = await postLogEntry(logEntry);
+      if (!success) {
+        throw new Error("Failed to log food");
+      }
+      alert("success:" + success);
+
+      onCancel(); // close menu
+    } catch (error: any) {
+      console.error(error);
+      errorMsg = error.message || "An error occurred";
+      alert(error.message);
+    } finally {
+      isSubmitting = false;
+    }
+  }
 </script>
 
 <div class="wrapper">
@@ -33,7 +67,7 @@
   </div>
   <div id="intro-info" class="apart">
     <img src={foodThumbnailSrc} alt={"picture of " + food_item.name} />
-    <div>
+    <form onsubmit={handleAddFood}>
       <h3>{food_item.name}</h3>
       <span>{food_item.brand}</span>
       <span>{food_item.author}</span>
@@ -52,8 +86,16 @@
           {/each}
         </select>
       </div>
-      <button>add</button>
-    </div>
+
+      <!-- TODO temp show error -->
+      {#if errorMsg}
+        <span class="error">{errorMsg}</span>
+      {/if}
+
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Adding..." : "Add"}
+      </button>
+    </form>
   </div>
   <hr />
   {#if food_item}
@@ -94,7 +136,7 @@
     min-width: 0;
   }
 
-  #intro-info > div {
+  form {
     flex: 1;
     min-width: 0;
     width: 100%;

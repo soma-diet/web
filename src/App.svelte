@@ -39,7 +39,7 @@
     </section>
     <section class="main-view">
       {#if !selectedFoodItem}
-        <PostLogEntryTest />
+        <!-- <PostLogEntryTest /> -->
         <DailyLog />
       {:else}
         {#key selectedFoodItem.id}

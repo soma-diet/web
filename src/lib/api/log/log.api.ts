@@ -2,16 +2,16 @@ import type { LogEntry } from "../../model";
 import { SomaError } from "../../utils/errors";
 import { fetchWithAuth } from "../client";
 import type { LogEntryRequestDto } from "./log.dto";
-import { entryToRequestDto } from "./log.mapper";
+import { entryToRequestDto, rawToLogEntry } from "./log.mapper";
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
 
 export async function getLogEntries(): Promise<LogEntry[]> {
     const response = await fetchWithAuth(DIARY_LOG_ENDPOINT);
     const raw = await response.json();
-    console.log(raw);
-    // TOOD unfinished
-    return [];
+    console.log("entries", raw);
+    const entries = raw.map((rawEntry: any) => rawToLogEntry(rawEntry)) ?? [];
+    return entries;
 }
 
 export async function postLogEntry(entry: LogEntry): Promise<boolean> {

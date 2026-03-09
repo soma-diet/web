@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
   import { postLogEntry } from "../../api";
 
   import { rawItemToFood } from "../../api/food/food.mapper";
@@ -49,4 +49,4 @@
 
 <form action="">
   <button type="button" onclick={testPostLogEntry}>TEST POST LOG ENTRY</button>
-</form>
+</form> -->
