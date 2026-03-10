@@ -16,8 +16,9 @@ const SYSTEM_LIQUID_SERVINGS: Serving[] = [
 ];
 
 export function getWithSystemServings(trackable: Trackable): Serving[] {
-    const systemServings = trackable.isMass
-        ? SYSTEM_MASS_SERVINGS
-        : SYSTEM_LIQUID_SERVINGS;
+    // const systemServings = trackable.isMass
+    //     ? SYSTEM_MASS_SERVINGS
+    //     : SYSTEM_LIQUID_SERVINGS;
+    const systemServings = SYSTEM_MASS_SERVINGS; // TODO trackuje se asi vzdy v gramech takze serving v ml je zavadejici asi
     return [...systemServings, ...trackable.servings];
 }
