@@ -1,14 +1,14 @@
-import type { Food } from "./food.model";
 import type { Serving } from "./serving.model";
-import { TrackableType } from "./trackable-type.model";
+import type { Trackable } from "./trackable.model";
 
 export interface LogEntry {
     id: string;
     timestamp: string; // iso 8601 string (zalezi na poradi pridani pro vzhled daily logu)
 
-    itemId: string;
-    itemName: string; // cached hodnota, aby se nedelal dalsi request
-    itemType: TrackableType; // na rozliseni food a receptu
+    // itemId: string;
+    // itemName: string; // cached hodnota, aby se nedelal dalsi request
+    // itemType: TrackableType; // na rozliseni food a receptu
+    item: Trackable,
 
     servingId?: string | null;
     servingName: string; // cached hodnota
@@ -19,16 +19,17 @@ export interface LogEntry {
 }
 
 export function createLogEntry(
-    food: Food,
+    trackable: Trackable,
     serving: Serving,
     quantity: number,
 ): LogEntry {
     return {
         id: crypto.randomUUID(),
         timestamp: new Date().toISOString().split(".")[0],
-        itemId: food.id,
-        itemName: food.name,
-        itemType: TrackableType.FOOD, // TODO prozatim to muze byt jen food
+        // itemId: trackable.id,
+        // itemName: trackable.name,
+        // itemType: trackable.type,
+        item: trackable,
         servingId: serving.id,
         servingName: serving.name,
         servingSize: serving.size,

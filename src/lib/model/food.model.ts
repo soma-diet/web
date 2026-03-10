@@ -1,17 +1,12 @@
 import type { Macronutrients, Micronutrients } from "./nutrients.model";
 import type { Serving } from "./serving.model";
+import { TrackableType, type Trackable } from "./trackable.model";
 
-export interface Food {
-    id: string;
-    name: string;
-    author?: string | null;
+export interface Food extends Trackable {
     barcode?: string | null;
     brand?: string | null;
-    isMass: boolean;
-    imageFilename?: string | null;
     macronutrients: Macronutrients;
     micronutrients: Micronutrients;
-    servings: Serving[];
 }
 
 export function createFood(
@@ -34,5 +29,6 @@ export function createFood(
         macronutrients: macronutrients,
         micronutrients: micronutrients,
         servings: servings,
+        type: TrackableType.FOOD,
     };
 }

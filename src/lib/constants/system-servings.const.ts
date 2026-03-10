@@ -1,4 +1,4 @@
-import type { Food, Serving } from "../model";
+import type { Serving, Trackable } from "../model";
 
 const SYSTEM_MASS_SERVINGS: Serving[] = [
     {
@@ -15,9 +15,9 @@ const SYSTEM_LIQUID_SERVINGS: Serving[] = [
     },
 ];
 
-export function getWithSystemServings(food: Food): Serving[] {
-    const systemServings = food.isMass
+export function getWithSystemServings(trackable: Trackable): Serving[] {
+    const systemServings = trackable.isMass
         ? SYSTEM_MASS_SERVINGS
         : SYSTEM_LIQUID_SERVINGS;
-    return [...systemServings, ...food.servings];
+    return [...systemServings, ...trackable.servings];
 }

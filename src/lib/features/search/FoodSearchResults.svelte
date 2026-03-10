@@ -1,48 +1,46 @@
 <script lang="ts">
-    import type { Food } from "../../model";
-    import { TrackableType } from "../../model/trackable-type.model";
-    import LogItem from "../ui/list/LogItem.svelte";
+  import { TrackableType, type Food } from "../../model";
+  import LogItem from "../ui/list/LogItem.svelte";
 
-    // prijmout itemy z rodice
-    let { items = [] as Food[], onLoadMore, onItemSelected } = $props();
+  // prijmout itemy z rodice
+  let { items = [] as Food[], onLoadMore, onItemSelected } = $props();
 
-    function handleScroll(e: Event) {
-        const el = e.target as HTMLElement;
+  function handleScroll(e: Event) {
+    const el = e.target as HTMLElement;
 
-        // vypocet toho zda uz doscrolloval dolu
-        const isBottom =
-            el.scrollTop + el.clientHeight >= el.scrollHeight - 200;
-        if (isBottom && onLoadMore) {
-            setTimeout(onLoadMore, 50);
-        }
+    // vypocet toho zda uz doscrolloval dolu
+    const isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 200;
+    if (isBottom && onLoadMore) {
+      setTimeout(onLoadMore, 50);
     }
+  }
 </script>
 
 <ul onscroll={handleScroll}>
-    <hr />
-    {#if items.length > 0}
-        {#each items as item}
-            <li>
-                <LogItem
-                    name={item.name}
-                    subtext={item.brand ?? ""}
-                    kcal={item.macronutrients.kcal}
-                    itemType={TrackableType.FOOD}
-                    onclick={() => onItemSelected(item)}
-                />
-            </li>
-            <hr />
-        {/each}
-    {/if}
+  <hr />
+  {#if items.length > 0}
+    {#each items as item}
+      <li>
+        <LogItem
+          name={item.name}
+          subtext={item.brand ?? ""}
+          kcal={item.macronutrients.kcal}
+          itemType={TrackableType.FOOD}
+          onclick={() => onItemSelected(item)}
+        />
+      </li>
+      <hr />
+    {/each}
+  {/if}
 </ul>
 
 <style>
-    ul {
-        flex-grow: 1;
-        overflow-y: auto;
-    }
+  ul {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
 
-    hr {
-        border: 1px solid var(--secondary-color);
-    }
+  hr {
+    border: 1px solid var(--secondary-color);
+  }
 </style>

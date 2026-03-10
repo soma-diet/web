@@ -4,7 +4,7 @@ import type { LogEntryRequestDto } from "./log.dto";
 export function entryToRequestDto(entry: LogEntry): LogEntryRequestDto {
     return {
         id: entry.id,
-        itemId: entry.itemId,
+        itemId: entry.item.id,
         quantity: entry.quantity,
         timestamp: entry.timestamp,
         servingId: entry.servingId,
@@ -12,20 +12,21 @@ export function entryToRequestDto(entry: LogEntry): LogEntryRequestDto {
     };
 }
 
-export function rawToLogEntry(rawEntry: any): LogEntry {
+export function rawToLogEntry(raw: any): LogEntry {
     return {
-        id: rawEntry.id,
-        timestamp: rawEntry.timestamp,
-        itemId: rawEntry.itemId,
-        servingId: rawEntry.servingId,
+        id: raw.id,
+        timestamp: raw.timestamp,
 
-        itemName: rawEntry.itemName,
-        itemType: rawEntry.itemType,
+        // itemId: rawEntry.itemId,
+        // itemName: rawEntry.itemName,
+        // itemType: rawEntry.itemType,
+        item: raw.item,
+        
+        servingId: raw.servingId,
+        servingName: raw.servingName,
+        servingSize: raw.servingSize,
+        quantity: raw.quantity,
 
-        servingName: rawEntry.servingName,
-        servingSize: rawEntry.servingSize,
-        quantity: rawEntry.quantity,
-
-        components: rawEntry.components,
+        components: raw.components,
     };
 }

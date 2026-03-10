@@ -1,13 +1,17 @@
 <script lang="ts">
-  import { SAMPLE_LOG_ENTRY } from "../../sample/log-entry.sample";
   import TransparentButton from "../ui/action/TransparentButton.svelte";
   import LogItem from "../ui/list/LogItem.svelte";
 
-  import BackArrowIcon from "../ui/icon/BackArrowIcon.svelte";
-  import ForwardArrowIcon from "../ui/icon/ForwardArrowIcon.svelte";
   import { getLogEntries } from "../../api/log/log.api";
   import type { LogEntry } from "../../model";
+  import BackArrowIcon from "../ui/icon/BackArrowIcon.svelte";
+  import ForwardArrowIcon from "../ui/icon/ForwardArrowIcon.svelte";
   import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
+
+  interface Props {
+    onItemSelected: (entry: LogEntry) => void;
+  }
+  let { onItemSelected }: Props = $props();
 
   let loadingEntries = $state(true);
   let logEntries = $state<LogEntry[]>([]);
@@ -46,9 +50,10 @@
     {#each logEntries as entry}
       <li>
         <LogItem
-          name={entry.itemName}
+          name={entry.item.name}
           subtext={`${entry.quantity} ${entry.servingName}`}
-          itemType={entry.itemType}
+          itemType={entry.item.type}
+          onclick={() => onItemSelected(entry)}
         />
       </li>
       <hr />

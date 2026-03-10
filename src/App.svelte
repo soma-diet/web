@@ -2,28 +2,13 @@
   import AuthPrompt from "./lib/features/auth/AuthPrompt.svelte";
   import Header from "./lib/features/layout/Header.svelte";
   import DailyLog from "./lib/features/log/DailyLog.svelte";
-  import LogFood from "./lib/features/log/LogFood.svelte";
-  import PostLogEntryTest from "./lib/features/log/PostLogEntryTest.svelte";
+  import LogTrackable from "./lib/features/log/LogTrackable.svelte";
   import FoodSearch from "./lib/features/search/FoodSearch.svelte";
-  import type { Food } from "./lib/model";
+  import type { Trackable, LogEntry, Food } from "./lib/model";
   import { authLoading, authUser, isLoggedIn } from "./lib/stores/auth.store";
 
-  let selectedFoodItem = $state<Food | null>(null);
-
-  /* isLoggedIn.subscribe((loggedIn: boolean) => {
-    if (loggedIn) {
-      setTimeout(async () => {
-        console.log(
-          "AUTH STATUS: Anonymous: " +
-            $authUser?.isAnonymous +
-            ", token: " +
-            $authUser?.uid +
-            ", equals logged in: " +
-            loggedIn,
-        );
-      });
-    }
-  }); */
+  let selectedTrackableItem = $state<Trackable | null>(null);
+  let selectedLogEntry = $state<LogEntry | null>(null);
 </script>
 
 {#if $authLoading || !$isLoggedIn}
@@ -34,18 +19,36 @@
   <Header />
   <main>
     <section class="side-view">
-      <FoodSearch onItemSelected={(item: Food) => (selectedFoodItem = item)} />
+      <FoodSearch
+        onItemSelected={(item: Food) => (selectedTrackableItem = item)}
+      />
       <!-- <AddFoodForm /> -->
     </section>
     <section class="main-view">
-      {#if !selectedFoodItem}
+      {#if !selectedTrackableItem && !selectedLogEntry}
         <!-- <PostLogEntryTest /> -->
-        <DailyLog />
-      {:else}
-        {#key selectedFoodItem.id}
-          <LogFood
-            food={selectedFoodItem}
-            onCancel={() => (selectedFoodItem = null)}
+        <DailyLog
+          onItemSelected={(entry: LogEntry) => {
+            selectedLogEntry = entry;
+            selectedTrackableItem = entry.item;
+          }}
+        />
+      {:else if selectedTrackableItem && !selectedLogEntry}
+        {#key selectedTrackableItem.id}
+          <LogTrackable
+            trackable={selectedTrackableItem}
+            onCancel={() => (selectedTrackableItem = null)}
+          />
+        {/key}
+      {:else if selectedTrackableItem && selectedLogEntry}
+        {#key selectedLogEntry.id}
+          <LogTrackable
+            trackable={selectedTrackableItem}
+            editedEntry={selectedLogEntry}
+            onCancel={() => {
+              selectedTrackableItem = null;
+              selectedLogEntry = null;
+            }}
           />
         {/key}
       {/if}

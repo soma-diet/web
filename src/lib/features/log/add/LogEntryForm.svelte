@@ -1,23 +1,23 @@
 <script lang="ts">
   import { getWithSystemServings } from "../../../constants/system-servings.const";
-  import type { Food, Serving } from "../../../model";
+  import type { Serving, Trackable } from "../../../model";
 
   interface Props {
-    food: Food;
+    trackable: Trackable;
     onSubmitTask: () => Promise<void>; // promise aby na to mohl dat .finally uvnitr
     quantity: number;
     selectedServing: Serving;
   }
 
   let {
-    food,
+    trackable,
     onSubmitTask: onSubmitTask,
     quantity = $bindable(),
     selectedServing = $bindable(),
-  } = $props();
+  }: Props = $props();
 
-  let unit = $derived(food.isMass ? "g" : "ml");
-  let servings = $derived(getWithSystemServings(food));
+  let unit = "g";
+  let servings = $derived(getWithSystemServings(trackable));
   let totalSize = $derived(quantity * selectedServing.size);
   let isSubmitting = $state(false);
 
@@ -34,9 +34,9 @@
 </script>
 
 <form {onsubmit}>
-  <h3>{food.name}</h3>
-  <span>{food.brand}</span>
-  <span>{food.author}</span>
+  <h3>{trackable.name}</h3>
+  <!-- <span>{food.brand}</span> -->
+  <span>{trackable.author}</span>
 
   <div>
     <label for="quantity">Amount: </label>
