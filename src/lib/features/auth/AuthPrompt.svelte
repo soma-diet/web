@@ -1,11 +1,11 @@
 <script lang="ts">
   import { signInWithGoogle } from "../../api";
   import { isAuthLoading, isLoggedIn } from "../../stores/auth.store";
-  import GoogleSignInButton from "../ui/ext/GoogleSignInButton.svelte";
-  import LabeledHorizontalRule from "../ui/util/LabeledHorizontalRule.svelte";
-  import LoadingEffect from "../ui/util/LoadingEffect.svelte";
-  import Prompt from "../ui/util/Prompt.svelte";
-  import Shadeout from "../ui/util/Shadeout.svelte";
+  import GoogleSignInButton from "../../ui/ext/GoogleSignInButton.svelte";
+  import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.svelte";
+  import LoadingEffect from "../../ui/util/LoadingEffect.svelte";
+  import Prompt from "../../ui/util/Prompt.svelte";
+  import Shadeout from "../../ui/util/Shadeout.svelte";
 </script>
 
 <Shadeout>

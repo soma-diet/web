@@ -1,9 +1,9 @@
 <script lang="ts">
   import { untrack } from "svelte";
   import type { Food, LogEntry, Serving, Trackable } from "../../model";
-  import TransparentButton from "../ui/action/TransparentButton.svelte";
+  import TransparentButton from "../../ui/action/TransparentButton.svelte";
   import NutritionalInfo from "./info/NutritionalInfo.svelte";
-  import CrossIcon from "../ui/icon/CrossIcon.svelte";
+  import CrossIcon from "../../ui/icon/CrossIcon.svelte";
   import { getImage, SomaImageSize } from "../../utils/image.util";
   import { createLogEntry } from "../../model/entry.model";
   import { postLogEntry } from "../../api";

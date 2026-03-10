@@ -1,6 +1,6 @@
 <script lang="ts">
   import { TrackableType, type Food } from "../../model";
-  import LogItem from "../ui/list/LogItem.svelte";
+  import LogItem from "../../ui/list/LogItem.svelte";
 
   // prijmout itemy z rodice
   let { items = [] as Food[], onLoadMore, onItemSelected } = $props();

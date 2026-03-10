@@ -1,58 +1,58 @@
 <script lang="ts">
-    import { getFoodSearchResults } from "../../api/food/food.api";
-    import ListLoadingEffect from "../ui/list/ListLoadingEffect.svelte";
-    import TabSelection from "../ui/list/TabSelection.svelte";
-    import FoodSearchResults from "./FoodSearchResults.svelte";
-    import type { Food } from "../../model";
-    import SearchInput from "../ui/form/input/SearchInput.svelte";
+  import { getFoodSearchResults } from "../../api/food/food.api";
+  import ListLoadingEffect from "../../ui/list/ListLoadingEffect.svelte";
+  import TabSelection from "../../ui/list/TabSelection.svelte";
+  import FoodSearchResults from "./FoodSearchResults.svelte";
+  import type { Food } from "../../model";
+  import SearchInput from "../../ui/form/input/SearchInput.svelte";
 
-    let { onItemSelected } = $props();
+  let { onItemSelected } = $props();
 
-    const TIMEOUT_MS = 300;
+  const TIMEOUT_MS = 300;
 
-    let foodItems = $state<Food[]>([]);
-    let query = $state("");
-    let searching = $state(false);
+  let foodItems = $state<Food[]>([]);
+  let query = $state("");
+  let searching = $state(false);
 
-    let page = $state(0); // vychozi load je 0
-    let hasMore = $state(true);
+  let page = $state(0); // vychozi load je 0
+  let hasMore = $state(true);
 
-    // debounce timer
-    let timer: ReturnType<typeof setTimeout>;
+  // debounce timer
+  let timer: ReturnType<typeof setTimeout>;
 
-    async function search(currentQuery: string, newQuery: boolean) {
-        if (newQuery) {
-            page = 0;
-        } else {
-            page += 1;
-        }
-
-        searching = true;
-
-        try {
-            const response = await getFoodSearchResults(currentQuery, page);
-            hasMore = response.hasMore;
-            foodItems = newQuery
-                ? response.foodItems
-                : [...foodItems, ...response.foodItems];
-        } catch (e) {
-            console.error("Searching food items failed:", e);
-            if (page > 0) page -= 1;
-        } finally {
-            searching = false;
-        }
+  async function search(currentQuery: string, newQuery: boolean) {
+    if (newQuery) {
+      page = 0;
+    } else {
+      page += 1;
     }
 
-    $effect(() => {
-        const currentQuery = query; // potreba precist drive nez v async blocku!!!
-        clearTimeout(timer);
-        timer = setTimeout(async () => search(currentQuery, true), TIMEOUT_MS);
-    });
+    searching = true;
 
-    async function loadMore() {
-        if (searching || !hasMore) return;
-        search(query, false);
+    try {
+      const response = await getFoodSearchResults(currentQuery, page);
+      hasMore = response.hasMore;
+      foodItems = newQuery
+        ? response.foodItems
+        : [...foodItems, ...response.foodItems];
+    } catch (e) {
+      console.error("Searching food items failed:", e);
+      if (page > 0) page -= 1;
+    } finally {
+      searching = false;
     }
+  }
+
+  $effect(() => {
+    const currentQuery = query; // potreba precist drive nez v async blocku!!!
+    clearTimeout(timer);
+    timer = setTimeout(async () => search(currentQuery, true), TIMEOUT_MS);
+  });
+
+  async function loadMore() {
+    if (searching || !hasMore) return;
+    search(query, false);
+  }
 </script>
 
 <!-- TODO az bude user mit ucet tak vyhledavat podle typu
@@ -61,29 +61,25 @@
     All = public + private
 -->
 <div class="search-controls">
-    <TabSelection selected="All" options={["All", "Private", "Public"]} />
-    <TabSelection selected="All" options={["All", "Foods", "Recipes"]} />
-    <SearchInput bind:value={query} placeholder="Search foods" />
+  <TabSelection selected="All" options={["All", "Private", "Public"]} />
+  <TabSelection selected="All" options={["All", "Foods", "Recipes"]} />
+  <SearchInput bind:value={query} placeholder="Search foods" />
 </div>
 {#if searching && foodItems.length === 0}
-    <ListLoadingEffect />
+  <ListLoadingEffect />
 {:else if !searching && foodItems.length === 0}
-    <div class="center-content offset-center-up">
-        <span>No items found</span>
-    </div>
+  <div class="center-content offset-center-up">
+    <span>No items found</span>
+  </div>
 {:else}
-    <FoodSearchResults
-        items={foodItems}
-        onLoadMore={loadMore}
-        {onItemSelected}
-    />
+  <FoodSearchResults items={foodItems} onLoadMore={loadMore} {onItemSelected} />
 {/if}
 
 <style>
-    /* aby nacitaci column food search results nezmackla input a tab selection */
-    .search-controls {
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
-    }
+  /* aby nacitaci column food search results nezmackla input a tab selection */
+  .search-controls {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
 </style>
