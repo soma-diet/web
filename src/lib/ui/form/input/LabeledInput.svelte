@@ -3,14 +3,15 @@
         label: string;
         name: string;
         value: string;
+        type: string;
     }
 
-    let { label, name, value }: Props = $props();
+    let { label, name, value, type }: Props = $props();
 </script>
 
 <div>
     <label for={name}>{label}</label>
-    <input {name} {value} />
+    <input {type} {name} {value} />
 </div>
 
 <style>

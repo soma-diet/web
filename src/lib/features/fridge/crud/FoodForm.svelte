@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Food } from "../../../model";
   import FileInput from "../../../ui/form/input/FileInput.svelte";
-  import LabeledTextInput from "../../../ui/form/input/LabeledTextInput.svelte";
+  import LabeledInput from "../../../ui/form/input/LabeledInput.svelte";
 
   interface Props {
     onFinished: () => void;
@@ -27,8 +27,8 @@
       alt="food"
     />
     <ul>
-      <LabeledTextInput label="Food name" name="name" value="" />
-      <LabeledTextInput label="Brand" name="brand" value="" />
+      <LabeledInput type="text" label="Food name" name="name" value="" />
+      <LabeledInput type="text" label="Brand" name="brand" value="" />
 
       <!-- TODO kandidat na Drag&drop -->
       <FileInput label="Change food image" name="image" />
@@ -36,11 +36,11 @@
   </div>
 
   <ul>
-    <LabeledTextInput label="Carbohydrates" name="carbs" value="" />
-    <LabeledTextInput label="Protein" name="protein" value="" />
-    <LabeledTextInput label="Fats" name="fats" value="" />
-    <LabeledTextInput label="Fiber" name="fiber" value="" />
-    <LabeledTextInput label="Sodium" name="sodium" value="" />
+    <LabeledInput type="number" label="Carbohydrates" name="carbs" value="" />
+    <LabeledInput type="number" label="Protein" name="protein" value="" />
+    <LabeledInput type="number" label="Fats" name="fats" value="" />
+    <LabeledInput type="number" label="Fiber" name="fiber" value="" />
+    <LabeledInput type="number" label="Sodium" name="sodium" value="" />
   </ul>
   <button type="submit" disabled={isSubmitting}
     >{food ? "save changes" : "create new food"}</button
