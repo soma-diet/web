@@ -66,3 +66,11 @@ export async function postFood(food: Food): Promise<boolean> {
         }
     }
 }
+
+export async function deleteFood(food: Food): Promise<boolean> {
+    const endpoint = FOOD_ENDPOINT + "/" + food.id;
+    const resposne = await fetchWithAuth(endpoint, {
+        method: "DELETE",
+    });
+    return resposne.ok;
+}

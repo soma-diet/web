@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TrackableType } from "../../../model/trackable.model";
+  import { TrackableType } from "../../model";
   import FoodIcon from "../icon/FoodIcon.svelte";
   import RecipeIcon from "../icon/RecipeIcon.svelte";
 

@@ -32,3 +32,22 @@ export async function postLogEntry(entry: LogEntry): Promise<boolean> {
         return false;
     }
 }
+
+export async function putLogEntry(entry: LogEntry): Promise<boolean> {
+    const endpoint = DIARY_LOG_ENDPOINT + "/" + entry.id;
+    const requestDto: LogEntryRequestDto = entryToRequestDto(entry);
+
+    const response = await fetchWithAuth(endpoint, {
+        method: "PUT",
+        body: JSON.stringify(requestDto),
+    });
+    return response.ok;
+}
+
+export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
+    const endpoint = DIARY_LOG_ENDPOINT + "/" + entry.id;
+    const response = await fetchWithAuth(endpoint, {
+        method: "DELETE",
+    });
+    return response.ok;
+}

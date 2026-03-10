@@ -1,14 +1,12 @@
 <script lang="ts">
-  import { untrack } from "svelte";
-  import type { Food, LogEntry, Serving, Trackable } from "../../model";
+  import { postLogEntry, putLogEntry } from "../../api";
+  import { getWithSystemServings } from "../../constants/system-servings.const";
+  import type { LogEntry, Trackable } from "../../model";
+  import { createLogEntry } from "../../model/entry.model";
   import TransparentButton from "../../ui/action/TransparentButton.svelte";
-  import NutritionalInfo from "./info/NutritionalInfo.svelte";
   import CrossIcon from "../../ui/icon/CrossIcon.svelte";
   import { getImage, SomaImageSize } from "../../utils/image.util";
-  import { createLogEntry } from "../../model/entry.model";
-  import { postLogEntry } from "../../api";
   import LogEntryForm from "./add/LogEntryForm.svelte";
-  import { getWithSystemServings } from "../../constants/system-servings.const";
 
   interface Props {
     trackable: Trackable;
@@ -26,25 +24,17 @@
 
   const servings = $derived(getWithSystemServings(trackable));
 
-  let quantity = $state<number>(untrack(() => editedEntry?.quantity ?? 100));
+  let quantity = $derived(editedEntry?.quantity ?? 100);
 
-  // let selectedServing = $state<Serving | undefined>(
-  //   untrack(() =>
-  //     editedEntry
-  //       ? servings.find((val) => val.id === editedEntry.id)
-  //       : servings[0],
-  //   ),
-  // );
-  let initialServing = untrack(() =>
+  let initialServing = $derived(
     editedEntry
-      ? servings.find((val) => val.id === editedEntry.id)
+      ? servings.find((val) => (val.id ?? null) === (editedEntry.servingId ?? null))
       : servings[0],
   );
   let selectedServing = $derived(initialServing ?? servings[0]);
 
-  async function addFood() {
+  async function addEntry() {
     if (!selectedServing) {
-      alert("Cannot add food: Unknown serving type.");
       return;
     }
 
@@ -62,7 +52,22 @@
       onCancel();
     } catch (error: any) {
       console.error(error);
-      alert(error.message || "An unexpected error occurred.");
+    }
+  }
+
+  async function updateEntry() {
+    if (!selectedServing || !editedEntry) return; // nemelo by se dit?
+
+    editedEntry.quantity = quantity;
+    editedEntry.servingId = selectedServing.id;
+    try {
+      const success = await putLogEntry(editedEntry);
+      if (!success) {
+        throw new Error("Failed to update entry");
+      }
+      onCancel();
+    } catch (err: any) {
+      console.error(err);
     }
   }
 </script>
@@ -81,7 +86,7 @@
 
     <LogEntryForm
       {trackable}
-      onSubmitTask={addFood}
+      onSubmitTask={editedEntry ? updateEntry : addEntry}
       bind:quantity
       bind:selectedServing
     />
