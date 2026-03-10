@@ -1,12 +1,12 @@
 <script lang="ts">
-  import TransparentButton from "../../ui/action/TransparentButton.svelte";
-  import LogItem from "../../ui/list/LogItem.svelte";
+  import TransparentButton from "../../../ui/action/TransparentButton.svelte";
+  import LogItem from "../../../ui/list/LogItem.svelte";
 
-  import { getLogEntries } from "../../api/log/log.api";
-  import type { LogEntry } from "../../model";
-  import BackArrowIcon from "../../ui/icon/BackArrowIcon.svelte";
-  import ForwardArrowIcon from "../../ui/icon/ForwardArrowIcon.svelte";
-  import ListLoadingEffect from "../../ui/list/ListLoadingEffect.svelte";
+  import { getLogEntries } from "../../../api/log/log.api";
+  import type { LogEntry } from "../../../model";
+  import BackArrowIcon from "../../../ui/icon/BackArrowIcon.svelte";
+  import ForwardArrowIcon from "../../../ui/icon/ForwardArrowIcon.svelte";
+  import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.svelte";
 
   interface Props {
     onItemSelected: (entry: LogEntry) => void;

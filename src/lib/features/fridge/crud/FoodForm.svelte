@@ -1,15 +1,26 @@
 <script lang="ts">
-  import type { Food } from "../../model";
-  import FileInput from "../../ui/form/input/FileInput.svelte";
-  import LabeledTextInput from "../../ui/form/input/LabeledTextInput.svelte";
+  import type { Food } from "../../../model";
+  import FileInput from "../../../ui/form/input/FileInput.svelte";
+  import LabeledTextInput from "../../../ui/form/input/LabeledTextInput.svelte";
 
   interface Props {
-    editedFood?: Food | null;
+    onFinished: () => void;
+    food?: Food | null;
   }
-  let { editedFood = null }: Props = $props();
+  let { onFinished, food = null }: Props = $props();
+
+  let isSubmitting = $state<boolean>(false);
+  function handleSubmit() {
+    isSubmitting = true;
+    // TODO call API
+
+    // clean up
+    isSubmitting = false;
+    onFinished();
+  }
 </script>
 
-<form>
+<form onsubmit={handleSubmit}>
   <div class="intro">
     <img
       src="https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/7de863efbfe0eef06f7a66c1e97201ec/Derivates/d5754b87aaaccfe716bc2615afd93dad9c6e73d7.jpg"
@@ -31,8 +42,8 @@
     <LabeledTextInput label="Fiber" name="fiber" value="" />
     <LabeledTextInput label="Sodium" name="sodium" value="" />
   </ul>
-  <button type="submit"
-    >{editedFood ? "save changes" : "create new food"}</button
+  <button type="submit" disabled={isSubmitting}
+    >{food ? "save changes" : "create new food"}</button
   >
 </form>
 

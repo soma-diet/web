@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Macronutrients, Micronutrients } from "../../../model";
+    import type { Macronutrients, Micronutrients } from "../../../../model";
 
     interface Props {
         grams: number;

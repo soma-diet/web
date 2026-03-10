@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getFoodSearchResults } from "../../api/food/food.api";
-  import ListLoadingEffect from "../../ui/list/ListLoadingEffect.svelte";
-  import TabSelection from "../../ui/list/TabSelection.svelte";
+  import { getFoodSearchResults } from "../../../api";
+  import type { Food } from "../../../model";
+  import SearchInput from "../../../ui/form/input/SearchInput.svelte";
+  import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.svelte";
+  import TabSelection from "../../../ui/list/TabSelection.svelte";
   import FoodSearchResults from "./FoodSearchResults.svelte";
-  import type { Food } from "../../model";
-  import SearchInput from "../../ui/form/input/SearchInput.svelte";
 
   let { onItemSelected } = $props();
 
