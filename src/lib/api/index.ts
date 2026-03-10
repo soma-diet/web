@@ -11,5 +11,4 @@ export * from "./log/log.mapper";
 export * from "./targets/targets.api";
 export * from "./targets/targets.dto";
 export * from "./targets/targets.mapper";
-export * from "./trackable/trackable.dto";
 export * from "./trackable/trackable.mapper";
