@@ -1,6 +1,9 @@
 import { writable } from "svelte/store";
 import type { LogEntry, Trackable } from "../model";
 
+// TODO separate stores into individual files
+
+// #region LogSection UI Store
 export interface LogSelectionInput {
     trackable: Trackable;
     entry: LogEntry | null;
@@ -16,3 +19,4 @@ export function openLogForm(
 export function closeLogForm() {
     activeLogSelection.set(null);
 }
+// #endregion

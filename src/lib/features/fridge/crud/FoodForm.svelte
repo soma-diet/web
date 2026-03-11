@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Food } from "../../../model";
   import FileInput from "../../../ui/form/input/FileInput.svelte";
-  import LabeledInput from "../../../ui/form/input/LabeledInput.svelte";
+  import LabeledInput from "../../../ui/form/input/labeled/LabeledInput.svelte";
 
   interface Props {
     onFinished: () => void;
