@@ -1,4 +1,4 @@
-import type { LogEntry } from "../../model";
+import type { DailySummary, LogEntry } from "../../model";
 import type { LogEntryRequestDto } from "./log.dto";
 
 export function entryToRequestDto(entry: LogEntry): LogEntryRequestDto {
@@ -21,12 +21,25 @@ export function rawToLogEntry(raw: any): LogEntry {
         // itemName: rawEntry.itemName,
         // itemType: rawEntry.itemType,
         item: raw.item,
-        
+
         servingId: raw.servingId,
         servingName: raw.servingName,
         servingSize: raw.servingSize,
         quantity: raw.quantity,
 
         components: raw.components,
+    };
+}
+
+export function rawToDailySumamry(raw: any): DailySummary {
+    const macros = raw.totalMacronutrients;
+    const micros = raw.totalMicronutrients;
+    return {
+        kcal: macros.kcal,
+        fats: macros.fats,
+        carbs: macros.carbs,
+        protein: macros.protein,
+        fiber: micros.fiber,
+        sodium: micros.sodium,
     };
 }

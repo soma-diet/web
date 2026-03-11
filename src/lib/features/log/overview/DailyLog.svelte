@@ -7,6 +7,7 @@
   import BackArrowIcon from "../../../ui/icon/BackArrowIcon.svelte";
   import ForwardArrowIcon from "../../../ui/icon/ForwardArrowIcon.svelte";
   import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.svelte";
+  import TargetsProgress from "./targets/TargetsProgress.svelte";
 
   interface Props {
     onItemSelected: (entry: LogEntry) => void;
@@ -39,9 +40,7 @@
     class="date-button"
   />
 </nav>
-<div>
-  <span>daily targets progress bar</span>
-</div>
+<TargetsProgress date={new Date()} />
 {#if loadingEntries}
   <ListLoadingEffect />
 {:else}

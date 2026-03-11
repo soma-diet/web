@@ -1,11 +1,16 @@
-import type { LogEntry } from "../../model";
+import type { DailySummary, LogEntry } from "../../model";
 import { SomaError } from "../../utils/errors";
 import { fetchWithAuth } from "../client";
 import type { LogEntryRequestDto } from "./log.dto";
-import { entryToRequestDto, rawToLogEntry } from "./log.mapper";
+import {
+    entryToRequestDto,
+    rawToDailySumamry,
+    rawToLogEntry,
+} from "./log.mapper";
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
 
+// #region Main CRUD
 export async function getLogEntries(): Promise<LogEntry[]> {
     const response = await fetchWithAuth(DIARY_LOG_ENDPOINT);
     const raw = await response.json();
@@ -43,6 +48,7 @@ export async function putLogEntry(entry: LogEntry): Promise<boolean> {
     });
     return response.ok;
 }
+// #endregion
 
 export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
     const endpoint = DIARY_LOG_ENDPOINT + "/" + entry.id;
@@ -51,3 +57,25 @@ export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
     });
     return response.ok;
 }
+
+// #region Utils
+// TODO do jiny file (asi api.util.ts)
+function toLocalDateString(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+const DAILY_SUMMARY_ENDPOINT = "/api/diary/summary";
+export async function getDailySummary(date: Date): Promise<DailySummary> {
+    const params = new URLSearchParams({
+        date: toLocalDateString(date),
+    });
+    const endpoint = DAILY_SUMMARY_ENDPOINT + "?" + params.toString();
+    const response = await fetchWithAuth(endpoint);
+    const raw = await response.json();
+    console.log(raw);
+    return rawToDailySumamry(raw);
+}
+// #endregion
