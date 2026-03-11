@@ -1,17 +1,18 @@
-import { defineConfig } from "vite";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [svelte()],
-    server: {
-        proxy: {
-            "/api": {
-                target: "https://soma.skaba.dev",
-                // target: "http://localhost:8080",
-                changeOrigin: true,
-                secure: true,
-            },
-        },
+  plugins: [
+    vue(),
+    vueDevTools(),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     },
-});
+  },
+})
