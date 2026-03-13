@@ -1,0 +1,17 @@
+<template>
+  <div class="middle center {className}">
+    {@render children()}
+  </div>
+</template>
+
+<style scoped>
+div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.753);
+  z-index: 9999;
+}
+</style>
