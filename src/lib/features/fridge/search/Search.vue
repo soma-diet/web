@@ -69,10 +69,15 @@ const typeOptions = ["All", "Foods", "Recipes"];
     All = public + private
 -->
 <template>
-  <div class="search-controls">
+  <div id="search-controls" class="col">
     <TabSelection v-model="ownerSelected" :options="ownerOptions" />
     <TabSelection v-model="typeSelected" :options="typeOptions" />
-    <SearchInput v-model="query" placeholder="Search foods" />
+    <div id="actions" class="row">
+      <SearchInput v-model="query" placeholder="Search foods" />
+      <TransparentButton>
+        <AddIcon></AddIcon>
+      </TransparentButton>
+    </div>
   </div>
   <ListLoadingEffect v-if="searching && foodItems.length === 0" />
   <div v-else-if="!searching && foodItems.length === 0" class="center-content offset-center-up">
@@ -84,9 +89,12 @@ const typeOptions = ["All", "Foods", "Recipes"];
 
 <style scoped>
 /* aby nacitaci column food search results nezmackla input a tab selection */
-.search-controls {
-  display: flex;
-  flex-direction: column;
+#search-controls {
   flex-shrink: 0;
+}
+
+#actions {
+  padding: 0.5rem;
+  gap: 0.5rem;
 }
 </style>

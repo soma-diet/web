@@ -8,7 +8,7 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
-  food?: Food
+  food?: Food | null
 }>();
 
 const name = ref(props.food?.name ?? "");

@@ -18,7 +18,7 @@ input {
     border-radius: 0.5em;
     border: none;
     padding: 0 1rem;
-    margin: 0.5rem;
     outline: none;
+    width: 100%;
 }
 </style>

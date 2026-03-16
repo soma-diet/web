@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
-import { computed, ref, watch, watchEffect } from "vue";
-import { getDailySummary, getDailyTargets } from "../../../../api";
+import { targetsStore } from "@/lib/stores";
+import { computed, ref, watchEffect } from "vue";
+import { getDailySummary } from "../../../../api";
 import { NUTRIENT_NAMES } from "../../../../constants/ui.const";
 import type { DailySummary, DailyTargets } from "../../../../model";
 
@@ -12,25 +13,12 @@ const props = defineProps<Props>();
 
 const shownTargetsKeys: (keyof DailyTargets)[] = ["kcal", "protein"];
 
-const dailyTargets = ref<DailyTargets | null>(null);
 const dailySummary = ref<DailySummary | null>(null);
-
-const loadingTargets = ref(true);
 const loadingSummary = ref(true);
 
 function updateProgress(date: Date) {
-  loadingTargets.value = true;
   loadingSummary.value = true;
-  dailyTargets.value = null;
   dailySummary.value = null;
-
-  getDailyTargets()
-    .then((targets) => {
-      dailyTargets.value = targets;
-    })
-    .finally(() => {
-      loadingTargets.value = false;
-    });
 
   getDailySummary(date)
     .then((summary) => {
@@ -46,13 +34,13 @@ watchEffect(() => {
   updateProgress(props.date);
 })
 
-const isLoading = computed(() => loadingTargets.value || loadingSummary.value);
+const isLoading = computed(() => targetsStore.isLoadingTargets || loadingSummary.value);
 
 const targets = computed(() => {
   return shownTargetsKeys.map((key) => ({
     name: NUTRIENT_NAMES[key] ?? key,
     current: dailySummary.value?.[key] ?? 0,
-    max: dailyTargets.value?.[key] ?? null,
+    max: targetsStore.dailyTargets?.[key] ?? null,
   }))
 }
 );

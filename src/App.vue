@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import Header from './lib/features/layout/Header.vue';
-import { useAuthStore } from './lib/stores';
-
-const authStore = useAuthStore();
+import { authStore } from './lib/stores';
 </script>
 
 <template>
-  <AuthPrompt v-if="authStore.isAuthLoading || !authStore.isLoggedIn" />
+  <AuthPrompt v-if="authStore.isLoading || !authStore.isLoggedIn" />
   <div id="content">
     <Header />
     <main>

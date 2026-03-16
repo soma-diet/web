@@ -4,26 +4,18 @@ na ktery mohou poslouchat a cekat
 */
 
 import { onAuthStateChanged, type User } from "firebase/auth";
+import { reactive } from "vue";
 import { auth } from "../infra/firebase";
-import { defineStore } from "pinia";
-import { computed, ref } from "vue";
 
-export const useAuthStore = defineStore("auth", () => {
-    const authUser = ref<User | null>(null);
+export const authStore = reactive({
+  user: null as User | null,
+  isLoading: true as boolean,
+  get isLoggedIn(): boolean {
+    return this.user !== null && !this.user.isAnonymous;
+  },
+});
 
-    const isAuthLoading = ref<boolean>(true);
-    const isLoggedIn = computed(
-        () => authUser.value !== null && !authUser.value.isAnonymous,
-    );
-
-    onAuthStateChanged(auth, (user) => {
-        authUser.value = user;
-        isAuthLoading.value = false;
-    });
-
-    return {
-        authUser,
-        isAuthLoading,
-        isLoggedIn,
-    };
+onAuthStateChanged(auth, (user) => {
+  authStore.user = user;
+  authStore.isLoading = false;
 });

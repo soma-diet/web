@@ -5,15 +5,15 @@ import type { LogEntry } from "../../model";
 import LogEntryForm from "./crud/LogEntryForm.vue";
 import DailyLog from "./overview/DailyLog.vue";
 
-const logSelectionStore = useLogSelectionStore();
+const { logSelectionState, closeLogForm, openLogForm } = useLogSelectionStore();
 
-const showOverview = () => logSelectionStore.closeLogForm();
-const showEdit = (entry: LogEntry) => logSelectionStore.openLogForm(entry.item, entry);
+const showOverview = () => closeLogForm();
+const showEdit = (entry: LogEntry) => openLogForm(entry.item, entry);
 </script>
 
 <template>
-  <LogEntryForm v-if="logSelectionStore.activeLogSelection" @finished="showOverview"
-    :trackable="logSelectionStore.activeLogSelection.trackable"
-    :entry="logSelectionStore.activeLogSelection.entry ?? undefined" />
+  <LogEntryForm v-if="logSelectionState.activeLogSelection" @finished="showOverview"
+    :trackable="logSelectionState.activeLogSelection.trackable"
+    :entry="logSelectionState.activeLogSelection.entry ?? undefined" />
   <DailyLog v-else @itemSelected="showEdit" />
 </template>

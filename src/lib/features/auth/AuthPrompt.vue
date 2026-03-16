@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/lib/stores";
+import { authStore } from "@/lib/stores";
 import { signInWithGoogle } from "../../api";
 import GoogleSignInButton from "../../ui/ext/GoogleSignInButton.vue";
 import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.vue";
 import LoadingEffect from "../../ui/util/LoadingEffect.vue";
 import Prompt from "../../ui/util/Prompt.vue";
 import Shadeout from "../../ui/util/Shadeout.vue";
-
-const authStore = useAuthStore();
 </script>
 
 <template>
-
   <Shadeout>
-    <LoadingEffect v-if="authStore.isAuthLoading" />
+    <LoadingEffect v-if="authStore.isLoading" />
     <Prompt v-else>
       <div id="content" class="col apart center">
         <template v-if="!authStore.isLoggedIn">

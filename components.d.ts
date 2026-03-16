@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddIcon: typeof import('./src/lib/ui/icon/AddIcon.vue')['default']
     AnalysisSection: typeof import('./src/lib/features/analysis/AnalysisSection.vue')['default']
     AuthPrompt: typeof import('./src/lib/features/auth/AuthPrompt.vue')['default']
     BackArrowIcon: typeof import('./src/lib/ui/icon/BackArrowIcon.vue')['default']

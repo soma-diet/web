@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/lib/stores';
+import { authStore } from '@/lib/stores';
 import { computed } from 'vue';
-
-const authStore = useAuthStore();
-let email = computed<string | null>(() => authStore.authUser?.email ?? null);
+let email = computed<string | null>(() => authStore.user?.email ?? null);
 </script>
 
 <template>

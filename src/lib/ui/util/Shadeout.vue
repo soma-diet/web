@@ -1,6 +1,6 @@
 <template>
   <div class="middle center {className}">
-    {@render children()}
+    <slot />
   </div>
 </template>
 
