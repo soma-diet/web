@@ -10,9 +10,21 @@ import {
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
 
+// TODO do jiny file (asi api.util.ts) (nebo udelat RequestDto a na to mapovat v mapperu)
+function toLocalDateString(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
 // #region Main CRUD
-export async function getLogEntries(): Promise<LogEntry[]> {
-    const response = await fetchWithAuth(DIARY_LOG_ENDPOINT);
+export async function getLogEntries(date: Date): Promise<LogEntry[]> {
+    const params = new URLSearchParams({
+        date: toLocalDateString(date),
+    });
+    const endpoint = DIARY_LOG_ENDPOINT + "?" + params.toString();
+    const response = await fetchWithAuth(endpoint);
     const raw = await response.json();
     console.log("entries", raw);
     const entries = raw.map((rawEntry: any) => rawToLogEntry(rawEntry)) ?? [];
@@ -59,14 +71,6 @@ export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
 }
 
 // #region Utils
-// TODO do jiny file (asi api.util.ts)
-function toLocalDateString(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-}
-
 const DAILY_SUMMARY_ENDPOINT = "/api/diary/summary";
 export async function getDailySummary(date: Date): Promise<DailySummary> {
     const params = new URLSearchParams({

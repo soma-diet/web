@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { getLogEntries } from "../../../api/log/log.api";
 import type { LogEntry } from "../../../model";
 import TransparentButton from "@/lib/ui/action/TransparentButton.vue";
@@ -13,28 +13,60 @@ const emit = defineEmits<{
 
 const loadingEntries = ref(true);
 const logEntries = ref<LogEntry[]>([]);
-getLogEntries()
-  .then((entries: LogEntry[]) => {
-    logEntries.value = entries;
-  })
-  .finally(() => {
-    loadingEntries.value = false;
-  });
+const dateSelected = ref<Date>(new Date());
+const moveDate = (backwards: boolean) => {
+  const increment = backwards ? -1 : 1;
+  const changedDate = new Date(dateSelected.value);
+  changedDate.setDate(changedDate.getDate() + increment);
+  dateSelected.value = changedDate;
+}
+
+function loadEntries(date: Date) {
+  console.log("reloading entries for " + date.toDateString());
+  loadingEntries.value = true;
+  logEntries.value = [];
+
+  getLogEntries(date)
+    .then((entries: LogEntry[]) => {
+      logEntries.value = entries;
+    })
+    .finally(() => {
+      loadingEntries.value = false;
+    });
+}
+
+watch(dateSelected, (newDate) => loadEntries(newDate), { immediate: true });
+
+const isTodaySelected = computed(() => {
+  const date = dateSelected.value;
+  const today = new Date();
+  return date.getDate() === today.getDate();
+});
+watch(isTodaySelected, (is: boolean) => console.log("today?", is));
+const dateString = computed(() => {
+  if (isTodaySelected.value) return "Today";
+  const date = dateSelected.value;
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (date.getDate() === yesterday.getDate()) return "Yesterday";
+
+  return date.toLocaleDateString('cs-CZ');
+});
 </script>
 
 <template>
   <nav class="apart center">
     <div class="left center">
-      <TransparentButton @click="() => null">
+      <TransparentButton @click="moveDate(true)">
         <BackArrowIcon />
       </TransparentButton>
-      <h3>03.06.2026</h3>
+      <h3>{{ dateString }}</h3>
     </div>
-    <TransparentButton @click="() => null">
+    <TransparentButton @click="moveDate(false)" :class="{ 'hidden': isTodaySelected }">
       <ForwardArrowIcon />
     </TransparentButton>
   </nav>
-  <TargetsProgress :date="new Date()" />
+  <TargetsProgress :date="dateSelected" />
   <ListLoadingEffect v-if="loadingEntries" />
   <ul v-else>
     <hr />

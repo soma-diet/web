@@ -119,3 +119,7 @@ ul {
 }
 
 /* #endregion */
+
+.hidden {
+    display: none !important;
+}
