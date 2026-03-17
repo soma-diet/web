@@ -49,8 +49,7 @@ async function handleTargetsSubmit() {
   <ListLoadingEffect v-if="isSubmitting || targetsStore.isLoadingTargets" />
   <form v-else-if="targetsStore.dailyTargets" @submit.prevent="handleTargetsSubmit">
     <LabeledNumberInput label="Energy (kJ)" v-model="kJ" />
-    <LabeledNumberInput label="Energy (kcal)" v-model="targetsStore.dailyTargets.kcal" />
-    <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key]"
+    <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
       v-model="targetsStore.dailyTargets[key]" />
     <button type="submit" :disabled="isSubmitting">update targets</button>
   </form>
