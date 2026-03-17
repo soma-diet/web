@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Food } from '@/lib/model';
+import EditIcon from '@/lib/ui/icon/EditIcon.vue';
 import LogItem from '@/lib/ui/list/LogItem.vue';
 
 const emit = defineEmits<{

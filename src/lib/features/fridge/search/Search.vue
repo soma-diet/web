@@ -5,6 +5,7 @@ import type { Food } from "../../../model";
 import TabSelection from "@/lib/ui/list/TabSelection.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
 import SearchInput from "@/lib/ui/form/input/SearchInput.vue";
+import { useFoodSelectionStore } from "@/lib/stores/food-selection.store";
 
 const emit = defineEmits<{
   (e: "itemSelected", item: Food): void
@@ -18,6 +19,8 @@ const searching = ref(false);
 
 const page = ref(0); // vychozi load je 0
 const hasMore = ref(true);
+
+const { openFoodForm } = useFoodSelectionStore();
 
 // debounce timer
 let timer: ReturnType<typeof setTimeout>;
@@ -74,7 +77,7 @@ const typeOptions = ["All", "Foods", "Recipes"];
     <TabSelection v-model="typeSelected" :options="typeOptions" />
     <div id="actions" class="row">
       <SearchInput v-model="query" placeholder="Search foods" />
-      <TransparentButton>
+      <TransparentButton @click="openFoodForm()">
         <AddIcon></AddIcon>
       </TransparentButton>
     </div>

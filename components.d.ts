@@ -17,6 +17,7 @@ declare module 'vue' {
     BackArrowIcon: typeof import('./src/lib/ui/icon/BackArrowIcon.vue')['default']
     CrossIcon: typeof import('./src/lib/ui/icon/CrossIcon.vue')['default']
     DailyLog: typeof import('./src/lib/features/log/overview/DailyLog.vue')['default']
+    EditIcon: typeof import('./src/lib/ui/icon/EditIcon.vue')['default']
     FileInput: typeof import('./src/lib/ui/form/input/FileInput.vue')['default']
     FoodForm: typeof import('./src/lib/features/fridge/crud/FoodForm.vue')['default']
     FoodIcon: typeof import('./src/lib/ui/icon/FoodIcon.vue')['default']
