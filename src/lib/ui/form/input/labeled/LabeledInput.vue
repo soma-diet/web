@@ -4,16 +4,20 @@ interface Props {
   name?: string;
   type: string;
   step?: string;
+  required?: boolean
 }
 
-const props = defineProps<Props>();
-const model = defineModel<string | number | null>();
+const props = withDefaults(defineProps<Props>(), {
+  required: false
+});
+const model = defineModel<any>();
 </script>
 
 <template>
   <div>
     <label :for="props.name">{{ props.label }}</label>
-    <input :type="props.type" :name="props.name" :id="props.name" :step="props.step" v-model="model" />
+    <input :type="props.type" :name="props.name" :id="props.name" :step="props.step" :required="required"
+      v-model="model" />
   </div>
 </template>
 

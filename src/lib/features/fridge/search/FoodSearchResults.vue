@@ -30,8 +30,8 @@ function handleScroll(e: Event) {
     <hr />
     <template v-for="item in props.items" :key="item.id">
       <li>
-        <LogItem :name="item.name" :subtext="item.brand" :kcal="item.macronutrients.kcal" :itemType="item.type"
-          @click="emit('itemSelected', item)" />
+        <LogItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
+          :itemType="item.type" @click="emit('itemSelected', item)" />
       </li>
       <hr />
     </template>

@@ -7,27 +7,27 @@ import Components from "unplugin-vue-components/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        vue(),
-        vueDevTools(),
-        Components({
-            dirs: ["src/lib/features", "src/lib/ui"],
-            dts: true,
-        }),
-    ],
-    server: {
-        proxy: {
-            "/api": {
-                // target: "https://soma.skaba.dev",
-                target: "http://localhost:8080",
-                changeOrigin: true,
-                // secure: true,
-            },
-        },
+  plugins: [
+    vue(),
+    vueDevTools(),
+    Components({
+      dirs: ["src/lib/features", "src/lib/ui"],
+      dts: true,
+    }),
+  ],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://soma.skaba.dev",
+        // target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: true,
+      },
     },
-    resolve: {
-        alias: {
-            "@": fileURLToPath(new URL("./src", import.meta.url)),
-        },
+  },
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
+  },
 });

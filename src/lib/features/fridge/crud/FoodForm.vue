@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { postFood } from "@/lib/api";
-import { NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS } from "@/lib/constants";
+import { MACROS_KEYS, MICROS_KEYS, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS } from "@/lib/constants";
 import { computed, reactive, ref } from "vue";
-import { createFood, type Food, type Serving } from "../../../model";
+import { createFood, createServing, type Food, type Serving } from "../../../model";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -14,10 +14,11 @@ const props = defineProps<{
 
 const name = ref(props.food?.name ?? "");
 const brand = ref(props.food?.brand ?? "");
-const isMass = ref(props.food?.isMass ?? true);
-const nutrients = reactive<Record<string, number | null>>(
-  Object.fromEntries(NUTRITION_KEYS.map(key => [key, props.food?.macronutrients[key as keyof typeof props.food.macronutrients] ?? null]))
-);
+const isLiquid = ref(props.food?.isMass ? !props.food.isMass : false);
+
+const macros = Object.fromEntries(MACROS_KEYS.map(key => [key, props.food?.macronutrients[key] ?? null]));
+const micros = Object.fromEntries(MICROS_KEYS.map(key => [key, props.food?.micronutrients[key] ?? null]));
+const nutrientInput = reactive({ ...macros, ...micros });
 
 // IMG UPLOAD
 const selectedImg = ref<File | null>(null);
@@ -40,26 +41,71 @@ const handleFileChange = (e: Event) => {
   }
 }
 
+// SERVINGS
+interface FormServing {
+  previousId: string | null,
+  name: string | null,
+  size: number | null
+}
+const servings = ref<FormServing[]>(props.food?.servings.map(serving => {
+  return {
+    previousId: serving.id,
+    name: serving.name,
+    size: serving.size
+  }
+}) ?? []);
+const addServingField = () => {
+  servings.value.push({
+    previousId: null,
+    name: null,
+    size: null
+  } as FormServing)
+}
+const removeServingField = (name: string | null) => {
+  servings.value = servings.value.filter((serving: FormServing) => {
+    return serving.name !== name;
+  })
+}
+
 // SUBMITTING
 const isSubmitting = ref<boolean>(false);
 function handleSubmit() {
   isSubmitting.value = true;
   // TODO call API
 
+  // asi jde lehceji ale typescript mi to neumoznuje moc elegantne se zda
+  const macros = {
+    kcal: nutrientInput.kcal!,
+    protein: nutrientInput.protein!,
+    fats: nutrientInput.fats!,
+    carbs: nutrientInput.carbs!
+  }
+  const micros = {
+    fiber: nutrientInput.fiber ?? null,
+    sodium: nutrientInput.sodium ?? null
+  }
+
   if (!props.food) {
     // new food
-    const macros = {
-      kcal: nutrients.kcal!,
-      protein: nutrients.protein!,
-      fats: nutrients.fats!,
-      carbs: nutrients.carbs!
-    }
-    const micros = {
-      fiber: nutrients.fiber ?? null,
-      sodium: nutrients.sodium ?? null
-    }
-    const servings: Serving[] = [];
-    const newFood = createFood(name.value, isMass.value, macros, micros, servings, brand.value, null);
+    const newServings = servings.value.map((formServing: FormServing) => {
+      // TODO display error and prevent
+      if (!formServing.name || !formServing.size) {
+        console.error("serving must have name and size");
+        throw Error("serving must have name and size");
+      }
+
+      if (formServing.previousId) {
+        return {
+          id: formServing.previousId,
+          name: formServing.name,
+          size: formServing.size,
+          isSystem: false
+        }
+      } else {
+        return createServing(formServing.name, formServing.size);
+      }
+    });
+    const newFood = createFood(name.value, !isLiquid.value, macros, micros, newServings, brand.value, null);
     postFood(newFood, selectedImg.value).finally(() => {
       console.log("post finished!!");
     });
@@ -76,17 +122,35 @@ function handleSubmit() {
     <div class="intro">
       <img :src="foodImg" alt="food" />
       <ul>
-        <LabeledInput type="text" label="Food name" v-model="name" />
-        <LabeledInput type="text" label="Brand" v-model="brand" />
+        <LabeledInput type="text" label="Food name" v-model="name" :required="true" />
+        <LabeledInput type="text" label="Brand" v-model="brand" :required="true" />
+        <LabeledInput type="checkbox" label="Is a liquid" v-model="isLiquid" />
 
         <!-- TODO kandidat na Drag&drop -->
         <ImageInput name="food-img" label="Change food image" @file-changed="(e: Event) => handleFileChange(e)" />
       </ul>
     </div>
-
+    <hr>
+    <h3>Servings</h3>
+    <ul>
+      <li v-for="formServing in servings">
+        <div class="row apart">
+          <h4>{{ formServing.name }}</h4>
+          <TransparentButton @click="removeServingField(formServing.name)">
+            <CrossIcon></CrossIcon>
+          </TransparentButton>
+        </div>
+        <LabeledInput type="text" label="Name" v-model="formServing.name" :required="true" />
+        <LabeledNumberInput label="Size (g)" v-model="formServing.size" :required="true" />
+        <br>
+      </li>
+    </ul>
+    <button type="button" @click="addServingField">add serving</button>
+    <hr>
+    <h3>Nutrients</h3>
     <ul>
       <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
-        :name="key" v-model="nutrients[key]" />
+        :name="key" v-model="nutrientInput[key]" :required="MACROS_KEYS.some(_key => _key === key)" />
     </ul>
     <button type="submit" :disabled="isSubmitting">{{ props.food ? "save changes" : "create new food" }}</button>
   </form>
