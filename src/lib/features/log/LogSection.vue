@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import { useLogSelectionStore } from "@/lib/stores";
 import type { LogEntry } from "../../model";
-import LogEntryForm from "./crud/LogEntryForm.vue";
 import DailyLog from "./overview/DailyLog.vue";
 
 const { logSelectionState, closeLogForm, openLogForm } = useLogSelectionStore();
@@ -12,8 +11,9 @@ const showEdit = (entry: LogEntry) => openLogForm(entry.item, entry);
 </script>
 
 <template>
-  <LogEntryForm v-if="logSelectionState.activeLogSelection" @finished="showOverview"
-    :trackable="logSelectionState.activeLogSelection.trackable"
-    :entry="logSelectionState.activeLogSelection.entry ?? undefined" />
-  <DailyLog v-else @itemSelected="showEdit" />
+  <DailyLog v-if="!logSelectionState.activeLogSelection" @itemSelected="showEdit" />
+  <AddLogEntryForm v-else-if="!logSelectionState.activeLogSelection.entry" @finished="showOverview"
+    :trackable="logSelectionState.activeLogSelection.trackable" />
+  <EditLogEntryForm v-else="!logSelectionState.activeLogSelection.entry" @finished="showOverview"
+    :trackable="logSelectionState.activeLogSelection.trackable" :entry="logSelectionState.activeLogSelection.entry" />
 </template>

@@ -23,8 +23,6 @@ export async function getFoodSearchResults(
   const response = await fetchWithAuth(endpoint);
   const raw = await response.json();
 
-  console.log(raw);
-
   const foodItems = raw.content.map((rawItem: any) => rawItemToFood(rawItem));
 
   return {

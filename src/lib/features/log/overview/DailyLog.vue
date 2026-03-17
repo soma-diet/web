@@ -22,7 +22,6 @@ const moveDate = (backwards: boolean) => {
 }
 
 function loadEntries(date: Date) {
-  console.log("reloading entries for " + date.toDateString());
   loadingEntries.value = true;
   logEntries.value = [];
 
@@ -42,7 +41,7 @@ const isTodaySelected = computed(() => {
   const today = new Date();
   return date.getDate() === today.getDate();
 });
-watch(isTodaySelected, (is: boolean) => console.log("today?", is));
+
 const dateString = computed(() => {
   if (isTodaySelected.value) return "Today";
   const date = dateSelected.value;

@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { useId } from 'vue';
+
 interface Props {
   label: string;
-  name?: string;
   type: string;
   step?: string;
   required?: boolean
@@ -11,13 +12,14 @@ const props = withDefaults(defineProps<Props>(), {
   required: false
 });
 const model = defineModel<any>();
+
+const inputId = useId();
 </script>
 
 <template>
   <div>
-    <label :for="props.name">{{ props.label }}</label>
-    <input :type="props.type" :name="props.name" :id="props.name" :step="props.step" :required="required"
-      v-model="model" />
+    <label :for="inputId">{{ props.label }}</label>
+    <input :type="props.type" :id="inputId" :step="props.step" :required="required" v-model="model" />
   </div>
 </template>
 

@@ -70,9 +70,9 @@ const ownerOptions = ["All", "Private", "Public"];
     All = public + private
 -->
 <template>
-  <div id="search-controls" class="col">
+  <div class="col search-controls">
     <TabSelection v-model="ownerSelected" :options="ownerOptions" />
-    <div id="actions" class="row">
+    <div class="row actions">
       <SearchInput v-model="query" placeholder="Search foods" />
       <TransparentButton @click="openFoodForm()">
         <AddIcon></AddIcon>
@@ -89,11 +89,11 @@ const ownerOptions = ["All", "Private", "Public"];
 
 <style scoped>
 /* aby nacitaci column food search results nezmackla input a tab selection */
-#search-controls {
+.search-controls {
   flex-shrink: 0;
 }
 
-#actions {
+.actions {
   padding: 0.5rem;
   gap: 0.5rem;
 }

@@ -7,7 +7,7 @@ const nutrientInput = defineModel<Record<string, number | null>>("nutrients", { 
 <template>
   <ul>
     <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key" :name="key"
-      v-model="nutrientInput[key]" :required="MACROS_KEYS.some(_key => _key === key)" />
+      v-model:value="nutrientInput[key]" :required="MACROS_KEYS.some(_key => _key === key)" />
   </ul>
 </template>
 

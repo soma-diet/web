@@ -53,7 +53,7 @@ updateProgress(props.date);
 
 <template>
   <ListLoadingEffect v-if="isLoading" />
-  <div v-else id="container" class="col stretch-h middle">
+  <div v-else class="col stretch-h middle container">
     <template v-for="target in targets" :key="target.name">
       <div class="apart">
         <span>{{ target.name }}</span>
@@ -69,7 +69,7 @@ updateProgress(props.date);
 </template>
 
 <style scoped>
-#container {
+.container {
   padding: 1rem;
   gap: 0.25rem;
 }

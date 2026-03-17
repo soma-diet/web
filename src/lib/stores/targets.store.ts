@@ -15,7 +15,6 @@ function reloadTargets() {
     })
     .finally(() => {
       targetsStore.isLoadingTargets = false;
-      console.log("finished reloading", targetsStore.dailyTargets);
     });
 }
 

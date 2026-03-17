@@ -13,9 +13,9 @@ const props = withDefaults(defineProps<Props>(), {
   step: "0.1"
 })
 
-const model = defineModel<number | string | null>();
+const inputModel = defineModel<number | string | null>("value");
 </script>
 
 <template>
-  <LabeledInput type="number" v-bind="props" v-model.number="model" />
+  <LabeledInput type="number" v-bind="props" v-model.number="inputModel" />
 </template>

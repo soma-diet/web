@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
-import { postLogEntry, putLogEntry } from "../../../api";
+import { computed, ref } from "vue";
 import { getWithSystemServings } from "../../../constants/system-servings.const";
 import {
-  createLogEntry,
   type LogEntry,
   type Serving,
   type Trackable,
@@ -12,26 +10,23 @@ import { CrossIcon } from "../../../ui/icon";
 import { getImage, SomaImageSize } from "../../../utils/image.util";
 
 const emit = defineEmits<{
-  (e: "finished"): void;
+  (e: "cancel"): void,
+  (e: "submit", quantity: number, servingId: string | null, callback: () => void): void,
 }>();
 
-interface Props {
+const props = defineProps<{
   trackable: Trackable;
   entry?: LogEntry;
-}
-
-const props = defineProps<Props>();
-onMounted(() => {
-  console.log("entry form for trackable", props.trackable.macronutrients );
-})
+}>();
 
 const unit = "g";
-const thumbnailSrc = computed(() => props.trackable.imageFilename
-  ? getImage(props.trackable.imageFilename, SomaImageSize.LARGE)
-  : "");
+const thumbnailSrc = computed(() =>
+  props.trackable.imageFilename
+    ? getImage(props.trackable.imageFilename, SomaImageSize.LARGE)
+    : "/assets/no-img-placeholder.jpg");
 
 // inputs
-const quantity = ref(props.entry?.quantity ?? 100);
+const quantity = ref<number>(props.entry?.quantity ?? 100);
 
 // servings
 const servings = computed(() => getWithSystemServings(props.trackable));
@@ -45,31 +40,35 @@ const selectedServing = ref<Serving>(
 const totalSize = computed(() => quantity.value * selectedServing.value.size);
 const isSubmitting = ref(false);
 
-async function handleSubmit() {
+function handleSubmit() {
   isSubmitting.value = true;
 
-  const newEntry = !props.entry
-    ? createLogEntry(props.trackable, selectedServing.value, quantity.value)
-    : { ...props.entry, quantity: quantity.value };
-  const httpCall = !props.entry ? postLogEntry : putLogEntry;
-  const success = await httpCall(newEntry);
-  if (success) {
-    emit("finished");
-  }
+  emit("submit", quantity.value, selectedServing.value.id, () => {
+    isSubmitting.value = false;
+  });
+
+  // const newEntry = !props.entry
+  //   ? createLogEntry(props.trackable, selectedServing.value, quantity.value)
+  //   : { ...props.entry, quantity: quantity.value, servingId: selectedServing.value.id };
+  // const httpCall = !props.entry ? postLogEntry : putLogEntry;
+  // console.log(newEntry, selectedServing.value);
+  // const success = await httpCall(newEntry);
+  // if (success) {
+  //   emit("finished");
+  // }
 }
 </script>
 
 <template>
   <div class="wrapper">
     <div class="right">
-      <TransparentButton @click="emit('finished')">
+      <TransparentButton @click="emit('cancel')">
         <CrossIcon />
       </TransparentButton>
     </div>
 
-    <div id="intro-info" class="apart">
-      <img v-if="thumbnailSrc" :src="thumbnailSrc" :alt="'picture of ' + props.trackable.name" />
-      <div v-else class="image-placeholder">No image available</div>
+    <div class="intro-info apart">
+      <img :src="thumbnailSrc" :alt="'picture of ' + props.trackable.name" />
 
       <form @submit.prevent="handleSubmit">
         <h3>{{ props.trackable.name }}</h3>
@@ -77,18 +76,12 @@ async function handleSubmit() {
         <span>{{ props.trackable.author }}</span>
 
         <div>
-          <label for="quantity">Amount: </label>
-          <input type="number" name="quantity" v-model.number="quantity" />
+          <LabeledNumberInput label="Amount: " v-model:value="quantity" step="0.01" />
           <span>{{ `(${totalSize} ${unit}` }}</span>
         </div>
 
-        <div>
-          <label for="serving">Serving: </label>
-          <select name="serving" v-model="selectedServing">
-            <!-- TODO system serving je zatim jen v g, takze potreba prepsat na ml, ale zaroven nemuzu pridat obe kazdemu foodu -->
-            <option v-for="serving in servings" :value="serving">{{ serving.name }}</option>
-          </select>
-        </div>
+        <LabeledSelect label="Serving: " v-model:selected="selectedServing"
+          :options="servings.map(serving => ({ name: serving.name, value: serving }))" />
 
         <button type="submit" :disabled="isSubmitting">
           {{ isSubmitting ? "saving.." : (props.entry ? "update" : "add") }}
@@ -127,13 +120,13 @@ form {
   gap: 0.5rem;
 }
 
-#intro-info {
+.intro-info {
   height: 12rem;
   min-width: 0;
   gap: 1rem;
 }
 
-#intro-info>img {
+.intro-info>img {
   flex: 1;
   height: 100%;
   object-fit: contain;

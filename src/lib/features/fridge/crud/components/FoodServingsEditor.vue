@@ -25,7 +25,7 @@ const removeServingField = (index: number) => {
         </TransparentButton>
       </div>
       <LabeledInput type="text" label="Name" v-model="formServing.name" :required="true" />
-      <LabeledNumberInput label="Size (g)" v-model="formServing.size" :required="true" />
+      <LabeledNumberInput label="Size (g)" v-model:value="formServing.size" :required="true" />
       <br>
     </li>
   </ul>

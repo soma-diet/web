@@ -34,8 +34,6 @@ export async function fetchWithAuth(
     headers["Content-Type"] = "application/json";
   }
 
-  console.log(url, headers);
-
   const response = await fetch(url, {
     ...options,
     headers,

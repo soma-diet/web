@@ -12,13 +12,13 @@ import Shadeout from "../../ui/util/Shadeout.vue";
   <Shadeout>
     <LoadingEffect v-if="authStore.isLoading" />
     <Prompt v-else>
-      <div id="content" class="col apart center">
+      <div class="col apart center content">
         <template v-if="!authStore.isLoggedIn">
           <div id="classic" class="col top center">
             <h1>Sign In</h1>
             <span>not imlemented</span>
           </div>
-          <div id="oauth" class="col center">
+          <div class="col center oauth">
             <LabeledHorizontalRule><span class="sub">or sign in with</span></LabeledHorizontalRule>
             <GoogleSignInButton @click="signInWithGoogle" />
           </div>
@@ -33,13 +33,13 @@ import Shadeout from "../../ui/util/Shadeout.vue";
 </template>
 
 <style scoped>
-#content {
+.content {
   height: 100%;
   padding: 2rem;
   gap: 1rem;
 }
 
-#oauth {
+.oauth {
   gap: 0.5rem;
   width: 100%;
 }

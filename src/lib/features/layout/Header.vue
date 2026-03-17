@@ -10,7 +10,7 @@ let email = computed<string | null>(() => authStore.user?.email ?? null);
       <SomaLogoIcon />
       <h1>SOMA</h1>
     </div>
-    <div id="actions" class="right center">
+    <div class="right center actions">
       <template v-if="authStore.isLoggedIn">
         <span>logged user: {{ email }}</span>
         <a href="#actions">targets</a>
@@ -41,14 +41,14 @@ h1 {
   margin: 0;
 }
 
-#actions a {
+.actions a {
   color: var(--secondary-color);
   font-size: 125%;
   text-decoration: none;
   font-style: italic;
 }
 
-#actions a:hover {
+.actions a:hover {
   color: var(--pentarery-color);
 }
 </style>

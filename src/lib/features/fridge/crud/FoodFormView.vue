@@ -34,7 +34,7 @@ const formServings = ref<FormServing[]>(props.food?.servings.map(serving => {
 // Nutrients Editor State
 const macros = Object.fromEntries(MACROS_KEYS.map(key => [key, props.food?.macronutrients[key] ?? null]));
 const micros = Object.fromEntries(MICROS_KEYS.map(key => [key, props.food?.micronutrients[key] ?? null]));
-const nutrientInput = reactive({ ...macros, ...micros });
+let nutrientInput = reactive({ ...macros, ...micros });
 
 function prepareServings(formServings: FormServing[]): Serving[] {
   return formServings.map((formServing: FormServing) => {

@@ -1,33 +1,10 @@
 import {
   TrackableType,
   type Food,
-  type Macronutrients,
-  type Micronutrients,
-  type Serving,
+  type Serving
 } from "../../model";
+import { rawToMacronutrients, rawToMicronutrients } from "../trackable/trackable.mapper";
 import type { FoodRequestDto } from "./food.dto";
-
-function rawToMacronutrients(rawMacros: any): Macronutrients {
-  return {
-    kcal: Number(rawMacros.kcal),
-    protein: Number(rawMacros.protein),
-    fats: Number(rawMacros.fats),
-    carbs: Number(rawMacros.carbs),
-  };
-}
-
-function rawToMicronutrients(rawMicros: any): Micronutrients {
-  if (!rawMicros) {
-    return {
-      fiber: null,
-      sodium: null,
-    };
-  }
-  return {
-    fiber: rawMicros.fiber ? Number(rawMicros.fiber) : null,
-    sodium: rawMicros.sodium ? Number(rawMicros.sodium) : null,
-  };
-}
 
 function rawToServing(rawServing: any): Serving {
   return {
