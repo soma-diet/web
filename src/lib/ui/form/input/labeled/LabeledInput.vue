@@ -7,14 +7,13 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
 const model = defineModel<string | number | null>();
 </script>
 
 <template>
   <div>
     <label :for="props.name">{{ props.label }}</label>
-    <input :type="props.type" :name="props.name" :step="props.step" v-model="model" />
+    <input :type="props.type" :name="props.name" :id="props.name" :step="props.step" v-model="model" />
   </div>
 </template>
 

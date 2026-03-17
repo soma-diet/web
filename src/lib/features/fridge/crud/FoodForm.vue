@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { postFood } from "@/lib/api";
 import { NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS } from "@/lib/constants";
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { createFood, type Food, type Serving } from "../../../model";
 
 const emit = defineEmits<{
@@ -19,6 +19,28 @@ const nutrients = reactive<Record<string, number | null>>(
   Object.fromEntries(NUTRITION_KEYS.map(key => [key, props.food?.macronutrients[key as keyof typeof props.food.macronutrients] ?? null]))
 );
 
+// IMG UPLOAD
+const selectedImg = ref<File | null>(null);
+const previewUrl = ref<string | null>(null);
+const foodImg = computed(() => {
+  if (previewUrl.value) return previewUrl.value;
+  if (props.food?.imageFilename) return props.food.imageFilename;
+  return "/assets/no-img-placeholder.jpg";
+})
+const handleFileChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const files = target.files;
+  if (files && files.length > 0) {
+    const file = files[0]!;
+    selectedImg.value = file;
+    previewUrl.value = URL.createObjectURL(file); // vytvori preview url pro zobrazeni nahraneho obrazku
+  } else {
+    selectedImg.value = null;
+    previewUrl.value = null;
+  }
+}
+
+// SUBMITTING
 const isSubmitting = ref<boolean>(false);
 function handleSubmit() {
   isSubmitting.value = true;
@@ -38,7 +60,7 @@ function handleSubmit() {
     }
     const servings: Serving[] = [];
     const newFood = createFood(name.value, isMass.value, macros, micros, servings, brand.value, null);
-    postFood(newFood).finally(() => {
+    postFood(newFood, selectedImg.value).finally(() => {
       console.log("post finished!!");
     });
   }
@@ -52,13 +74,13 @@ function handleSubmit() {
 <template>
   <form @submit.prevent="handleSubmit">
     <div class="intro">
-      <img src="/assets/no-img-placeholder.jpg" alt="food" />
+      <img :src="foodImg" alt="food" />
       <ul>
-        <LabeledInput type="text" label="Food name" name="name" v-model="name" />
-        <LabeledInput type="text" label="Brand" name="brand" v-model="brand" />
+        <LabeledInput type="text" label="Food name" v-model="name" />
+        <LabeledInput type="text" label="Brand" v-model="brand" />
 
         <!-- TODO kandidat na Drag&drop -->
-        <FileInput label="Change food image" name="image" />
+        <ImageInput name="food-img" label="Change food image" @file-changed="(e: Event) => handleFileChange(e)" />
       </ul>
     </div>
 
