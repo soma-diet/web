@@ -10,8 +10,8 @@ export interface FoodSearchResponse {
 export interface FoodRequestDto {
     id: string,
     name: string,
-    barcode?: string | null,
-    brand?: string | null,
+    barcode: string | null,
+    brand: string | null,
     isMass: boolean,
     macronutrients: Macronutrients,
     micronutrients: Micronutrients,

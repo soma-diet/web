@@ -6,7 +6,7 @@ const foodSelectionState = reactive({
   isFormOpen: false as boolean,
 });
 
-function openFoodForm(food?: Food | null) {
+function openFoodForm(food = null as Food | null) {
   if (food) foodSelectionState.selectedFood = food;
   foodSelectionState.isFormOpen = true;
 }

@@ -3,7 +3,7 @@ import { TrackableType } from "../../model";
 
 interface Props {
   name: string;
-  subtext?: string | null;
+  subtext?: string;
   itemType: TrackableType;
   kcal?: number;
 }

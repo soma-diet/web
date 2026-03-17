@@ -6,6 +6,6 @@ export interface Macronutrients {
 }
 
 export interface Micronutrients {
-    fiber?: number
-    sodium?: number
+    fiber: number | null
+    sodium: number | null
 }

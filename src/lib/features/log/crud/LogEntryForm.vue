@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { postLogEntry, putLogEntry } from "../../../api";
 import { getWithSystemServings } from "../../../constants/system-servings.const";
 import {
@@ -21,6 +21,9 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+onMounted(() => {
+  console.log("entry form for trackable", props.trackable.macronutrients );
+})
 
 const unit = "g";
 const thumbnailSrc = computed(() => props.trackable.imageFilename
@@ -32,9 +35,10 @@ const quantity = ref(props.entry?.quantity ?? 100);
 
 // servings
 const servings = computed(() => getWithSystemServings(props.trackable));
+const systemServing = servings.value.find((serving: Serving) => serving.isSystem)!;
+const entryServing = props.entry ? servings.value.find((s: Serving) => s.id === props.entry!.servingId) : null;
 const selectedServing = ref<Serving>(
-  (props.entry ? servings.value.find((val) => (val.id ?? null) === (props.entry?.servingId ?? null)) : null)
-  ?? servings.value[0]
+  entryServing ?? systemServing
 );
 
 // helpers
@@ -93,7 +97,8 @@ async function handleSubmit() {
     </div>
 
     <hr />
-    <span>tady nutritional info</span>
+    <NutritionalInfo :key="props.trackable.id" :grams="totalSize" :macros="props.trackable.macronutrients"
+      :micros="props.trackable.micronutrients" />
     <hr />
 
     <div>

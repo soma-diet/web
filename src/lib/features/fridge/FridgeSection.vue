@@ -15,5 +15,5 @@ const triggerAddEntry = (food: Food) => {
 
 <template>
   <Search v-if="!foodSelectionState.isFormOpen" @itemSelected="triggerAddEntry" />
-  <FoodForm v-else @finished="closeFoodForm" :food="foodSelectionState.selectedFood" />
+  <FoodForm v-else @finished="closeFoodForm" :food="foodSelectionState.selectedFood ?? undefined" />
 </template>

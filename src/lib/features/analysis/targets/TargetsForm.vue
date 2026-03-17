@@ -1,11 +1,11 @@
 <!-- Form for setting daily targets. -->
 <script setup lang="ts">
-import { NUTRIENT_NAMES, NUTRITION_KEYS, NUTRITION_RATIOS } from "@/lib/constants";
 import { targetsStore } from "@/lib/stores";
 import { computed, ref } from "vue";
 import { putDailyTargets } from "../../../api";
 import LabeledNumberInput from "../../../ui/form/input/labeled/LabeledNumberInput.vue";
 import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.vue";
+import { kcalToKJ, kJToKcal, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS, roundNutrient } from "@/lib/constants";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -13,20 +13,16 @@ const emit = defineEmits<{
 
 const isSubmitting = ref(false);
 
-const kJ = computed<number | string | null>({
+const kJ = computed<number | null>({
   get: () => {
-    if (targetsStore.dailyTargets?.kcal != null) {
-      return Math.round(targetsStore.dailyTargets.kcal * NUTRITION_RATIOS.KCAL_TO_KJ_MULT * 10) / 10;
+    if (targetsStore.dailyTargets && targetsStore.dailyTargets.kcal != null) {
+      return roundNutrient(kcalToKJ(targetsStore.dailyTargets.kcal));
     }
     return null;
   },
   set: (newVal) => {
     if (targetsStore.dailyTargets) {
-      if (newVal != null && newVal !== "") {
-        targetsStore.dailyTargets.kcal = Math.round((Number(newVal) / NUTRITION_RATIOS.KCAL_TO_KJ_MULT) * 10) / 10;
-      } else {
-        targetsStore.dailyTargets.kcal = null;
-      }
+      targetsStore.dailyTargets.kcal = newVal ? roundNutrient(kJToKcal(newVal)) : null;
     }
   }
 });
@@ -54,7 +50,7 @@ async function handleTargetsSubmit() {
   <form v-else-if="targetsStore.dailyTargets" @submit.prevent="handleTargetsSubmit">
     <LabeledNumberInput label="Energy (kJ)" v-model="kJ" />
     <LabeledNumberInput label="Energy (kcal)" v-model="targetsStore.dailyTargets.kcal" />
-    <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_NAMES[key]"
+    <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key]"
       v-model="targetsStore.dailyTargets[key]" />
     <button type="submit" :disabled="isSubmitting">update targets</button>
   </form>

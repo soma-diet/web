@@ -3,8 +3,8 @@
 import { targetsStore } from "@/lib/stores";
 import { computed, ref, watchEffect } from "vue";
 import { getDailySummary } from "../../../../api";
-import { NUTRIENT_NAMES } from "../../../../constants/ui.const";
 import type { DailySummary, DailyTargets } from "../../../../model";
+import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/lib/constants";
 
 interface Props {
   date: Date;
@@ -37,11 +37,14 @@ watchEffect(() => {
 const isLoading = computed(() => targetsStore.isLoadingTargets || loadingSummary.value);
 
 const targets = computed(() => {
-  return shownTargetsKeys.map((key) => ({
-    name: NUTRIENT_NAMES[key] ?? key,
-    current: dailySummary.value?.[key] ?? 0,
-    max: targetsStore.dailyTargets?.[key] ?? null,
-  }))
+  return shownTargetsKeys.map((key) => {
+    const max = targetsStore.dailyTargets?.[key];
+    return {
+      name: NUTRIENT_DISPLAY_NAMES[key] ?? key,
+      current: roundNutrient(dailySummary.value?.[key] ?? 0),
+      max: max ? roundNutrient(max) : null,
+    }
+  })
 }
 );
 
