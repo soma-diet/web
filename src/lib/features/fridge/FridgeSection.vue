@@ -6,10 +6,11 @@ import { useFoodSelectionStore } from '@/lib/stores/food-selection.store';
 import "./search/Search.vue";
 
 const logSelectionStore = useLogSelectionStore();
-const { foodSelectionState, closeFoodForm } = useFoodSelectionStore();
+const { foodSelectionState, closeFoodForm, openFoodForm } = useFoodSelectionStore();
 
 const triggerAddEntry = (food: Food) => {
   logSelectionStore.openLogForm(food);
+  // openFoodForm(food);
 };
 </script>
 

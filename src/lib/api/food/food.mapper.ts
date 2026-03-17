@@ -5,6 +5,7 @@ import {
   type Micronutrients,
   type Serving,
 } from "../../model";
+import type { FoodRequestDto } from "./food.dto";
 
 function rawToMacronutrients(rawMacros: any): Macronutrients {
   return {
@@ -52,5 +53,18 @@ export function rawItemToFood(rawItem: any): Food {
     micronutrients: rawToMicronutrients(rawItem.micronutrients),
     servings: servings.map((serving: any) => rawToServing(serving)),
     type: TrackableType.FOOD,
+  };
+}
+
+export function foodToDto(food: Food): FoodRequestDto {
+  return {
+    id: food.id,
+    name: food.name,
+    brand: food.brand,
+    barcode: food.barcode,
+    isMass: food.isMass,
+    macronutrients: food.macronutrients,
+    micronutrients: food.micronutrients,
+    servings: food.servings,
   };
 }

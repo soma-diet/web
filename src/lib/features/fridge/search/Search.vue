@@ -61,9 +61,7 @@ async function loadMore() {
 search(query.value, true);
 
 const ownerSelected = ref("All");
-const typeSelected = ref("All");
 const ownerOptions = ["All", "Private", "Public"];
-const typeOptions = ["All", "Foods", "Recipes"];
 </script>
 
 <!-- TODO az bude user mit ucet tak vyhledavat podle typu
@@ -74,7 +72,6 @@ const typeOptions = ["All", "Foods", "Recipes"];
 <template>
   <div id="search-controls" class="col">
     <TabSelection v-model="ownerSelected" :options="ownerOptions" />
-    <TabSelection v-model="typeSelected" :options="typeOptions" />
     <div id="actions" class="row">
       <SearchInput v-model="query" placeholder="Search foods" />
       <TransparentButton @click="openFoodForm()">

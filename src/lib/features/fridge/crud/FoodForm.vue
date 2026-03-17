@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { postFood } from "@/lib/api";
+import { postFood, putFood } from "@/lib/api";
 import { MACROS_KEYS, MICROS_KEYS, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS } from "@/lib/constants";
 import { computed, reactive, ref } from "vue";
 import { createFood, createServing, type Food, type Serving } from "../../../model";
+import { getImage, SomaImageSize } from "@/lib/utils/image.util";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -25,7 +26,7 @@ const selectedImg = ref<File | null>(null);
 const previewUrl = ref<string | null>(null);
 const foodImg = computed(() => {
   if (previewUrl.value) return previewUrl.value;
-  if (props.food?.imageFilename) return props.food.imageFilename;
+  if (props.food?.imageFilename) return getImage(props.food.imageFilename, SomaImageSize.SMALL);
   return "/assets/no-img-placeholder.jpg";
 })
 const handleFileChange = (e: Event) => {
@@ -84,31 +85,43 @@ function handleSubmit() {
     fiber: nutrientInput.fiber ?? null,
     sodium: nutrientInput.sodium ?? null
   }
+  const newServings = servings.value.map((formServing: FormServing) => {
+    // TODO display error and prevent
+    if (!formServing.name || !formServing.size) {
+      console.error("serving must have name and size");
+      throw Error("serving must have name and size");
+    }
+
+    if (formServing.previousId) {
+      return {
+        id: formServing.previousId,
+        name: formServing.name,
+        size: formServing.size,
+        isSystem: false
+      }
+    } else {
+      return createServing(formServing.name, formServing.size);
+    }
+  });
 
   if (!props.food) {
     // new food
-    const newServings = servings.value.map((formServing: FormServing) => {
-      // TODO display error and prevent
-      if (!formServing.name || !formServing.size) {
-        console.error("serving must have name and size");
-        throw Error("serving must have name and size");
-      }
-
-      if (formServing.previousId) {
-        return {
-          id: formServing.previousId,
-          name: formServing.name,
-          size: formServing.size,
-          isSystem: false
-        }
-      } else {
-        return createServing(formServing.name, formServing.size);
-      }
-    });
-    const newFood = createFood(name.value, !isLiquid.value, macros, micros, newServings, brand.value, null);
+    const newFood = createFood(name.value, !isLiquid.value, macros, micros, newServings, brand.value);
     postFood(newFood, selectedImg.value).finally(() => {
       console.log("post finished!!");
     });
+  } else {
+    const replacedFood = props.food;
+    replacedFood.name = name.value;
+    replacedFood.brand = brand.value;
+    replacedFood.isMass = !isLiquid.value;
+    replacedFood.macronutrients = macros;
+    replacedFood.micronutrients = micros;
+    replacedFood.servings = newServings;
+
+    putFood(replacedFood, selectedImg.value).finally(() => {
+      console.log("put finished");
+    })
   }
 
   // clean up
@@ -119,6 +132,12 @@ function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit">
+    <div class="row apart">
+      <h2>{{ props.food ? `Edit ${props.food.name}` : "Create food" }}</h2>
+      <TransparentButton @click="emit('finished')">
+        <CrossIcon></CrossIcon>
+      </TransparentButton>
+    </div>
     <div class="intro">
       <img :src="foodImg" alt="food" />
       <ul>

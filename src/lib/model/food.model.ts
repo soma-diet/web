@@ -14,7 +14,6 @@ export function createFood(
   micronutrients: Micronutrients,
   servings: Serving[],
   brand = null as string | null,
-  imageFilename = null as string | null,
 ): Food {
   return {
     id: crypto.randomUUID(),
@@ -23,7 +22,7 @@ export function createFood(
     barcode: null, // TODO scanovani barcodes
     brand: brand,
     isMass: isMass,
-    imageFilename: imageFilename,
+    imageFilename: null,
     macronutrients: macronutrients,
     micronutrients: micronutrients,
     servings: servings,
