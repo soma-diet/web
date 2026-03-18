@@ -1,22 +1,23 @@
 import { reactive } from "vue";
-import type { DailyTargets } from "../model";
 import { getDailyTargets } from "../api";
+import type { DailyTargets } from "../model";
 
-export const targetsStore = reactive({
+const targetsState = reactive({
   dailyTargets: null as DailyTargets | null,
   isLoadingTargets: true as boolean,
 });
 
 function reloadTargets() {
-  targetsStore.isLoadingTargets = true;
+  targetsState.isLoadingTargets = true;
   getDailyTargets()
     .then((response: DailyTargets) => {
-      targetsStore.dailyTargets = response;
+      targetsState.dailyTargets = response;
     })
     .finally(() => {
-      targetsStore.isLoadingTargets = false;
+      targetsState.isLoadingTargets = false;
     });
 }
 
-// nacist data hned (potreba nacitat pouze jenom jednou?)
-reloadTargets();
+export function useTargetsStore() {
+  return { targetsState, reloadTargets };
+}

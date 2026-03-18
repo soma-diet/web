@@ -1,13 +1,9 @@
-/* DROP
-stores obsahuji promenne, ktere updatuji a tim davaji zbytku aplikace nejaky stav
-na ktery mohou poslouchat a cekat
-*/
-
+// auth.store.ts
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { reactive } from "vue";
 import { auth } from "../infra/firebase";
 
-export const authStore = reactive({
+const authState = reactive({
   user: null as User | null,
   isLoading: true as boolean,
   get isLoggedIn(): boolean {
@@ -16,6 +12,10 @@ export const authStore = reactive({
 });
 
 onAuthStateChanged(auth, (user) => {
-  authStore.user = user;
-  authStore.isLoading = false;
+  authState.user = user;
+  authState.isLoading = false;
 });
+
+export function useAuthStore() {
+  return { authState };
+}

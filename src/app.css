@@ -1,8 +1,3 @@
-#app {
-    height: 100%;
-    width: 100%;
-}
-
 *,
 *::before,
 *::after {
@@ -17,6 +12,8 @@
     --pentarery-color: #dd000f;
     --border-color: #000000;
     --subtle-color: #878787;
+
+    --cutout-width: 1px;
 }
 
 html,
@@ -123,3 +120,84 @@ ul {
 .hidden {
     display: none !important;
 }
+
+/* #region Shared? TODO asi lepsi misto nez v app.css */
+#app {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* flex: 1; */
+    gap: var(--cutout-width);
+    background-color: var(--border-color);
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: var(--cutout-width);
+    min-height: 0;
+}
+
+section {
+    background-color: var(--primary-color);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+}
+
+/* #region Bevel borders */
+/* customizable shard bevel structure */
+.bevel {
+    --b: 7px;
+    clip-path: polygon(var(--tl1, 0% 0%), var(--tl2, 0% 0%),
+            var(--tr1, 100% 0%), var(--tr2, 100% 0%),
+            var(--br1, 100% 100%), var(--br2, 100% 100%),
+            var(--bl1, 0% 100%), var(--bl2, 0% 100%)
+        );
+}
+
+/* modifier classes */
+.bevel-tl {
+    --tl1: 0% var(--b);
+    --tl2: var(--b) 0%;
+}
+
+.bevel-tr {
+    --tr1: calc(100% - var(--b)) 0%;
+    --tr2: 100% var(--b);
+}
+
+.bevel-br {
+    --br1: 100% calc(100% - var(--b));
+    --br2: calc(100% - var(--b)) 100%;
+}
+
+.bevel-bl {
+    --bl1: var(--b) 100%;
+    --bl2: 0% calc(100% - var(--b));
+}
+/* #endregion */
+
+/* #endregion */
+
+/* #region Flex values */
+.f1 {
+    flex: 1;
+}
+
+.f2 {
+    flex: 2;
+}
+.f3 {
+    flex: 3;
+}
+.f4 {
+    flex: 4;
+}
+/* #endregion */

@@ -17,5 +17,6 @@ import LoadingEffect from '../util/LoadingEffect.vue';
     flex-direction: column;
     flex-grow: 1;
     padding-bottom: 4rem;
+    height: 100%;
 }
 </style>

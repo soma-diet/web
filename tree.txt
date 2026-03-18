@@ -1,0 +1,128 @@
+src/
+├── app.css
+├── App.vue
+├── lib
+│   ├── api
+│   │   ├── auth
+│   │   │   ├── auth.api.ts
+│   │   │   └── auth.error.ts
+│   │   ├── client.ts
+│   │   ├── error.ts
+│   │   ├── food
+│   │   │   ├── food.api.ts
+│   │   │   ├── food.dto.ts
+│   │   │   └── food.mapper.ts
+│   │   ├── index.ts
+│   │   ├── log
+│   │   │   ├── log.api.ts
+│   │   │   ├── log.dto.ts
+│   │   │   └── log.mapper.ts
+│   │   ├── targets
+│   │   │   ├── targets.api.ts
+│   │   │   ├── targets.dto.ts
+│   │   │   └── targets.mapper.ts
+│   │   └── trackable
+│   │       └── trackable.mapper.ts
+│   ├── constants
+│   │   ├── index.ts
+│   │   ├── nutrition.const.ts
+│   │   └── system-servings.const.ts
+│   ├── features
+│   │   ├── analysis
+│   │   │   ├── analysis.helper.ts
+│   │   │   ├── AnalysisSection.vue
+│   │   │   └── targets
+│   │   │       └── TargetsForm.vue
+│   │   ├── auth
+│   │   │   └── AuthPrompt.vue
+│   │   ├── fridge
+│   │   │   ├── crud
+│   │   │   │   ├── AddFoodForm.vue
+│   │   │   │   ├── components
+│   │   │   │   │   ├── FoodDetailsEditor.vue
+│   │   │   │   │   ├── FoodNutrientsEditor.vue
+│   │   │   │   │   └── FoodServingsEditor.vue
+│   │   │   │   ├── EditFoodForm.vue
+│   │   │   │   ├── FoodFormView.vue
+│   │   │   │   └── model
+│   │   │   │       └── form-serving.ui.model.ts
+│   │   │   ├── FridgeSection.vue
+│   │   │   └── search
+│   │   │       ├── FoodSearchResults.vue
+│   │   │       └── Search.vue
+│   │   ├── layout
+│   │   │   ├── Background.vue
+│   │   │   └── Header.vue
+│   │   └── log
+│   │       ├── crud
+│   │       │   ├── AddLogEntryForm.vue
+│   │       │   ├── components
+│   │       │   │   └── NutritionalInfo.vue
+│   │       │   ├── EditLogEntryForm.vue
+│   │       │   └── LogEntryFormView.vue
+│   │       ├── LogSection.vue
+│   │       └── overview
+│   │           ├── DailyLog.vue
+│   │           └── targets
+│   │               └── TargetsProgress.vue
+│   ├── index.ts
+│   ├── infra
+│   │   └── firebase.ts
+│   ├── model
+│   │   ├── entry.model.ts
+│   │   ├── food.model.ts
+│   │   ├── index.ts
+│   │   ├── nutrients.model.ts
+│   │   ├── serving.model.ts
+│   │   ├── targets.model.ts
+│   │   └── trackable.model.ts
+│   ├── sample
+│   │   ├── food-item.sample.ts
+│   │   └── log-entry.sample.ts
+│   ├── stores
+│   │   ├── auth.store.ts
+│   │   ├── food-selection.store.ts
+│   │   ├── index.ts
+│   │   ├── log.store.ts
+│   │   └── targets.store.ts
+│   ├── ui
+│   │   ├── action
+│   │   │   └── TransparentButton.vue
+│   │   ├── ext
+│   │   │   └── GoogleSignInButton.vue
+│   │   ├── form
+│   │   │   ├── input
+│   │   │   │   ├── ImageInput.vue
+│   │   │   │   ├── labeled
+│   │   │   │   │   ├── LabeledInput.vue
+│   │   │   │   │   ├── LabeledNumberInput.vue
+│   │   │   │   │   └── LabeledSelect.vue
+│   │   │   │   └── SearchInput.vue
+│   │   │   └── nav
+│   │   │       └── FormNavigationBar.vue
+│   │   ├── icon
+│   │   │   ├── AddIcon.vue
+│   │   │   ├── BackArrowIcon.vue
+│   │   │   ├── CrossIcon.vue
+│   │   │   ├── EditIcon.vue
+│   │   │   ├── FoodIcon.vue
+│   │   │   ├── ForwardArrowIcon.vue
+│   │   │   ├── index.ts
+│   │   │   ├── RecipeIcon.vue
+│   │   │   └── SomaLogoIcon.vue
+│   │   ├── list
+│   │   │   ├── ListLoadingEffect.vue
+│   │   │   ├── LogItem.vue
+│   │   │   └── TabSelection.vue
+│   │   └── util
+│   │       ├── LabeledHorizontalRule.vue
+│   │       ├── LoadingEffect.vue
+│   │       ├── Prompt.vue
+│   │       └── Shadeout.vue
+│   └── utils
+│       ├── errors.ts
+│       └── image.util.ts
+└── main.ts
+/F  [error opening dir]
+
+39 directories, 86 files

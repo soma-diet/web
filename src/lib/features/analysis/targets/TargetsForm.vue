@@ -1,11 +1,11 @@
 <!-- Form for setting daily targets. -->
 <script setup lang="ts">
-import { targetsStore } from "@/lib/stores";
+import { kcalToKJ, kJToKcal, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS, roundNutrient } from "@/lib/constants";
 import { computed, ref } from "vue";
 import { putDailyTargets } from "../../../api";
 import LabeledNumberInput from "../../../ui/form/input/labeled/LabeledNumberInput.vue";
 import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.vue";
-import { kcalToKJ, kJToKcal, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS, roundNutrient } from "@/lib/constants";
+import { useTargetsStore } from "@/lib/stores";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -13,16 +13,18 @@ const emit = defineEmits<{
 
 const isSubmitting = ref(false);
 
+const { targetsState, reloadTargets } = useTargetsStore();
+
 const kJ = computed<number | null>({
   get: () => {
-    if (targetsStore.dailyTargets && targetsStore.dailyTargets.kcal != null) {
-      return roundNutrient(kcalToKJ(targetsStore.dailyTargets.kcal));
+    if (targetsState.dailyTargets && targetsState.dailyTargets.kcal != null) {
+      return roundNutrient(kcalToKJ(targetsState.dailyTargets.kcal));
     }
     return null;
   },
   set: (newVal) => {
-    if (targetsStore.dailyTargets) {
-      targetsStore.dailyTargets.kcal = newVal ? roundNutrient(kJToKcal(newVal)) : null;
+    if (targetsState.dailyTargets) {
+      targetsState.dailyTargets.kcal = newVal ? roundNutrient(kJToKcal(newVal)) : null;
     }
   }
 });
@@ -31,12 +33,15 @@ const kJ = computed<number | null>({
 // FORM SUBMITTING
 async function handleTargetsSubmit() {
   isSubmitting.value = true;
-  if (!targetsStore.dailyTargets) {
+  if (!targetsState.dailyTargets) {
     console.error("Daily targets shouldn't be null on form submit.");
     return;
   }
 
-  putDailyTargets(targetsStore.dailyTargets!).finally(() => {
+  putDailyTargets(targetsState.dailyTargets!).catch((_) => {
+    // if error reload targets to saved values from the server
+    reloadTargets();
+  }).finally(() => {
     isSubmitting.value = false;
     emit("finished");
   });
@@ -46,11 +51,11 @@ async function handleTargetsSubmit() {
 
 <template>
   <h2>Set your daily targets</h2>
-  <ListLoadingEffect v-if="isSubmitting || targetsStore.isLoadingTargets" />
-  <form v-else-if="targetsStore.dailyTargets" @submit.prevent="handleTargetsSubmit">
+  <ListLoadingEffect v-if="isSubmitting || targetsState.isLoadingTargets" />
+  <form v-else-if="targetsState.dailyTargets" @submit.prevent="handleTargetsSubmit">
     <LabeledNumberInput label="Energy (kJ)" v-model:value="kJ" />
     <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
-      v-model:value="targetsStore.dailyTargets[key]" />
+      v-model:value="targetsState.dailyTargets[key]" />
     <button type="submit" :disabled="isSubmitting">update targets</button>
   </form>
   <span v-else>failed to load targets</span>

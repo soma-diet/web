@@ -1,5 +1,5 @@
 <template>
-  <div class="middle center {className}">
+  <div class="middle center">
     <slot />
   </div>
 </template>

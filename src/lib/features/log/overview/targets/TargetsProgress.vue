@@ -1,20 +1,21 @@
 <script setup lang="ts">
 
-import { targetsStore } from "@/lib/stores";
-import { computed, ref, watchEffect } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import { getDailySummary } from "../../../../api";
 import type { DailySummary, DailyTargets } from "../../../../model";
 import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/lib/constants";
+import { useTargetsStore } from "@/lib/stores";
 
 interface Props {
   date: Date;
 }
 const props = defineProps<Props>();
 
-const shownTargetsKeys: (keyof DailyTargets)[] = ["kcal", "protein"];
-
 const dailySummary = ref<DailySummary | null>(null);
 const loadingSummary = ref(true);
+const shownTargetsKeys: (keyof DailyTargets)[] = ["kcal", "protein"];
+
+const { targetsState, reloadTargets } = useTargetsStore();
 
 function updateProgress(date: Date) {
   loadingSummary.value = true;
@@ -34,11 +35,11 @@ watchEffect(() => {
   updateProgress(props.date);
 })
 
-const isLoading = computed(() => targetsStore.isLoadingTargets || loadingSummary.value);
+// const isLoading = computed(() => targetsState.isLoadingTargets || loadingSummary.value);
 
 const targets = computed(() => {
   return shownTargetsKeys.map((key) => {
-    const max = targetsStore.dailyTargets?.[key];
+    const max = targetsState.dailyTargets?.[key];
     return {
       name: NUTRIENT_DISPLAY_NAMES[key] ?? key,
       current: roundNutrient(dailySummary.value?.[key] ?? 0),
@@ -49,11 +50,14 @@ const targets = computed(() => {
 );
 
 updateProgress(props.date);
+
+// onMounted(() => {
+//   reloadTargets();
+// })
 </script>
 
 <template>
-  <ListLoadingEffect v-if="isLoading" />
-  <div v-else class="col stretch-h middle container">
+  <div class="col stretch-h middle container">
     <template v-for="target in targets" :key="target.name">
       <div class="apart">
         <span>{{ target.name }}</span>

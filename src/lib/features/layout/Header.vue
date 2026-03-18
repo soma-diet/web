@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { authStore } from '@/lib/stores';
+import { logOut } from '@/lib/api';
+import { useAuthStore } from '@/lib/stores';
 import { computed } from 'vue';
-let email = computed<string | null>(() => authStore.user?.email ?? null);
+
+const { authState } = useAuthStore();
+let email = computed<string | null>(() => authState.user?.email ?? null);
 </script>
 
 <template>
@@ -11,9 +14,9 @@ let email = computed<string | null>(() => authStore.user?.email ?? null);
       <h1>SOMA</h1>
     </div>
     <div class="right center actions">
-      <template v-if="authStore.isLoggedIn">
-        <span>logged user: {{ email }}</span>
-        <a href="#actions">targets</a>
+      <template v-if="authState.isLoggedIn">
+        <span>LOGGED AS: {{ email }}</span>
+        <button @click="logOut">sign out</button>
       </template>
     </div>
   </header>

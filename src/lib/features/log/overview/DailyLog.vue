@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import { getLogEntries } from "../../../api/log/log.api";
-import type { LogEntry } from "../../../model";
 import TransparentButton from "@/lib/ui/action/TransparentButton.vue";
 import BackArrowIcon from "@/lib/ui/icon/BackArrowIcon.vue";
 import ForwardArrowIcon from "@/lib/ui/icon/ForwardArrowIcon.vue";
 import LogItem from "@/lib/ui/list/LogItem.vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { getLogEntries } from "../../../api/log/log.api";
+import type { LogEntry } from "../../../model";
+import { useTargetsStore } from "@/lib/stores";
+import { reload } from "firebase/auth";
 
 const emit = defineEmits<{
   (e: "itemSelected", entry: LogEntry): void
@@ -14,6 +16,9 @@ const emit = defineEmits<{
 const loadingEntries = ref(true);
 const logEntries = ref<LogEntry[]>([]);
 const dateSelected = ref<Date>(new Date());
+
+const { targetsState, reloadTargets } = useTargetsStore();
+
 const moveDate = (backwards: boolean) => {
   const increment = backwards ? -1 : 1;
   const changedDate = new Date(dateSelected.value);
@@ -51,6 +56,9 @@ const dateString = computed(() => {
 
   return date.toLocaleDateString('cs-CZ');
 });
+
+reloadTargets();
+
 </script>
 
 <template>
@@ -65,18 +73,20 @@ const dateString = computed(() => {
       <ForwardArrowIcon />
     </TransparentButton>
   </nav>
-  <TargetsProgress :date="dateSelected" />
-  <ListLoadingEffect v-if="loadingEntries" />
-  <ul v-else>
-    <hr />
-    <template v-for="entry in logEntries">
-      <li>
-        <LogItem :name="entry.item.name" :subtext="`${entry.quantity} ${entry.servingName}`" :itemType="entry.item.type"
-          @click="emit('itemSelected', entry)" />
-      </li>
+  <ListLoadingEffect v-if="loadingEntries || targetsState.isLoadingTargets" />
+  <template v-else>
+    <TargetsProgress :date="dateSelected" />
+    <ul>
       <hr />
-    </template>
-  </ul>
+      <template v-for="entry in logEntries">
+        <li>
+          <LogItem :name="entry.item.name" :subtext="`${entry.quantity} ${entry.servingName}`"
+            :itemType="entry.item.type" @click="emit('itemSelected', entry)" />
+        </li>
+        <hr />
+      </template>
+    </ul>
+  </template>
 </template>
 
 <style scoped>
