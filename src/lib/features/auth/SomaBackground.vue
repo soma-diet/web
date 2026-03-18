@@ -2,9 +2,7 @@
 </script>
 
 <template>
-  <div class="col center middle">
-    <SomaLogoIcon />
-  </div>
+  
 </template>
 
 <style scoped>

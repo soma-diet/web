@@ -39,6 +39,7 @@ declare module 'vue' {
     GoogleSignInButton: typeof import('./src/lib/ui/ext/GoogleSignInButton.vue')['default']
     Header: typeof import('./src/lib/features/layout/Header.vue')['default']
     ImageInput: typeof import('./src/lib/ui/form/input/ImageInput.vue')['default']
+    InteractableItem: typeof import('./src/lib/ui/list/InteractableItem.vue')['default']
     LabeledHorizontalRule: typeof import('./src/lib/ui/util/LabeledHorizontalRule.vue')['default']
     LabeledInput: typeof import('./src/lib/ui/form/input/labeled/LabeledInput.vue')['default']
     LabeledNumberInput: typeof import('./src/lib/ui/form/input/labeled/LabeledNumberInput.vue')['default']
@@ -61,9 +62,11 @@ declare module 'vue' {
     Shadeout: typeof import('./src/lib/ui/util/Shadeout.vue')['default']
     SomaBackground: typeof import('./src/lib/features/auth/SomaBackground.vue')['default']
     SomaLogoIcon: typeof import('./src/lib/ui/icon/SomaLogoIcon.vue')['default']
+    SwipeableItem: typeof import('./src/lib/ui/list/SwipeableItem.vue')['default']
     TabSelection: typeof import('./src/lib/ui/list/TabSelection.vue')['default']
     TargetsForm: typeof import('./src/lib/features/analysis/targets/TargetsForm.vue')['default']
     TargetsProgress: typeof import('./src/lib/features/log/overview/targets/TargetsProgress.vue')['default']
     TransparentButton: typeof import('./src/lib/ui/action/TransparentButton.vue')['default']
+    TrashIcon: typeof import('./src/lib/ui/icon/TrashIcon.vue')['default']
   }
 }

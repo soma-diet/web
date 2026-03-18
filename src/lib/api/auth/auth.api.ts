@@ -1,17 +1,15 @@
 import { redirectAfterLogin, redirectAfterLogout } from "@/router/router.util";
 import {
   auth,
-  GoogleAuthProvider,
+  githubAuthProvider,
+  googleAuthProvider,
   signInWithPopup,
   signOut,
 } from "../../infra/firebase";
-import { GithubAuthProvider } from "firebase/auth/web-extension";
 
 export async function signInWithGoogle() {
-  const provider = new GoogleAuthProvider();
-
   try {
-    const result = await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, googleAuthProvider);
     console.log("Successfully authenticated with Google!", result.user.uid);
     redirectAfterLogin();
     return result.user;
@@ -25,10 +23,8 @@ export async function signInWithGoogle() {
 }
 
 export async function signInWithGitHub() {
-  const provider = new GithubAuthProvider();
-
   try {
-    const result = await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, githubAuthProvider);
     console.log("Successfully authenticated with GitHub!", result.user.uid);
     redirectAfterLogin();
     return result.user;

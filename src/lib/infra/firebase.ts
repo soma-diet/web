@@ -5,7 +5,7 @@ import {
   linkWithPopup,
   signInWithPopup,
   signOut,
-  GithubAuthProvider
+  GithubAuthProvider,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -19,5 +19,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export { GoogleAuthProvider, linkWithPopup, signInWithPopup, signOut };
+const auth = getAuth(app);
+const googleAuthProvider = new GoogleAuthProvider();
+const githubAuthProvider = new GithubAuthProvider();
+
+export {
+  auth,
+  googleAuthProvider,
+  githubAuthProvider,
+  linkWithPopup,
+  signInWithPopup,
+  signOut,
+};

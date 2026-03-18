@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { getFoodSearchResults } from "../../../api";
+import { deleteFood, getFoodSearchResults } from "../../../api";
 import type { Food } from "../../../model";
 import TabSelection from "@/lib/ui/list/TabSelection.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
@@ -58,6 +58,16 @@ async function loadMore() {
   search(query.value, false);
 }
 
+async function triggerDelete(item: Food) {
+  // hned smazat z UI
+  foodItems.value = foodItems.value.filter((food) => food.id !== item.id);
+  try {
+    await deleteFood(item);
+  } catch (e) {
+    console.error("Failed to delete food item:", e);
+  }
+}
+
 search(query.value, true);
 
 const ownerSelected = ref("All");
@@ -83,8 +93,8 @@ const ownerOptions = ["All", "Private", "Public"];
   <div v-else-if="!searching && foodItems.length === 0" class="center-content offset-center-up">
     <span>No items found</span>
   </div>
-  <FoodSearchResults :items="foodItems" @loadMore="loadMore"
-    @itemSelected="(item: Food) => emit('itemSelected', item)" />
+  <FoodSearchResults :items="foodItems" @loadMore="loadMore" @itemSelected="(item: Food) => emit('itemSelected', item)"
+    @itemDeleted="triggerDelete" />
 </template>
 
 <style scoped>

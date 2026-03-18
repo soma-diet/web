@@ -95,8 +95,8 @@ function handleSubmit() {
 <template>
   <form @submit.prevent="handleSubmit">
     <FormNavigationBar :title="title" @close="emit('cancel')" />
-    <FoodDetailsEditor v-model:name="name" v-model:brand="brand" v-model:is-liquid="isLiquid"
-      v-model:selected-img="selectedImg" />
+    <FoodDetailsEditor :initial-image="food?.imageFilename ?? undefined" v-model:name="name" v-model:brand="brand"
+      v-model:is-liquid="isLiquid" v-model:selected-img="selectedImg" />
     <hr>
     <h3>Servings</h3>
     <FoodServingsEditor v-model:servings="formServings" />

@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import { deleteFood } from '@/lib/api';
 import type { Food } from '@/lib/model';
-import EditIcon from '@/lib/ui/icon/EditIcon.vue';
-import LogItem from '@/lib/ui/list/LogItem.vue';
+import { useFoodSelectionStore } from '@/lib/stores';
 
 const emit = defineEmits<{
   (e: "loadMore"): void,
-  (e: "itemSelected", item: Food): void
+  (e: "itemSelected", item: Food): void,
+  (e: "itemDeleted", item: Food): void
 }>();
 
 const props = defineProps<{
   items: Food[]
 }>();
+
+const { openFoodForm } = useFoodSelectionStore();
 
 function handleScroll(e: Event) {
   const el = e.target as HTMLElement;
@@ -30,8 +33,11 @@ function handleScroll(e: Event) {
     <hr />
     <template v-for="item in props.items" :key="item.id">
       <li>
-        <LogItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
-          :itemType="item.type" @click="emit('itemSelected', item)" />
+        <!-- <LogItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
+          :itemType="item.type" @click="emit('itemSelected', item)" /> -->
+        <InteractableItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
+          :itemType="item.type" @click="emit('itemSelected', item)" @onedit="openFoodForm(item)"
+          @ondelete="emit('itemDeleted', item)" />
       </li>
       <hr />
     </template>

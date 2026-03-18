@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getImage, SomaImageSize } from '@/lib/utils/image.util';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
@@ -13,7 +14,7 @@ const selectedImg = defineModel<File | null>("selectedImg", { required: true });
 const previewUrl = ref<string | null>(null);
 const displayImg = computed(() => {
   if (previewUrl.value) return previewUrl.value;
-  if (props.initialImage) return props.initialImage;
+  if (props.initialImage) return getImage(props.initialImage, SomaImageSize.LARGE);
   return "/assets/no-img-placeholder.jpg";
 });
 
