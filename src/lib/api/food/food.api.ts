@@ -3,18 +3,21 @@ import { AuthError } from "../auth/auth.error";
 import { fetchWithAuth } from "../client";
 import { ApiError } from "../error";
 import type { FoodRequestDto, FoodSearchResponse } from "./food.dto";
+import { FoodSearchFilter } from "./food.filter";
 import { foodToDto, rawItemToFood } from "./food.mapper";
 
 const FOOD_ENDPOINT = "/api/foods";
 
-export async function getFoodSearchResults(
+export async function getFoods(
   query: string,
+  filter = FoodSearchFilter.ALL as FoodSearchFilter,
   page = 0,
 ): Promise<FoodSearchResponse> {
   query = query.trim();
 
   const params = new URLSearchParams({
     query: query,
+    filter: filter,
     page: page.toString(),
     size: "20", // TODO put in config
   });

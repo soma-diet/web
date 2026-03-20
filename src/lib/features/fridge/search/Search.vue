@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { deleteFood, getFoodSearchResults } from "../../../api";
+import { onMounted, ref, watch } from "vue";
+import { deleteFood, getFoods } from "../../../api";
 import type { Food } from "../../../model";
 import TabSelection from "@/lib/ui/list/TabSelection.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
 import SearchInput from "@/lib/ui/form/input/SearchInput.vue";
 import { useFoodSelectionStore } from "@/lib/stores/food-selection.store";
+import { FoodSearchFilter } from "@/lib/api/food/food.filter";
 
 const emit = defineEmits<{
   (e: "itemSelected", item: Food): void
@@ -26,6 +27,7 @@ const { openFoodForm } = useFoodSelectionStore();
 let timer: ReturnType<typeof setTimeout>;
 
 async function search(currentQuery: string, newQuery: boolean) {
+  console.log("searching <" + currentQuery + ">" + ", newQuery: " + newQuery);
   if (newQuery) {
     page.value = 0;
   } else {
@@ -34,8 +36,9 @@ async function search(currentQuery: string, newQuery: boolean) {
 
   searching.value = true;
 
+  const filter = getActiveFilter();
   try {
-    const response = await getFoodSearchResults(currentQuery, page.value);
+    const response = await getFoods(currentQuery, filter, page.value);
     hasMore.value = response.hasMore;
     foodItems.value = newQuery
       ? response.foodItems
@@ -47,11 +50,6 @@ async function search(currentQuery: string, newQuery: boolean) {
     searching.value = false;
   }
 }
-
-watch(query, (newQuery) => {
-  clearTimeout(timer);
-  timer = setTimeout(async () => search(newQuery, true), TIMEOUT_MS);
-})
 
 async function loadMore() {
   if (searching.value || !hasMore.value) return;
@@ -68,20 +66,34 @@ async function triggerDelete(item: Food) {
   }
 }
 
-search(query.value, true);
+// Filters
+const searchFilters = ["All", "Private", "Public"];
+const selectedSearchFilter = ref<string>("All");
+const getActiveFilter = () => {
+  switch (selectedSearchFilter.value) {
+    case "Private": return FoodSearchFilter.PRIVATE;
+    case "Public": return FoodSearchFilter.PUBLIC;
+    default: return FoodSearchFilter.ALL;
+  }
+}
 
-const ownerSelected = ref("All");
-const ownerOptions = ["All", "Private", "Public"];
+watch(query, (newQuery) => {
+  clearTimeout(timer);
+  timer = setTimeout(async () => search(newQuery, true), TIMEOUT_MS);
+})
+
+watch(selectedSearchFilter, async () => {
+  search(query.value, true);
+})
+
+onMounted(() => {
+  search(query.value, true);
+})
 </script>
 
-<!-- TODO az bude user mit ucet tak vyhledavat podle typu
-    Public = SOMA author
-    Private = pouze jeho vlastni
-    All = public + private
--->
 <template>
   <div class="col search-controls">
-    <TabSelection v-model="ownerSelected" :options="ownerOptions" />
+    <TabSelection v-model="selectedSearchFilter" :options="searchFilters" />
     <div class="row actions">
       <SearchInput v-model="query" placeholder="Search foods" />
       <TransparentButton @click="openFoodForm()">
@@ -89,12 +101,12 @@ const ownerOptions = ["All", "Private", "Public"];
       </TransparentButton>
     </div>
   </div>
-  <ListLoadingEffect v-if="searching && foodItems.length === 0" />
-  <div v-else-if="!searching && foodItems.length === 0" class="center-content offset-center-up">
+  <ListLoadingEffect v-if="searching" />
+  <FoodSearchResults v-else-if="foodItems.length > 0" :items="foodItems" @loadMore="loadMore"
+    @itemSelected="(item: Food) => emit('itemSelected', item)" @itemDeleted="triggerDelete" />
+  <div v-else class="center-content offset-center-up">
     <span>No items found</span>
   </div>
-  <FoodSearchResults :items="foodItems" @loadMore="loadMore" @itemSelected="(item: Food) => emit('itemSelected', item)"
-    @itemDeleted="triggerDelete" />
 </template>
 
 <style scoped>

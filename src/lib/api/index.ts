@@ -4,6 +4,7 @@ export * from "./client";
 export * from "./error";
 export * from "./food/food.api";
 export * from "./food/food.dto";
+export * from "./food/food.filter";
 export * from "./food/food.mapper";
 export * from "./log/log.api";
 export * from "./log/log.dto";

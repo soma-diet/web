@@ -26,9 +26,7 @@ export async function getLogEntries(date: Date): Promise<LogEntry[]> {
   const endpoint = DIARY_LOG_ENDPOINT + "?" + params.toString();
   const response = await fetchWithAuth(endpoint);
   const raw = await response.json();
-  console.log("raw log entries", raw);
   const entries = raw.map((rawEntry: any) => rawToLogEntry(rawEntry)) ?? [];
-  console.log("mapepd entries", entries);
   return entries;
 }
 
