@@ -27,5 +27,6 @@ export function createFood(
     micronutrients: micronutrients,
     servings: servings,
     type: TrackableType.FOOD,
+    isPrivate: true
   };
 }

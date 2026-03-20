@@ -11,6 +11,7 @@ export interface Trackable {
   servings: Serving[];
   macronutrients: Macronutrients;
   micronutrients: Micronutrients;
+  isPrivate: boolean;
 }
 
 export enum TrackableType {

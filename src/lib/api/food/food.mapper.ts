@@ -1,9 +1,8 @@
+import { TrackableType, type Food, type Serving } from "../../model";
 import {
-  TrackableType,
-  type Food,
-  type Serving
-} from "../../model";
-import { rawToMacronutrients, rawToMicronutrients } from "../trackable/trackable.mapper";
+  rawToMacronutrients,
+  rawToMicronutrients,
+} from "../trackable/trackable.mapper";
 import type { FoodRequestDto } from "./food.dto";
 
 function rawToServing(rawServing: any): Serving {
@@ -30,6 +29,7 @@ export function rawItemToFood(rawItem: any): Food {
     micronutrients: rawToMicronutrients(rawItem.micronutrients),
     servings: servings.map((serving: any) => rawToServing(serving)),
     type: TrackableType.FOOD,
+    isPrivate: rawItem.isPrivate,
   };
 }
 

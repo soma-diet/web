@@ -14,7 +14,7 @@ export async function getFoodSearchResults(
   query = query.trim();
 
   const params = new URLSearchParams({
-    name: query,
+    query: query,
     page: page.toString(),
     size: "20", // TODO put in config
   });
