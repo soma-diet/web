@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue';
+import { onUnmounted, ref } from 'vue';
 
 const emit = defineEmits(["swipe-left", "swipe-right"]);
 const props = defineProps<{
-  directions?: "left" | "right" | "both"
+  leftAction?: boolean,
+  rightAction?: boolean
 }>();
 
 const TRIGGER_THRESHOLD_PX = 50; // dragged pixels for action to be performed
@@ -12,7 +13,6 @@ const MAX_DRAG_PX = 60;
 const isDragging = ref(false);
 const startX = ref(0);
 const currentX = ref(0);
-
 
 // #region DRAGGING
 // utils
@@ -36,19 +36,12 @@ const onDrag = (event: MouseEvent | TouchEvent) => {
 
   let deltaX = getPosX(event) - startX.value;
 
-  switch (props.directions) {
-    case "left":
-      deltaX = Math.max(-MAX_DRAG_PX, Math.min(0, deltaX));
-      break;
-
-    case "right":
-      deltaX = Math.min(MAX_DRAG_PX, Math.max(0, deltaX));
-      break;
-
-    case "both":
-    default:
-      deltaX = Math.max(-MAX_DRAG_PX, Math.min(MAX_DRAG_PX, deltaX));
-      break;
+  if (props.leftAction && props.rightAction) {
+    deltaX = Math.max(-MAX_DRAG_PX, Math.min(MAX_DRAG_PX, deltaX));
+  } else if (props.leftAction) {
+    deltaX = Math.max(-MAX_DRAG_PX, Math.min(0, deltaX));
+  } else {
+    deltaX = Math.min(MAX_DRAG_PX, Math.max(0, deltaX));
   }
 
   currentX.value = deltaX;
@@ -77,11 +70,6 @@ const stopDrag = () => {
 //#endregion
 
 onUnmounted(() => stopDrag());
-
-const contentStyle = computed(() => ({
-  transform: `translateX(${currentX.value}px)`,
-  transition: isDragging.value ? 'none' : 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)'
-}));
 </script>
 
 <template>
@@ -94,13 +82,17 @@ const contentStyle = computed(() => ({
       <slot name="action-left"></slot>
     </div>
 
-    <div class="swipe-content" :style="contentStyle" @mousedown="startDrag" @touchstart="startDrag">
+    <div class="swipe-content" :class="{ 'dragging': isDragging }" @mousedown="startDrag" @touchstart="startDrag">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <style scoped>
+.dragging {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 .swipe-container {
   position: relative;
   overflow: hidden;
@@ -139,6 +131,10 @@ const contentStyle = computed(() => ({
   user-select: none;
   touch-action: pan-y;
   cursor: grab;
+
+  /* CSS TRANSFORMACE */
+  /* Posune content o X pixelu vypocitanych z rozdilu vzdalenosti mysi po uvodnim kliknuti */
+  transform: translateX(calc(v-bind(currentX) * 1px));
 }
 
 .swipe-content:active {

@@ -30,14 +30,14 @@ function handleScroll(e: Event) {
 
 <template>
   <ul @scroll="handleScroll">
-    <hr />
+    <li>
+      <hr />
+    </li>
     <template v-for="item in props.items" :key="item.id">
       <li>
-        <!-- <LogItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
-          :itemType="item.type" @click="emit('itemSelected', item)" /> -->
         <InteractableItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
-          :itemType="item.type" @click="emit('itemSelected', item)" @onedit="openFoodForm(item)"
-          @ondelete="emit('itemDeleted', item)" />
+          :itemType="item.type" :leftAction="item.isPrivate" :rightAction="item.isPrivate"
+          @click="emit('itemSelected', item)" @onedit="openFoodForm(item)" @ondelete="emit('itemDeleted', item)" />
       </li>
       <hr />
     </template>

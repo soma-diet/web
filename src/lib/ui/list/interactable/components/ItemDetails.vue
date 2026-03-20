@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { TrackableType } from "../../model";
+import { TrackableType } from '@/lib/model';
 
-interface Props {
-  name: string;
-  subtext?: string;
-  itemType: TrackableType;
-  kcal?: number;
-}
-
-const props = defineProps<Props>();
+const props = defineProps<{
+  name: string,
+  itemType?: TrackableType,
+  subtext?: string,
+  kcal?: number
+}>();
 </script>
 
 <template>
@@ -58,7 +56,7 @@ span {
   white-space: nowrap;
 }
 
-.row.left {
+button>div {
   gap: 0.5rem;
   min-width: 0;
 }
