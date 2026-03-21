@@ -24,19 +24,17 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   const { authState } = useAuthStore();
   const isAuthenticated = authState.isLoggedIn;
   console.log("isauthenticated", isAuthenticated);
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next({ name: "SignIn", query: { redirect: to.fullPath } });
+    return { name: "SignIn", query: { redirect: to.fullPath } };
   }
   // pokud je logged in zabranime mu cestu na sign in
   else if ((to.name === "SignIn" || to.name === "/") && isAuthenticated) {
-    next({ name: "Dashboard" });
-  } else {
-    next();
+    return { name: "Dashboard" };
   }
 });
 

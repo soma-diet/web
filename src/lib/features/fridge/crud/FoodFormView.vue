@@ -114,5 +114,7 @@ form {
   flex-direction: column;
   justify-content: stretch;
   gap: 0.75rem;
+
+  overflow-y: auto;
 }
 </style>

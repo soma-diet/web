@@ -12,19 +12,14 @@ const props = defineProps<{
   options: Option[]
 }>();
 
-const selectedIndex = computed({
-  get() { return props.options.findIndex(opt => opt.value === selected.value) },
-  set(newIndex: number) { selected.value = props.options[newIndex]?.value }
-})
-
 const selectId = useId();
 </script>
 
 <template>
   <div>
     <label :for="selectId">{{ props.label }}</label>
-    <select :id="selectId" v-model="selectedIndex">
-      <option v-for="(opt, index) in options" :key="index" :value="index">{{ opt.name }}</option>
+    <select :id="selectId" v-model="selected">
+      <option v-for="(opt, index) in options" :key="index" :value="opt.value">{{ opt.name }}</option>
     </select>
   </div>
 </template>

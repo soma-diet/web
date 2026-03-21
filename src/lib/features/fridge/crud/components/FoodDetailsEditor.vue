@@ -37,7 +37,7 @@ const handleFileChange = (e: Event) => {
     <img :src="displayImg" alt="food" />
     <ul class="col">
       <LabeledInput type="text" label="Food name" v-model="name" :required="true" />
-      <LabeledInput type="text" label="Brand" v-model="brand" :required="true" />
+      <LabeledInput type="text" label="Brand" v-model="brand" />
       <LabeledInput type="checkbox" label="Is a liquid" v-model="isLiquid" />
 
       <!-- TODO kandidat na Drag&drop -->

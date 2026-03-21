@@ -46,16 +46,6 @@ function handleSubmit() {
   emit("submit", quantity.value, selectedServing.value.id, () => {
     isSubmitting.value = false;
   });
-
-  // const newEntry = !props.entry
-  //   ? createLogEntry(props.trackable, selectedServing.value, quantity.value)
-  //   : { ...props.entry, quantity: quantity.value, servingId: selectedServing.value.id };
-  // const httpCall = !props.entry ? postLogEntry : putLogEntry;
-  // console.log(newEntry, selectedServing.value);
-  // const success = await httpCall(newEntry);
-  // if (success) {
-  //   emit("finished");
-  // }
 }
 </script>
 
@@ -72,7 +62,6 @@ function handleSubmit() {
 
       <form @submit.prevent="handleSubmit">
         <h3>{{ props.trackable.name }}</h3>
-        <!-- <span>{{food.brand}}</span> -->
         <span>{{ props.trackable.author }}</span>
 
         <div>
