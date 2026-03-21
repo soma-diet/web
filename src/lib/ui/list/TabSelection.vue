@@ -23,17 +23,18 @@ div {
 }
 
 button {
-  background-color: var(--tertiary-color);
+  background-color: var(--bg-surface);
   height: 2rem;
   width: 100%;
 }
 
 button:hover {
-  background-color: var(--quadratery-color);
+  background-color: var(--bg-surface-alt);
   cursor: pointer;
 }
 
 button.selected {
-  background-color: var(--subtle-color);
+  background-color: var(--color-accent);
+  color: var(--text-on-accent);
 }
 </style>

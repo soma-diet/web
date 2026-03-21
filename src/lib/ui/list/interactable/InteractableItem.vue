@@ -66,7 +66,7 @@ const { isMobile } = useMobile();
   height: 100%;
   /* padding urcuje v podstate velikost ikonky */
   padding: 0.75rem;
-  color: var(--secondary-color);
+  color: var(--text-main);
 }
 
 .action svg {

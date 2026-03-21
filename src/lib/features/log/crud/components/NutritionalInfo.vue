@@ -53,7 +53,7 @@
 <style scoped>
 table,
 td {
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--border-main);
     border-collapse: collapse;
 }
 

@@ -51,6 +51,6 @@ ul {
 }
 
 hr {
-  border: 1px solid var(--secondary-color);
+  border: 1px solid var(--border-main);
 }
 </style>

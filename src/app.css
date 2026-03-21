@@ -1,28 +1,43 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
-    --primary-color: #ffffff;
-    --secondary-color: #000000;
-    --tertiary-color: #e0e0e0;
-    --quadratery-color: #bababa;
-    --pentarery-color: #dd000f;
-    --border-color: #000000;
-    --subtle-color: #878787;
+  /* #region Colors */
+  /* Background colors */
+  --bg-body: #ffffff;
+  --bg-surface: #dfdfdf;
+  --bg-surface-alt: #cacaca;
+  --bg-surface-active: #b6b6b6;
 
-    --cutout-width: 1px;
+  /* Foreground (text + borders) */
+  --text-main: #000000;
+  --text-muted: #878787;
+
+  --border-main: #000000;
+  --border-subtle: #e0e0e0;
+  --border-disabled: #bababa;
+
+  /* Accent */
+  --color-accent: #ff1d2c;
+  --color-accent-hover: #d1121f;
+  --text-on-accent: #ffffff;
+  /* #endregion */
+
+
+  --cutout-width: 1px;
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    background-color: var(--secondary-color);
+  /* body border color pozadi, protoze bevel vyrez = border */
+  background-color: var(--border-main);
 }
 
 html,
@@ -37,7 +52,7 @@ p,
 span,
 ul,
 hr {
-    margin: 0;
+  margin: 0;
 }
 
 h1,
@@ -48,18 +63,19 @@ h5,
 h6,
 p,
 span {
-    color: var(--secondary-color);
+  color: var(--text-main);
 }
 
 ul {
-    padding: 0;
-    list-style: none;
+  padding: 0;
+  list-style: none;
 }
 
 /* #region Font */
 .italic {
-    font-style: italic;
+  font-style: italic;
 }
+
 /* #endregion */
 
 /* #region Flex layout */
@@ -74,136 +90,139 @@ ul {
 .top,
 .center,
 .bottom {
-    display: flex;
+  display: flex;
 }
 
 .col {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .row {
-    flex-direction: row;
+  flex-direction: row;
 }
 
 .left {
-    justify-content: start;
+  justify-content: start;
 }
 
 .apart {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .stretch-h {
-    justify-content: stretch;
+  justify-content: stretch;
 }
 
 .middle {
-    justify-content: center;
+  justify-content: center;
 }
 
 .right {
-    justify-content: end;
+  justify-content: end;
 }
 
 .top {
-    align-items: start;
+  align-items: start;
 }
 
 .center {
-    align-items: center;
+  align-items: center;
 }
 
 .bottom {
-    align-items: end;
+  align-items: end;
 }
 
 .strech-v {
-    align-items: stretch;
+  align-items: stretch;
 }
 
 /* #endregion */
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 /* #region Shared? TODO asi lepsi misto nez v app.css */
 #app {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: var(--cutout-width);
-    background-color: var(--border-color);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--cutout-width);
+  background-color: var(--border-main);
 }
 
 main {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    gap: var(--cutout-width);
-    min-height: 0;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: var(--cutout-width);
+  min-height: 0;
 }
 
 section {
-    background-color: var(--primary-color);
-    border-left: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    height: 100%;
-    min-height: 0;
-    min-width: 0;
+  background-color: var(--bg-body);
+  border-left: 1px solid var(--border-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
 }
 
 /* #region Bevel borders */
 /* customizable shard bevel structure */
 .bevel {
-    --b: 7px;
-    clip-path: polygon(var(--tl1, 0% 0%), var(--tl2, 0% 0%),
-            var(--tr1, 100% 0%), var(--tr2, 100% 0%),
-            var(--br1, 100% 100%), var(--br2, 100% 100%),
-            var(--bl1, 0% 100%), var(--bl2, 0% 100%)
-        );
+  --b: 7px;
+  clip-path: polygon(var(--tl1, 0% 0%), var(--tl2, 0% 0%),
+      var(--tr1, 100% 0%), var(--tr2, 100% 0%),
+      var(--br1, 100% 100%), var(--br2, 100% 100%),
+      var(--bl1, 0% 100%), var(--bl2, 0% 100%));
 }
 
 /* modifier classes */
 .bevel-tl {
-    --tl1: 0% var(--b);
-    --tl2: var(--b) 0%;
+  --tl1: 0% var(--b);
+  --tl2: var(--b) 0%;
 }
 
 .bevel-tr {
-    --tr1: calc(100% - var(--b)) 0%;
-    --tr2: 100% var(--b);
+  --tr1: calc(100% - var(--b)) 0%;
+  --tr2: 100% var(--b);
 }
 
 .bevel-br {
-    --br1: 100% calc(100% - var(--b));
-    --br2: calc(100% - var(--b)) 100%;
+  --br1: 100% calc(100% - var(--b));
+  --br2: calc(100% - var(--b)) 100%;
 }
 
 .bevel-bl {
-    --bl1: var(--b) 100%;
-    --bl2: 0% calc(100% - var(--b));
+  --bl1: var(--b) 100%;
+  --bl2: 0% calc(100% - var(--b));
 }
+
 /* #endregion */
 
 /* #endregion */
 
 /* #region Flex values */
 .f1 {
-    flex: 1;
+  flex: 1;
 }
 
 .f2 {
-    flex: 2;
+  flex: 2;
 }
+
 .f3 {
-    flex: 3;
+  flex: 3;
 }
+
 .f4 {
-    flex: 4;
+  flex: 4;
 }
+
 /* #endregion */

@@ -13,7 +13,7 @@ let email = computed<string | null>(() => authState.user?.email ?? null);
       <RotatingSomaLogo :duration="10" :delay="30" />
       <h1>SOMA</h1>
     </div>
-    <div class="right center actions">
+    <div class="right center">
       <template v-if="authState.isLoggedIn">
         <span>LOGGED AS: {{ email }}</span>
         <button @click="logOut">sign out</button>
@@ -24,7 +24,7 @@ let email = computed<string | null>(() => authState.user?.email ?? null);
 
 <style scoped>
 header {
-  background-color: var(--primary-color);
+  background-color: var(--bg-body);
   padding: 1rem;
   height: 5rem;
 }
@@ -40,18 +40,7 @@ header>div :deep(svg) {
 }
 
 h1 {
-  color: var(--secondary-color);
+  color: var(--text-main);
   margin: 0;
-}
-
-.actions a {
-  color: var(--secondary-color);
-  font-size: 125%;
-  text-decoration: none;
-  font-style: italic;
-}
-
-.actions a:hover {
-  color: var(--pentarery-color);
 }
 </style>

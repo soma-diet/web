@@ -20,6 +20,7 @@ declare module 'vue' {
     AuthPrompt: typeof import('./src/lib/features/auth/AuthPrompt.vue')['default']
     BackArrowIcon: typeof import('./src/lib/ui/icon/BackArrowIcon.vue')['default']
     Background: typeof import('./src/lib/features/layout/Background.vue')['default']
+    ConfirmButton: typeof import('./src/lib/ui/action/ConfirmButton.vue')['default']
     copy: typeof import('./src/lib/features/fridge/crud/EditFoodForm copy.vue')['default']
     CrossIcon: typeof import('./src/lib/ui/icon/CrossIcon.vue')['default']
     DailyLog: typeof import('./src/lib/features/log/overview/DailyLog.vue')['default']

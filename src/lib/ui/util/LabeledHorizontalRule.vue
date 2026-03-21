@@ -22,7 +22,7 @@
 .separator::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--border-main);
 }
 
 .separator:not(:empty)::before {

@@ -12,7 +12,7 @@ const model = defineModel<string>();
 
 <style scoped>
 input {
-    background-color: var(--tertiary-color);
+    background-color: var(--bg-surface);
     height: 3rem;
 
     border-radius: 0.5em;

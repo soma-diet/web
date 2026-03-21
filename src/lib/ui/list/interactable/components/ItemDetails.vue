@@ -33,22 +33,22 @@ const props = defineProps<{
   justify-content: space-between;
   padding: 0.5em;
   gap: 1em;
-  background-color: var(--tertiary-color);
+  background-color: var(--bg-surface);
   width: 100%;
   border: none;
 }
 
 .wrapper:hover {
   cursor: pointer;
-  background-color: var(--quadratery-color);
+  background-color: var(--bg-surface-active);
 }
 
 .wrapper:hover span {
-  color: var(--secondary-color);
+  color: var(--text-main);
 }
 
 span {
-  color: var(--subtle-color);
+  color: var(--text-muted);
   font-size: 80%;
 }
 

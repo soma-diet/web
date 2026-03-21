@@ -6,6 +6,7 @@ import { putDailyTargets } from "../../../api";
 import LabeledNumberInput from "../../../ui/form/input/labeled/LabeledNumberInput.vue";
 import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.vue";
 import { useTargetsStore } from "@/lib/stores";
+import ConfirmButton from "@/lib/ui/action/ConfirmButton.vue";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -56,7 +57,7 @@ async function handleTargetsSubmit() {
     <LabeledNumberInput label="Energy (kJ)" v-model:value="kJ" />
     <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
       v-model:value="targetsState.dailyTargets[key]" />
-    <button type="submit" :disabled="isSubmitting">update targets</button>
+    <ConfirmButton type="submit" :disabled="isSubmitting">Update daily targets</ConfirmButton>
   </form>
   <span v-else>failed to load targets</span>
 </template>
