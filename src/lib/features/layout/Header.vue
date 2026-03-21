@@ -10,7 +10,7 @@ let email = computed<string | null>(() => authState.user?.email ?? null);
 <template>
   <header class="apart center">
     <div class="left center">
-      <SomaLogoIcon />
+      <RotatingSomaLogo :duration="10" :delay="30" />
       <h1>SOMA</h1>
     </div>
     <div class="right center actions">

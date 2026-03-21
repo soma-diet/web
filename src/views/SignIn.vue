@@ -1,11 +1,13 @@
   <script setup lang="ts">
+  import RotatingSomaLogo from '@/lib/ui/animated/RotatingSomaLogo.vue';
+
 </script>
 
   <template>
     <main>
       <section class="bevel bevel-tr bevel-br f3 center middle">
         <div class="background-wrapper center middle">
-          <SomaLogoIcon />
+          <RotatingSomaLogo :duration="5" :delay="3" />
         </div>
       </section>
       <section class="bevel bevel-tl bevel-bl f2">

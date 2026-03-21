@@ -56,6 +56,7 @@ declare module 'vue' {
     NutritionalInfo: typeof import('./src/lib/features/log/crud/components/NutritionalInfo.vue')['default']
     Prompt: typeof import('./src/lib/ui/util/Prompt.vue')['default']
     RecipeIcon: typeof import('./src/lib/ui/icon/RecipeIcon.vue')['default']
+    RotatingSomaLogo: typeof import('./src/lib/ui/animated/RotatingSomaLogo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Search: typeof import('./src/lib/features/fridge/search/Search.vue')['default']
