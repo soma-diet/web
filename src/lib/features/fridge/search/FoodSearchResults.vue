@@ -30,16 +30,12 @@ function handleScroll(e: Event) {
 
 <template>
   <ul @scroll="handleScroll">
-    <li>
-      <hr />
-    </li>
     <template v-for="item in props.items" :key="item.id">
       <li>
         <InteractableItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
           :itemType="item.type" :leftAction="item.isPrivate" :rightAction="item.isPrivate"
           @click="emit('itemSelected', item)" @onedit="openFoodForm(item)" @ondelete="emit('itemDeleted', item)" />
       </li>
-      <hr />
     </template>
   </ul>
 </template>
@@ -48,9 +44,5 @@ function handleScroll(e: Event) {
 ul {
   flex-grow: 1;
   overflow-y: auto;
-}
-
-hr {
-  border: 1px solid var(--border-main);
 }
 </style>

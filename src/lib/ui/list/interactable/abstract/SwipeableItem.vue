@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import OutlineButton from '@/lib/ui/action/OutlineButton.vue';
 import { onUnmounted, ref } from 'vue';
 
 const emit = defineEmits(["swipe-left", "swipe-right"]);
@@ -74,13 +75,15 @@ onUnmounted(() => stopDrag());
 
 <template>
   <div class="swipe-container">
-    <div class="swipe-action left-action" :class="{ 'active': currentX > TRIGGER_THRESHOLD_PX }">
-      <slot name="action-right"></slot>
-    </div>
+    <OutlineButton v-if="props.leftAction" class="swipe-action left-action"
+      :class="{ 'active': currentX > TRIGGER_THRESHOLD_PX }">
+      <slot name="action-right" />
+    </OutlineButton>
 
-    <div class="swipe-action right-action" :class="{ 'active': currentX < -TRIGGER_THRESHOLD_PX }">
-      <slot name="action-left"></slot>
-    </div>
+    <OutlineButton v-if="props.rightAction" class="swipe-action right-action"
+      :class="{ 'active': currentX < -TRIGGER_THRESHOLD_PX }">
+      <slot name="action-left" />
+    </OutlineButton>
 
     <div class="swipe-content" :class="{ 'dragging': isDragging }" @mousedown="startDrag" @touchstart="startDrag">
       <slot></slot>
@@ -102,6 +105,8 @@ onUnmounted(() => stopDrag());
 /* zvyrazneni kdyz je triggernuta */
 .swipe-action.active {
   opacity: 1;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .swipe-action {
@@ -109,22 +114,21 @@ onUnmounted(() => stopDrag());
   position: absolute;
   top: 0;
   bottom: 0;
-  transition: opacity 0.2s;
-  opacity: 0.5;
+  width: 60px;
+  transition: 0.5s;
 }
 
 .left-action {
   left: 0;
-  right: 50%;
 }
 
 .right-action {
   right: 0;
-  left: 50%;
 }
 
 .swipe-content {
   position: relative;
+  background-color: var(--bg-surface);
   z-index: 1;
   width: 100%;
 

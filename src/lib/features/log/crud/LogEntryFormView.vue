@@ -50,31 +50,32 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper col stretch-h">
     <div class="right">
-      <TransparentButton @click="emit('cancel')">
+      <OutlineButton type="button" @click="emit('cancel')">
         <CrossIcon />
-      </TransparentButton>
+      </OutlineButton>
     </div>
 
-    <div class="intro-info apart">
-      <img :src="thumbnailSrc" :alt="'picture of ' + props.trackable.name" />
+    <div class="intro-info apart center">
+      <div class="food-thumbnail middle">
+        <img :src="thumbnailSrc" :alt="'picture of ' + props.trackable.name" />
+      </div>
 
       <form @submit.prevent="handleSubmit">
         <h3>{{ props.trackable.name }}</h3>
         <span>{{ props.trackable.author }}</span>
 
-        <div>
-          <LabeledNumberInput label="Amount: " v-model:value="quantity" step="0.01" />
-          <span>{{ `(${totalSize} ${unit}` }}</span>
-        </div>
+        <LabeledNumberInput label="Amount: " v-model:value="quantity" step="0.01" />
 
-        <LabeledSelect label="Serving: " v-model:selected="selectedServing"
+        <LabeledSelect label="Serving" v-model:selected="selectedServing"
           :options="servings.map(serving => ({ name: serving.name, value: serving }))" />
 
-        <button type="submit" :disabled="isSubmitting">
+        <span>{{ `totals ${totalSize} ${unit}` }}</span>
+
+        <PrimaryButton type="submit" :disabled="isSubmitting">
           {{ isSubmitting ? "saving.." : (props.entry ? "update" : "add") }}
-        </button>
+        </PrimaryButton>
       </form>
     </div>
 
@@ -97,28 +98,30 @@ form {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.25rem;
+  gap: 0.5rem;
   text-align: end;
 }
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
   padding: 1.5rem;
-  justify-content: stretch;
-  gap: 0.5rem;
-}
-
-.intro-info {
-  height: 12rem;
-  min-width: 0;
   gap: 1rem;
 }
 
-.intro-info>img {
-  flex: 1;
-  height: 100%;
-  object-fit: contain;
+.intro-info {
   min-width: 0;
+  max-height: 20rem;
+  gap: 1rem;
+}
+
+.food-thumbnail {
+  flex: 1;
+  max-height: 100%;
+  border: 2px solid var(--border-main);
+}
+
+.food-thumbnail>img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 </style>

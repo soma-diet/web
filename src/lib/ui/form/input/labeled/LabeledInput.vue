@@ -17,22 +17,31 @@ const inputId = useId();
 </script>
 
 <template>
-  <div>
-    <label :for="inputId">{{ props.label }}</label>
+  <div class="col left">
+    <label :for="inputId" class="accent-heading">{{ props.label }}</label>
     <input :type="props.type" :id="inputId" :step="props.step" :required="required" v-model="model" />
   </div>
 </template>
 
 <style scoped>
 div {
-  display: flex;
-}
-
-label {
-  flex: 1;
+  gap: 0.5rem;
 }
 
 input {
   flex: 2;
+
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  padding: 0.75rem 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+label {
+  flex: 1;
 }
 </style>

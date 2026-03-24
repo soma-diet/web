@@ -16,18 +16,34 @@ const removeServingField = (index: number) => {
 </script>
 
 <template>
-  <ul>
-    <li v-for="(formServing, index) in servings" :key="index">
-      <div class="row apart">
-        <h4>{{ formServing.name }}</h4>
-        <TransparentButton @click="removeServingField(index)">
+  <ul class="col">
+    <li class="col" v-for="(formServing, index) in servings" :key="index">
+      <div class="row apart center">
+        <h3 :class="{ 'placeholder': formServing.name?.length === 0 }">{{ formServing.name && formServing.name !== '' ?
+          `Serving: ${formServing.name}` : "New serving"
+        }}
+        </h3>
+        <OutlineButton @click="removeServingField(index)">
           <CrossIcon></CrossIcon>
-        </TransparentButton>
+        </OutlineButton>
       </div>
       <LabeledInput type="text" label="Name" v-model="formServing.name" :required="true" />
       <LabeledNumberInput label="Size (g)" v-model:value="formServing.size" :required="true" />
-      <br>
     </li>
   </ul>
-  <button type="button" @click="addServingField">add serving</button>
+  <OutlineButton type="button" @click="addServingField">Add a serving</OutlineButton>
 </template>
+
+<style scoped>
+ul {
+  gap: 1.5rem;
+}
+
+li {
+  gap: 0.5rem;
+}
+
+.placeholder {
+  color: var(--text-dim);
+}
+</style>

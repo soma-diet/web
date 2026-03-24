@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue';
+import { useId } from 'vue';
 
 const selected = defineModel<any>("selected", { required: true });
 
@@ -16,8 +16,8 @@ const selectId = useId();
 </script>
 
 <template>
-  <div>
-    <label :for="selectId">{{ props.label }}</label>
+  <div class="col">
+    <label class="accent-heading" :for="selectId">{{ props.label }}</label>
     <select :id="selectId" v-model="selected">
       <option v-for="(opt, index) in options" :key="index" :value="opt.value">{{ opt.name }}</option>
     </select>
@@ -26,14 +26,25 @@ const selectId = useId();
 
 <style scoped>
 div {
-  display: flex;
-}
-
-label {
-  flex: 1;
+  gap: 0.5rem;
 }
 
 select {
-  flex: 2;
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  padding: 0.5rem;
+}
+
+select:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+option {
+  color: var(--text-main);
+}
+
+option:checked {
+  color: var(--color-accent);
 }
 </style>

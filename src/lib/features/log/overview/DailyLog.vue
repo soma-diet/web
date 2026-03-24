@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLogSelectionStore, useTargetsStore } from "@/lib/stores";
-import TransparentButton from "@/lib/ui/action/TransparentButton.vue";
+import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
 import BackArrowIcon from "@/lib/ui/icon/BackArrowIcon.vue";
 import ForwardArrowIcon from "@/lib/ui/icon/ForwardArrowIcon.vue";
 import { computed, ref, watch } from "vue";
@@ -16,7 +16,6 @@ const logEntries = ref<LogEntry[]>([]);
 const dateSelected = ref<Date>(new Date());
 
 const { targetsState, reloadTargets } = useTargetsStore();
-const { openLogForm } = useLogSelectionStore();
 
 const moveDate = (backwards: boolean) => {
   const increment = backwards ? -1 : 1;
@@ -71,28 +70,26 @@ reloadTargets();
 
 <template>
   <nav class="apart center">
-    <div class="left center">
-      <TransparentButton @click="moveDate(true)">
+    <div class="main left center">
+      <OutlineButton @click="moveDate(true)">
         <BackArrowIcon />
-      </TransparentButton>
+      </OutlineButton>
       <h3>{{ dateString }}</h3>
     </div>
-    <TransparentButton @click="moveDate(false)" :class="{ 'hidden': isTodaySelected }">
+    <OutlineButton @click="moveDate(false)" :class="{ 'hidden': isTodaySelected }">
       <ForwardArrowIcon />
-    </TransparentButton>
+    </OutlineButton>
   </nav>
   <ListLoadingEffect v-if="loadingEntries || targetsState.isLoadingTargets" />
   <template v-else>
     <TargetsProgress :date="dateSelected" />
     <ul>
-      <hr />
       <template v-for="entry in logEntries">
         <li>
           <InteractableItem :name="entry.item.name" :subtext="`${entry.quantity} ${entry.servingName}`"
             :itemType="entry.item.type" :leftAction="true" :rightAction="true" @onedit="emit('itemSelected', entry)"
             @ondelete="() => handleEntryDelete(entry)" />
         </li>
-        <hr />
       </template>
     </ul>
   </template>
@@ -103,16 +100,16 @@ nav {
   padding: 1rem;
 }
 
-:deep(.date-button) {
-  width: 2.5rem;
+nav>.main {
+  gap: 1rem;
+}
+
+h3 {
+  text-transform: uppercase;
 }
 
 ul {
   flex-grow: 1;
   overflow-y: auto;
-}
-
-hr {
-  border: 1px solid black;
 }
 </style>

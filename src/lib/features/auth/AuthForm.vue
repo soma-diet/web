@@ -10,7 +10,7 @@ import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.vue";
       <h1>SOMA</h1>
       <p class="italic">hit your diet goals without the guesswork</p>
     </div>
-    <LabeledHorizontalRule>please sign in with</LabeledHorizontalRule>
+    <LabeledHorizontalRule><span>please sign in with</span></LabeledHorizontalRule>
     <div class="col center oauth">
       <GoogleSignInButton @click="signInWithGoogle" />
       <GitHubSignInButton @click="signInWithGitHub" />

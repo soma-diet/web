@@ -35,25 +35,21 @@ watchEffect(() => {
   updateProgress(props.date);
 })
 
-// const isLoading = computed(() => targetsState.isLoadingTargets || loadingSummary.value);
-
 const targets = computed(() => {
   return shownTargetsKeys.map((key) => {
     const max = targetsState.dailyTargets?.[key];
+    const current = dailySummary.value?.[key] ?? 0;
     return {
       name: NUTRIENT_DISPLAY_NAMES[key] ?? key,
-      current: roundNutrient(dailySummary.value?.[key] ?? 0),
+      current: roundNutrient(current),
       max: max ? roundNutrient(max) : null,
+      percentage: max ? (current / max) * 100 : 0
     }
   })
 }
 );
 
 updateProgress(props.date);
-
-// onMounted(() => {
-//   reloadTargets();
-// })
 </script>
 
 <template>
@@ -67,18 +63,33 @@ updateProgress(props.date);
             : target.current }}
         </span>
       </div>
-      <progress v-if="target.max != null" :value="target.current" :max="target.max"></progress>
+      <div class="progress-container">
+        <div class="progress-bar" :style="{ width: target.percentage + '%' }"></div>
+      </div>
     </template>
   </div>
 </template>
 
 <style scoped>
 .container {
+  margin: 1rem;
   padding: 1rem;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  background-color: var(--bg-surface);
+  border-radius: 0.5em;
 }
 
-progress {
+.progress-container {
+  height: 5px;
+  border-radius: 9999px;
   width: 100%;
+  background-color: var(--border-dim);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--color-accent);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

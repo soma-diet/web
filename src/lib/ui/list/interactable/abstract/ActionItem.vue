@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import OutlineButton from '@/lib/ui/action/OutlineButton.vue';
 import { computed, ref } from 'vue';
 
 const emit = defineEmits(["click-left", "click-right"]);
@@ -42,15 +43,15 @@ const activeSlideDist = computed(() => {
 
 <template>
   <div class="swipe-container" @mousemove="checkHoverPosition" @mouseleave="resetHover">
-    <button v-if="props.leftAction" class="swipe-action left-action" :class="{ 'active': activeLeft }"
+    <OutlineButton v-if="props.leftAction" class="action left-action" :class="{ 'active': activeLeft }"
       @click="emit('click-left')">
-      <slot name="action-right"></slot>
-    </button>
+      <slot name="action-right" />
+    </OutlineButton>
 
-    <button v-if="props.rightAction" class="swipe-action right-action" :class="{ 'active': activeRight }"
+    <OutlineButton v-if="props.rightAction" class="action right-action" :class="{ 'active': activeRight }"
       @click="emit('click-right')">
-      <slot name="action-left"></slot>
-    </button>
+      <slot name="action-left" />
+    </OutlineButton>
 
     <div class="swipe-content">
       <slot></slot>
@@ -66,33 +67,30 @@ const activeSlideDist = computed(() => {
 }
 
 /* zvyrazneni kdyz je triggernuta */
-.swipe-action.active {
+.action.active {
   opacity: 1;
 }
 
-.swipe-action {
+.action {
   display: flex;
   position: absolute;
   top: 0;
   bottom: 0;
+  width: 60px;
   transition: opacity 0.2s;
   opacity: 0.5;
-  padding: 0;
-  border: 0;
 }
 
-.swipe-action:hover {
+.action:hover {
   cursor: pointer;
 }
 
 .left-action {
   left: 0;
-  right: 50%;
 }
 
 .right-action {
   right: 0;
-  left: 50%;
 }
 
 .swipe-content {

@@ -1,22 +1,7 @@
-<script setup lang="ts">
-import LoadingEffect from '../util/LoadingEffect.vue';
-
-</script>
-
 <template>
-    <div class="wrapper">
-        <LoadingEffect />
-    </div>
+  <OffCentered>
+    <LoadingEffect />
+  </OffCentered>
 </template>
 
-<style scoped>
-.wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    flex-grow: 1;
-    padding-bottom: 4rem;
-    height: 100%;
-}
-</style>
+<style scoped></style>

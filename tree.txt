@@ -87,7 +87,7 @@ src/
 │   │   └── targets.store.ts
 │   ├── ui
 │   │   ├── action
-│   │   │   └── TransparentButton.vue
+│   │   │   └── OutlineButton.vue
 │   │   ├── ext
 │   │   │   └── GoogleSignInButton.vue
 │   │   ├── form

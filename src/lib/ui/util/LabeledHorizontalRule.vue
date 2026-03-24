@@ -1,7 +1,7 @@
 <template>
-    <div class="separator">
-        <slot />
-    </div>
+  <div class="separator">
+    <slot />
+  </div>
 </template>
 
 <style scoped>
@@ -12,24 +12,24 @@
     */
 
 .separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 .separator::before,
 .separator::after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid var(--border-main);
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--text-main);
 }
 
 .separator:not(:empty)::before {
-    margin-right: 0.25em;
+  margin-right: 0.25em;
 }
 
 .separator:not(:empty)::after {
-    margin-left: 0.25em;
+  margin-left: 0.25em;
 }
 </style>

@@ -6,7 +6,6 @@ import { putDailyTargets } from "../../../api";
 import LabeledNumberInput from "../../../ui/form/input/labeled/LabeledNumberInput.vue";
 import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.vue";
 import { useTargetsStore } from "@/lib/stores";
-import ConfirmButton from "@/lib/ui/action/ConfirmButton.vue";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -51,13 +50,30 @@ async function handleTargetsSubmit() {
 </script>
 
 <template>
-  <h2>Set your daily targets</h2>
-  <ListLoadingEffect v-if="isSubmitting || targetsState.isLoadingTargets" />
-  <form v-else-if="targetsState.dailyTargets" @submit.prevent="handleTargetsSubmit">
-    <LabeledNumberInput label="Energy (kJ)" v-model:value="kJ" />
-    <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
-      v-model:value="targetsState.dailyTargets[key]" />
-    <ConfirmButton type="submit" :disabled="isSubmitting">Update daily targets</ConfirmButton>
-  </form>
-  <span v-else>failed to load targets</span>
+  <div class="wrapper col">
+    <h2>Your daily targets</h2>
+    <ListLoadingEffect v-if="isSubmitting || targetsState.isLoadingTargets" />
+    <form v-else-if="targetsState.dailyTargets" @submit.prevent="handleTargetsSubmit" class="col">
+      <LabeledNumberInput label="Energy (kJ)" v-model:value="kJ" />
+      <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
+        v-model:value="targetsState.dailyTargets[key]" />
+      <PrimaryButton type="submit" :disabled="isSubmitting">Update daily targets</PrimaryButton>
+    </form>
+    <span v-else>failed to load targets</span>
+  </div>
 </template>
+
+<style scoped>
+.wrapper {
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+form {
+  gap: 1rem;
+}
+
+h2 {
+  text-transform: uppercase;
+}
+</style>

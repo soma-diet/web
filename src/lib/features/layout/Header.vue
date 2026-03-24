@@ -1,22 +1,34 @@
 <script setup lang="ts">
 import { logOut } from '@/lib/api';
 import { useAuthStore } from '@/lib/stores';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const { authState } = useAuthStore();
 let email = computed<string | null>(() => authState.user?.email ?? null);
+
+const hoveringLogo = ref(false);
+const onLogoHovered = () => hoveringLogo.value = true;
+const onLogoLeft = () => hoveringLogo.value = false;
+const logoRotationDuration = computed(() => hoveringLogo.value ? 0.75 : 10);
+const logoRotationDelay = computed(() => hoveringLogo.value ? 0.05 : 30);
+watch(hoveringLogo, (val: boolean) => console.log(val));
 </script>
 
 <template>
   <header class="apart center">
     <div class="left center">
-      <RotatingSomaLogo :duration="10" :delay="30" />
+      <RotatingSomaLogo @mouseenter="onLogoHovered" @mouseleave="onLogoLeft" :duration="logoRotationDuration"
+        :delay="logoRotationDelay" :linear="hoveringLogo" />
       <h1>SOMA</h1>
     </div>
     <div class="right center">
       <template v-if="authState.isLoggedIn">
-        <span>LOGGED AS: {{ email }}</span>
-        <button @click="logOut">sign out</button>
+        <OutlineButton @click="logOut">
+          <LogOutIcon />
+        </OutlineButton>
+        <OutlineButton @click="logOut">
+          <AccountIcon />
+        </OutlineButton>
       </template>
     </div>
   </header>

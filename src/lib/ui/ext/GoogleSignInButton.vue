@@ -34,14 +34,14 @@
   -webkit-appearance: none;
   user-select: none;
   appearance: none;
-  background-color: WHITE;
+  background-color: var(--bg-dim);
   background-image: none;
   border: 1px solid #747775;
   -webkit-border-radius: 4px;
   border-radius: 4px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  color: #1f1f1f;
+  color: var(--text-main);
   cursor: pointer;
   font-family: "Roboto", arial, sans-serif;
   font-size: 14px;

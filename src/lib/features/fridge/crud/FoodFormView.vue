@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 // Navigation bar
-const title = computed(() => props.food ? `Edit ${props.food.name}` : 'Create food');
+const title = computed(() => props.food ? `Update ${props.food.name}` : 'Create a new food');
 
 // Details Editor State
 const name = ref(props.food?.name ?? "");
@@ -96,14 +96,10 @@ function handleSubmit() {
   <form @submit.prevent="handleSubmit">
     <FormNavigationBar :title="title" @close="emit('cancel')" />
     <FoodDetailsEditor :initial-image="food?.imageFilename ?? undefined" v-model:name="name" v-model:brand="brand"
-      v-model:is-liquid="isLiquid" v-model:selected-img="selectedImg" />
-    <hr>
-    <h3>Servings</h3>
+      v-model:isLiquid="isLiquid" v-model:selectedImg="selectedImg" />
     <FoodServingsEditor v-model:servings="formServings" />
-    <hr>
-    <h3>Nutrients</h3>
     <FoodNutrientsEditor v-model:nutrients="nutrientInput" />
-    <button type="submit" :disabled="isSubmitting">{{ props.food ? "Save" : "Create" }}</button>
+    <PrimaryButton type="submit" :disabled="isSubmitting">{{ props.food ? "Save" : "Create" }}</PrimaryButton>
   </form>
 </template>
 

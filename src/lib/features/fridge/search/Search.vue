@@ -94,29 +94,35 @@ onMounted(() => {
 <template>
   <div class="col search-controls">
     <TabSelection v-model="selectedSearchFilter" :options="searchFilters" />
-    <div class="row actions">
-      <SearchInput v-model="query" placeholder="Search foods" />
-      <TransparentButton @click="openFoodForm()">
+    <div class="row actions center stretch-v">
+      <SearchInput class="search" v-model="query" placeholder="Search foods" />
+      <OutlineButton class="plus-btn" @click="openFoodForm()">
         <AddIcon></AddIcon>
-      </TransparentButton>
+      </OutlineButton>
     </div>
   </div>
-  <ListLoadingEffect v-if="searching" />
+  <ListLoadingEffect v-if="searching && foodItems.length === 0" />
   <FoodSearchResults v-else-if="foodItems.length > 0" :items="foodItems" @loadMore="loadMore"
     @itemSelected="(item: Food) => emit('itemSelected', item)" @itemDeleted="triggerDelete" />
-  <div v-else class="center-content offset-center-up">
-    <span>No items found</span>
-  </div>
+  <OffCentered v-else>
+    <NoResults />
+  </OffCentered>
 </template>
 
 <style scoped>
-/* aby nacitaci column food search results nezmackla input a tab selection */
 .search-controls {
+  /* aby nacitaci column food search results nezmackla input a tab selection */
   flex-shrink: 0;
+  gap: 0.25rem;
 }
 
 .actions {
   padding: 0.5rem;
   gap: 0.5rem;
+  height: 4rem;
+}
+
+.plus-btn {
+  aspect-ratio: 1;
 }
 </style>

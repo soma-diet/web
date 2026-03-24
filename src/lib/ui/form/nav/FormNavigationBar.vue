@@ -7,9 +7,9 @@ const emit = defineEmits(["close"]);
 
 <template>
   <div class="row apart">
-    <h2>{{ props.title ?? "" }}</h2>
-    <TransparentButton @click="emit('close')">
+    <h2 class="upper">{{ props.title ?? "" }}</h2>
+    <OutlineButton @click="emit('close')">
       <CrossIcon></CrossIcon>
-    </TransparentButton>
+    </OutlineButton>
   </div>
 </template>

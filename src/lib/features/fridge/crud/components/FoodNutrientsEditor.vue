@@ -5,17 +5,16 @@ const nutrientInput = defineModel<Record<string, number | null>>("nutrients", { 
 </script>
 
 <template>
-  <ul>
-    <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key" :name="key"
-      v-model:value="nutrientInput[key]" :required="MACROS_KEYS.some(_key => _key === key)" />
+  <ul class="col">
+    <li :key="key" v-for="key in NUTRITION_KEYS">
+      <LabeledNumberInput :label="NUTRIENT_DISPLAY_NAMES[key] ?? key" :name="key" v-model:value="nutrientInput[key]"
+        :required="MACROS_KEYS.some(_key => _key === key)" />
+    </li>
   </ul>
 </template>
 
 <style scoped>
 ul {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  justify-content: space-between;
+  gap: 1rem;
 }
 </style>

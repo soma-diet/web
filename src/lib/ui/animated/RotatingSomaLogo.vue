@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch, computed } from 'vue';
 
 const props = defineProps<{
   duration: number,
-  delay: number
+  delay: number,
+  linear?: boolean
 }>();
 
 const PERSPECTIVE = 40;
 
-const perspectiveCss = `${PERSPECTIVE}rem`
-const durationCss = `${props.duration}s`;
+const perspectiveCss = `${PERSPECTIVE}rem`;
+const durationCss = computed(() => `${props.duration}s`);
+const tweenStyle = computed(() => props.linear ? 'linear' : 'ease-in-out');
 
 const getRandomRotation = () => {
   return {
@@ -21,28 +23,61 @@ const getRandomRotation = () => {
 
 const rotation = ref(getRandomRotation());
 const active = ref(false);
-let intervalId: number;
 
-function runAnimation() {
-  active.value = true;
-  rotation.value = getRandomRotation();
-  setTimeout(() => active.value = false, props.duration * 1000);
+let initialDelayId: ReturnType<typeof setTimeout>;
+let intervalId: ReturnType<typeof setInterval>;
+let timeoutId: ReturnType<typeof setTimeout>;
+
+function clearAllTimers() {
+  clearTimeout(initialDelayId);
+  clearTimeout(timeoutId);
+  clearInterval(intervalId);
 }
 
-onMounted(() => {
+function animationCycle() {
+  active.value = false;
+
+  // potreba mini block na restart animace
   setTimeout(() => {
-    intervalId = setInterval(runAnimation, (props.duration + props.delay) * 1000);
-    runAnimation();
-  }, props.delay * 1000)
+    rotation.value = getRandomRotation();
+    active.value = true;
+
+    timeoutId = setTimeout(() => {
+      active.value = false;
+    }, props.duration * 1000);
+  }, 0);
+}
+
+function startAnimation(immediate: boolean) {
+  clearAllTimers();
+
+  const startLoop = () => {
+    animationCycle();
+    intervalId = setInterval(animationCycle, (props.duration + props.delay) * 1000);
+  };
+
+  if (immediate) {
+    startLoop();
+  } else {
+    initialDelayId = setTimeout(startLoop, props.delay * 1000);
+  }
+}
+
+watch(() => [props.duration, props.delay], () => {
+  startAnimation(true);
+});
+
+onMounted(() => {
+  startAnimation(false);
 });
 
 onUnmounted(() => {
-  clearInterval(intervalId);
+  clearAllTimers();
 });
 </script>
 
 <template>
-  <SomaLogoIcon :class="{ 'rotation': active }" />
+  <SomaLogoIcon class="highlight" :class="{ 'rotation': active }" />
 </template>
 
 <style scoped>
@@ -50,7 +85,7 @@ onUnmounted(() => {
   animation-name: spin;
   animation-duration: v-bind("durationCss");
   animation-direction: normal;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: v-bind("tweenStyle");
 
   transform-origin: center;
   transform-style: preserve-3d;
