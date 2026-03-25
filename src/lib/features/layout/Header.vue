@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { logOut } from '@/lib/api';
 import { useAuthStore } from '@/lib/stores';
+import { useAnalysisSelectionStore } from '@/lib/stores/analysis-selection.store';
 import { computed, ref, watch } from 'vue';
 
 const { authState } = useAuthStore();
@@ -12,6 +13,8 @@ const onLogoLeft = () => hoveringLogo.value = false;
 const logoRotationDuration = computed(() => hoveringLogo.value ? 0.75 : 10);
 const logoRotationDelay = computed(() => hoveringLogo.value ? 0.05 : 30);
 watch(hoveringLogo, (val: boolean) => console.log(val));
+
+const { openTargetsForm } = useAnalysisSelectionStore();
 </script>
 
 <template>
@@ -26,8 +29,8 @@ watch(hoveringLogo, (val: boolean) => console.log(val));
         <OutlineButton @click="logOut">
           <LogOutIcon />
         </OutlineButton>
-        <OutlineButton @click="logOut">
-          <AccountIcon />
+        <OutlineButton @click="openTargetsForm">
+          <TargetIcon />
         </OutlineButton>
       </template>
     </div>

@@ -22,7 +22,12 @@
   /* Accent */
   --color-accent: #ff0000;
   --color-accent-hover: #ff3333;
+  --color-accent-light: #ff4c4c;
   --text-on-accent: #ffffff;
+
+  --color-positive: lime;
+  --color-positive-dim: green;
+
   /* #endregion */
 
   /* #region Typography */

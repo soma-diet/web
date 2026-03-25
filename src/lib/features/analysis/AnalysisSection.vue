@@ -1,21 +1,12 @@
 <!-- Section for Targets and Graphs -->
 <script setup lang="ts">
-import { ref } from "vue";
-import { AnalysisView } from "./analysis.helper";
+import { useAnalysisSelectionStore } from "@/lib/stores/analysis-selection.store";
 import TargetsForm from "./targets/TargetsForm.vue";
 
-let view = ref<AnalysisView>(AnalysisView.TARGETS);
-
-const showTargets = () => {
-  view.value = AnalysisView.TARGETS;
-};
-const showGraphs = () => {
-  view.value = AnalysisView.GRAPHS;
-};
+const { analysisSelectionState, closeTargetsForm } = useAnalysisSelectionStore();
 </script>
 
 <template>
-  <TargetsForm v-if="view === AnalysisView.TARGETS" @finished="showGraphs" />
-  <button v-else-if="view === AnalysisView.GRAPHS" @click="showTargets">show targets</button>
-  <span v-else>tady nic neni?????</span>
+  <TargetsForm v-if="analysisSelectionState.targetsFormOpen" @finished="closeTargetsForm" />
+  <GraphsOverview v-else />
 </template>

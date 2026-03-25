@@ -1,11 +1,11 @@
 <!-- Form for setting daily targets. -->
 <script setup lang="ts">
 import { kcalToKJ, kJToKcal, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS, roundNutrient } from "@/lib/constants";
+import { useTargetsStore } from "@/lib/stores";
 import { computed, ref } from "vue";
 import { putDailyTargets } from "../../../api";
 import LabeledNumberInput from "../../../ui/form/input/labeled/LabeledNumberInput.vue";
 import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.vue";
-import { useTargetsStore } from "@/lib/stores";
 
 const emit = defineEmits<{
   (e: "finished"): void
@@ -51,7 +51,7 @@ async function handleTargetsSubmit() {
 
 <template>
   <div class="wrapper col">
-    <h2>Your daily targets</h2>
+    <FormNavigationBar title="SET DAILY TARGETS" @close="emit('finished')" />
     <ListLoadingEffect v-if="isSubmitting || targetsState.isLoadingTargets" />
     <form v-else-if="targetsState.dailyTargets" @submit.prevent="handleTargetsSubmit" class="col">
       <LabeledNumberInput label="Energy (kJ)" v-model:value="kJ" />
@@ -67,6 +67,7 @@ async function handleTargetsSubmit() {
 .wrapper {
   padding: 1.5rem;
   gap: 1rem;
+  overflow-y: scroll;
 }
 
 form {

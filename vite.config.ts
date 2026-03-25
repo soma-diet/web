@@ -8,7 +8,14 @@ import Components from "unplugin-vue-components/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('macro-bar')
+        }
+      }
+    }),
+
     vueDevTools(),
     Components({
       dirs: ["src/lib/features", "src/lib/ui"],

@@ -6,7 +6,6 @@ import {
   type Serving,
   type Trackable,
 } from "../../../model";
-import { CrossIcon } from "../../../ui/icon";
 import { getImage, SomaImageSize } from "../../../utils/image.util";
 
 const emit = defineEmits<{
@@ -39,6 +38,12 @@ const selectedServing = ref<Serving>(
 // helpers
 const totalSize = computed(() => quantity.value * selectedServing.value.size);
 const isSubmitting = ref(false);
+const originalTotalSize = computed(() => {
+  if (props.entry) {
+    return props.entry.quantity * props.entry.servingSize;
+  }
+  return 0;
+});
 
 function handleSubmit() {
   isSubmitting.value = true;
@@ -47,15 +52,15 @@ function handleSubmit() {
     isSubmitting.value = false;
   });
 }
+
+const navTitle = computed(() => {
+  return props.entry ? "update entry" : "log entry"
+})
 </script>
 
 <template>
   <div class="wrapper col stretch-h">
-    <div class="right">
-      <OutlineButton type="button" @click="emit('cancel')">
-        <CrossIcon />
-      </OutlineButton>
-    </div>
+    <FormNavigationBar :title="navTitle" @close="emit('cancel')" />
 
     <div class="intro-info apart center">
       <div class="food-thumbnail middle">
@@ -63,7 +68,7 @@ function handleSubmit() {
       </div>
 
       <form @submit.prevent="handleSubmit">
-        <h3>{{ props.trackable.name }}</h3>
+        <h2>{{ props.trackable.name }}</h2>
         <span>{{ props.trackable.author }}</span>
 
         <LabeledNumberInput label="Amount: " v-model:value="quantity" step="0.01" />
@@ -84,9 +89,8 @@ function handleSubmit() {
       :micros="props.trackable.micronutrients" />
     <hr />
 
-    <div>
-      <span>daily target graph fill</span>
-    </div>
+    <MacroFill :key="props.trackable.id" :grams="totalSize" :macros="props.trackable.macronutrients"
+      :original-grams="originalTotalSize" />
   </div>
 </template>
 
@@ -105,11 +109,12 @@ form {
 .wrapper {
   padding: 1.5rem;
   gap: 1rem;
+  overflow-y: scroll;
 }
 
 .intro-info {
   min-width: 0;
-  max-height: 20rem;
+  max-height: 25rem;
   gap: 1rem;
 }
 

@@ -6,6 +6,7 @@ import ForwardArrowIcon from "@/lib/ui/icon/ForwardArrowIcon.vue";
 import { computed, ref, watch } from "vue";
 import { deleteLogEntry, getLogEntries } from "../../../api/log/log.api";
 import type { LogEntry } from "../../../model";
+import { useSummaryStore } from "@/lib/stores/summary.store";
 
 const emit = defineEmits<{
   (e: "itemSelected", entry: LogEntry): void
@@ -16,6 +17,7 @@ const logEntries = ref<LogEntry[]>([]);
 const dateSelected = ref<Date>(new Date());
 
 const { targetsState, reloadTargets } = useTargetsStore();
+const { reloadSummary } = useSummaryStore();
 
 const moveDate = (backwards: boolean) => {
   const increment = backwards ? -1 : 1;
@@ -61,6 +63,8 @@ async function handleEntryDelete(deletedEntry: LogEntry) {
     await deleteLogEntry(deletedEntry);
   } catch (e: any) {
     console.error("Failed to delete log entry", e);
+  } finally {
+    reloadSummary();
   }
 }
 

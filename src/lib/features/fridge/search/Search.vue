@@ -27,7 +27,6 @@ const { openFoodForm } = useFoodSelectionStore();
 let timer: ReturnType<typeof setTimeout>;
 
 async function search(currentQuery: string, newQuery: boolean) {
-  console.log("searching <" + currentQuery + ">" + ", newQuery: " + newQuery);
   if (newQuery) {
     page.value = 0;
   } else {
@@ -35,14 +34,13 @@ async function search(currentQuery: string, newQuery: boolean) {
   }
 
   searching.value = true;
+  if (newQuery) foodItems.value = [];
 
   const filter = getActiveFilter();
   try {
     const response = await getFoods(currentQuery, filter, page.value);
+    foodItems.value = [...foodItems.value, ...response.foodItems];
     hasMore.value = response.hasMore;
-    foodItems.value = newQuery
-      ? response.foodItems
-      : [...foodItems.value, ...response.foodItems];
   } catch (e) {
     console.error("Searching food items failed:", e);
     if (page.value > 0) page.value -= 1;
@@ -84,10 +82,10 @@ const getActiveFilter = () => {
 
 watch(query, (newQuery) => {
   clearTimeout(timer);
-  timer = setTimeout(async () => search(newQuery, true), TIMEOUT_MS);
+  timer = setTimeout(() => search(newQuery, true), TIMEOUT_MS);
 })
 
-watch(selectedSearchFilter, async () => {
+watch(selectedSearchFilter, () => {
   search(query.value, true);
 })
 
