@@ -51,6 +51,11 @@ async function search(currentQuery: string, newQuery: boolean) {
   }
 }
 
+watch(query, (newQuery) => {
+  clearTimeout(timer);
+  timer = setTimeout(() => search(newQuery, true), TIMEOUT_MS);
+})
+
 async function loadMore() {
   if (searching.value || !hasMore.value) return;
   search(query.value, false);
