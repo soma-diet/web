@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { Suspense } from 'vue';
 import ListLoadingEffect from './lib/ui/list/ListLoadingEffect.vue';
-import { useAppState } from './lib/stores/app.store';
+import { useNetwork } from './composables/network.composable';
+import OfflineScreen from './layout/OfflineScreen.vue';
 
-const { appState: { online } } = useAppState();
+const { online } = useNetwork();
+
+window.addEventListener('online', () => console.log("online"));
+window.addEventListener('online', () => console.log("offline"));
 </script>
 
 <template>
@@ -15,5 +19,5 @@ const { appState: { online } } = useAppState();
       <ListLoadingEffect />
     </template>
   </Suspense>
-  <span v-else>you are offline</span>
-</template>
+   <OfflineScreen v-else />
+ </template>

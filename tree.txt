@@ -1,6 +1,11 @@
 src/
 ├── app.css
 ├── App.vue
+├── composables
+│   ├── network.composable.ts
+│   └── use-mobile.composable.ts
+├── layout
+│   └── OfflineWarning.vue
 ├── lib
 │   ├── api
 │   │   ├── auth
@@ -11,6 +16,7 @@ src/
 │   │   ├── food
 │   │   │   ├── food.api.ts
 │   │   │   ├── food.dto.ts
+│   │   │   ├── food.filter.ts
 │   │   │   └── food.mapper.ts
 │   │   ├── index.ts
 │   │   ├── log
@@ -34,7 +40,8 @@ src/
 │   │   │   └── targets
 │   │   │       └── TargetsForm.vue
 │   │   ├── auth
-│   │   │   └── AuthPrompt.vue
+│   │   │   ├── AuthForm.vue
+│   │   │   └── SomaBackground.vue
 │   │   ├── fridge
 │   │   │   ├── crud
 │   │   │   │   ├── AddFoodForm.vue
@@ -48,10 +55,11 @@ src/
 │   │   │   │       └── form-serving.ui.model.ts
 │   │   │   ├── FridgeSection.vue
 │   │   │   └── search
+│   │   │       ├── components
+│   │   │       │   └── NoResults.vue
 │   │   │       ├── FoodSearchResults.vue
 │   │   │       └── Search.vue
 │   │   ├── layout
-│   │   │   ├── Background.vue
 │   │   │   └── Header.vue
 │   │   └── log
 │   │       ├── crud
@@ -65,7 +73,6 @@ src/
 │   │           ├── DailyLog.vue
 │   │           └── targets
 │   │               └── TargetsProgress.vue
-│   ├── index.ts
 │   ├── infra
 │   │   └── firebase.ts
 │   ├── model
@@ -76,9 +83,6 @@ src/
 │   │   ├── serving.model.ts
 │   │   ├── targets.model.ts
 │   │   └── trackable.model.ts
-│   ├── sample
-│   │   ├── food-item.sample.ts
-│   │   └── log-entry.sample.ts
 │   ├── stores
 │   │   ├── auth.store.ts
 │   │   ├── food-selection.store.ts
@@ -87,13 +91,18 @@ src/
 │   │   └── targets.store.ts
 │   ├── ui
 │   │   ├── action
-│   │   │   └── OutlineButton.vue
+│   │   │   ├── OutlineButton.vue
+│   │   │   └── PrimaryButton.vue
+│   │   ├── animated
+│   │   │   └── RotatingSomaLogo.vue
 │   │   ├── ext
+│   │   │   ├── GitHubSignInButton.vue
 │   │   │   └── GoogleSignInButton.vue
 │   │   ├── form
 │   │   │   ├── input
 │   │   │   │   ├── ImageInput.vue
 │   │   │   │   ├── labeled
+│   │   │   │   │   ├── LabeledCheckbox.vue
 │   │   │   │   │   ├── LabeledInput.vue
 │   │   │   │   │   ├── LabeledNumberInput.vue
 │   │   │   │   │   └── LabeledSelect.vue
@@ -101,18 +110,31 @@ src/
 │   │   │   └── nav
 │   │   │       └── FormNavigationBar.vue
 │   │   ├── icon
+│   │   │   ├── AccountIcon.vue
 │   │   │   ├── AddIcon.vue
 │   │   │   ├── BackArrowIcon.vue
 │   │   │   ├── CrossIcon.vue
 │   │   │   ├── EditIcon.vue
 │   │   │   ├── FoodIcon.vue
 │   │   │   ├── ForwardArrowIcon.vue
+│   │   │   ├── ImageIcon.vue
 │   │   │   ├── index.ts
+│   │   │   ├── LogOutIcon.vue
 │   │   │   ├── RecipeIcon.vue
-│   │   │   └── SomaLogoIcon.vue
+│   │   │   ├── SadMagnifierIcon.vue
+│   │   │   ├── SomaLogoIcon.vue
+│   │   │   └── TrashIcon.vue
+│   │   ├── layout
+│   │   │   └── OffCentered.vue
 │   │   ├── list
+│   │   │   ├── interactable
+│   │   │   │   ├── abstract
+│   │   │   │   │   ├── ActionItem.vue
+│   │   │   │   │   └── SwipeableItem.vue
+│   │   │   │   ├── components
+│   │   │   │   │   └── ItemDetails.vue
+│   │   │   │   └── InteractableItem.vue
 │   │   │   ├── ListLoadingEffect.vue
-│   │   │   ├── LogItem.vue
 │   │   │   └── TabSelection.vue
 │   │   └── util
 │   │       ├── LabeledHorizontalRule.vue
@@ -122,7 +144,15 @@ src/
 │   └── utils
 │       ├── errors.ts
 │       └── image.util.ts
-└── main.ts
+├── main.ts
+├── router
+│   ├── index.ts
+│   └── router.util.ts
+├── theme
+│   └── soma-theme.css
+└── views
+    ├── Dashboard.vue
+    └── SignIn.vue
 /F  [error opening dir]
 
-39 directories, 86 files
+49 directories, 106 files

@@ -234,6 +234,17 @@ section {
   --bl2: 0% calc(100% - var(--b));
 }
 
+.bevel-all {
+  --tl1: 0% var(--b);
+  --tl2: var(--b) 0%;
+  --tr1: calc(100% - var(--b)) 0%;
+  --tr2: 100% var(--b);
+  --br1: 100% calc(100% - var(--b));
+  --br2: calc(100% - var(--b)) 100%;
+  --bl1: var(--b) 100%;
+  --bl2: 0% calc(100% - var(--b));
+}
+
 /* #endregion */
 
 /* #endregion */
