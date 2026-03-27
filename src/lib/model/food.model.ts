@@ -18,8 +18,8 @@ export function createFood(
   return {
     id: crypto.randomUUID(),
     name: name,
-    author: null, // TODO zatim user nema zadne jmeno, takze asi neresim?
-    barcode: null, // TODO scanovani barcodes
+    author: null, // pro budouci rozsireni (nevyuzito, user si zatim nenastavuje jmeno)
+    barcode: null, // pro budouci rozsireni (neimplementovano)
     brand: brand,
     isMass: isMass,
     imageFilename: null,
