@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { makeDateFromDateString, makeInputDateString } from '@/lib/utils/date.util';
+import { makeDateFromDateString, makeDateString } from '@/lib/utils/date.util';
 import { computed, useId, watch } from 'vue';
 
 const id = useId();
@@ -13,7 +13,7 @@ const dateModel = defineModel<Date>();
 const dateInput = computed<string>({
   get() {
     if (!dateModel.value) return '';
-    return makeInputDateString(dateModel.value);
+    return makeDateString(dateModel.value);
   },
   set(inputValue) {
     if (!inputValue) {
@@ -23,10 +23,9 @@ const dateInput = computed<string>({
     dateModel.value = makeDateFromDateString(inputValue);
   }
 });
-watch(dateInput, (newVal: string) => console.log(newVal), { immediate: true });
 
 const todayDate = new Date();
-const maxDateCap: string = makeInputDateString(todayDate);
+const maxDateCap: string = makeDateString(todayDate);
 </script>
 
 <template>

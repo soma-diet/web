@@ -1,4 +1,4 @@
-import { makeInputDateString } from "@/lib/utils/date.util";
+import { makeDateString } from "@/lib/utils/date.util";
 import type { DailySummary, LogEntry } from "../../model";
 import { SomaError } from "../../utils/errors";
 import { fetchWithAuth } from "../client";
@@ -13,7 +13,7 @@ const DIARY_LOG_ENDPOINT = "/api/diary";
 // #region Main CRUD
 export async function getLogEntries(date: Date): Promise<LogEntry[]> {
   const params = new URLSearchParams({
-    date: makeInputDateString(date),
+    date: makeDateString(date),
   });
   const endpoint = DIARY_LOG_ENDPOINT + "?" + params.toString();
   const response = await fetchWithAuth(endpoint);
@@ -63,7 +63,7 @@ export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
 const DAILY_SUMMARY_ENDPOINT = "/api/diary/summary";
 export async function getDailySummary(date: Date): Promise<DailySummary> {
   const params = new URLSearchParams({
-    date: makeInputDateString(date),
+    date: makeDateString(date),
   });
   const endpoint = DAILY_SUMMARY_ENDPOINT + "?" + params.toString();
   const response = await fetchWithAuth(endpoint);

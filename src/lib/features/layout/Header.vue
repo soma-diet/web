@@ -15,7 +15,6 @@ const onLogoHovered = () => hoveringLogo.value = true;
 const onLogoLeft = () => hoveringLogo.value = false;
 const logoRotationDuration = computed(() => hoveringLogo.value ? 0.75 : 10);
 const logoRotationDelay = computed(() => hoveringLogo.value ? 0.05 : 30);
-watch(hoveringLogo, (val: boolean) => console.log(val));
 
 function handleLogOut() {
   logOut().then(() => {

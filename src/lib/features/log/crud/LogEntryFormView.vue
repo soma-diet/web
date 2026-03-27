@@ -27,7 +27,6 @@ const thumbnailSrc = computed(() =>
 // inputs
 const quantity = ref<number>(props.entry?.quantity ?? 100);
 const selectedDate = ref<Date>(props.entry?.timestamp ? makeDateFromISO(props.entry.timestamp) : new Date());
-console.log("selected date", selectedDate.value);
 
 // servings
 const servings = computed(() => getWithSystemServings(props.trackable));
