@@ -23,8 +23,8 @@ const initialImgPath = computed(() => props.initialImage ? getImage(props.initia
       <ImageInput v-model:file="selectedImg" :initialImage="initialImgPath ?? undefined" />
     </div>
     <div class="details col f1">
-      <LabeledInput type="text" label="Name" v-model="name" :required="true" />
-      <LabeledInput type="text" label="Brand" v-model="brand" />
+      <LabeledInput type="text" label="Name" v-model="name" :required="true" placeholder="Raw Chicken Breasts" />
+      <LabeledInput type="text" label="Brand" v-model="brand" placeholder="Walmart" />
       <LabeledCheckbox label="Is a liquid" v-model:checked="isLiquid" />
     </div>
   </div>

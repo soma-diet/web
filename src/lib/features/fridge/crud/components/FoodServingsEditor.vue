@@ -25,14 +25,14 @@ const removeServingField = (index: number) => {
       <div class="row apart center">
         <h3 :class="{ 'placeholder': formServing.name?.length === 0 }">{{ formServing.name && formServing.name !== '' ?
           `Serving: ${formServing.name}` : "New serving"
-        }}
+          }}
         </h3>
         <OutlineButton @click="removeServingField(index)">
           <CrossIcon></CrossIcon>
         </OutlineButton>
       </div>
-      <LabeledInput type="text" label="Name" v-model="formServing.name" :required="true" />
-      <LabeledNumberInput label="Size (g)" v-model:value="formServing.size" :required="true" />
+      <LabeledInput type="text" label="Name" v-model="formServing.name" :required="true" placeholder="Piece" />
+      <LabeledNumberInput label="Size (g)" v-model:value="formServing.size" :required="true" placeholder="50" />
     </li>
   </ul>
   <OutlineButton type="button" @click="addServingField">Add a serving</OutlineButton>
