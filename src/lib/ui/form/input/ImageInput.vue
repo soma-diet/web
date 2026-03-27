@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useId } from 'vue';
+import ImageIcon from '../../icon/ImageIcon.vue';
 
 const props = defineProps<{
   initialImage?: string;

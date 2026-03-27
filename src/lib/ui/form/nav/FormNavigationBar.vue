@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import OutlineButton from '../../action/OutlineButton.vue';
+import CrossIcon from '../../icon/CrossIcon.vue';
+
 const props = defineProps<{
   title?: string
 }>();

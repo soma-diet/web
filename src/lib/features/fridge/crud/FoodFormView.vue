@@ -3,6 +3,11 @@ import { MACROS_KEYS, MICROS_KEYS } from "@/lib/constants";
 import { computed, reactive, ref } from "vue";
 import { createFood, createServing, type Food, type Serving } from "../../../model";
 import type { FormServing } from "./model/form-serving.ui.model";
+import FormNavigationBar from "@/lib/ui/form/nav/FormNavigationBar.vue";
+import FoodDetailsEditor from "./components/FoodDetailsEditor.vue";
+import FoodServingsEditor from "./components/FoodServingsEditor.vue";
+import FoodNutrientsEditor from "./components/FoodNutrientsEditor.vue";
+import PrimaryButton from "@/lib/ui/action/PrimaryButton.vue";
 
 const emit = defineEmits<{
   (e: "cancel"): void,

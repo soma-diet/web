@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import SadMagnifierIcon from '@/lib/ui/icon/SadMagnifierIcon.vue';
+
+</script>
+
 <template>
   <div class="col center">
     <SadMagnifierIcon class="icon" />

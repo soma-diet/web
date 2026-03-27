@@ -2,6 +2,10 @@
 import { logOut } from '@/lib/api';
 import { useAuthStore } from '@/lib/stores';
 import { useAnalysisSelectionStore } from '@/lib/stores/analysis-selection.store';
+import OutlineButton from '@/lib/ui/action/OutlineButton.vue';
+import RotatingSomaLogo from '@/lib/ui/animated/RotatingSomaLogo.vue';
+import LogOutIcon from '@/lib/ui/icon/LogOutIcon.vue';
+import TargetIcon from '@/lib/ui/icon/TargetIcon.vue';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 

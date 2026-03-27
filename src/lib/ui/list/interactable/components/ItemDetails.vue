@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { TrackableType } from '@/lib/model';
+import FoodIcon from '@/lib/ui/icon/FoodIcon.vue';
+import RecipeIcon from '@/lib/ui/icon/RecipeIcon.vue';
 
 const props = defineProps<{
   name: string,

@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 import { signInWithGitHub, signInWithGoogle } from "../../api";
 import GoogleSignInButton from "../../ui/ext/GoogleSignInButton.vue";
 import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.vue";
+import GitHubSignInButton from "@/lib/ui/ext/GitHubSignInButton.vue";
 
 const router = useRouter();
 

@@ -4,6 +4,9 @@ import type { Food } from '@/lib/model';
 import { useLogSelectionStore } from '@/lib/stores';
 import { useFoodSelectionStore } from '@/lib/stores/food-selection.store';
 import "./search/Search.vue";
+import Search from './search/Search.vue';
+import AddFoodForm from './crud/AddFoodForm.vue';
+import EditFoodForm from './crud/EditFoodForm.vue';
 
 const logSelectionStore = useLogSelectionStore();
 const { foodSelectionState, closeFoodForm, openFoodForm } = useFoodSelectionStore();

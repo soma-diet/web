@@ -19,20 +19,13 @@ const inputId = useId();
 <template>
   <div class="col left">
     <label :for="inputId" class="accent-heading">{{ props.label }}</label>
-    <input :type="props.type" :id="inputId" :step="props.step" :required="required" v-model="model" class="input-field" />
+    <input :type="props.type" :id="inputId" :step="props.step" :required="required" v-model="model"
+      class="input-field" />
   </div>
 </template>
 
 <style scoped>
 div {
   gap: 0.5rem;
-}
-
-input {
-  flex: 2;
-}
-
-label {
-  flex: 1;
 }
 </style>

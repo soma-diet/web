@@ -8,6 +8,13 @@ import {
 } from "../../../model";
 import { getImage, SomaImageSize } from "../../../utils/image.util";
 import { makeDateFromISO } from "@/lib/utils/date.util";
+import FormNavigationBar from "@/lib/ui/form/nav/FormNavigationBar.vue";
+import LabeledNumberInput from "@/lib/ui/form/input/labeled/LabeledNumberInput.vue";
+import LabeledSelect from "@/lib/ui/form/input/labeled/LabeledSelect.vue";
+import LabeledDateInput from "@/lib/ui/form/input/labeled/LabeledDateInput.vue";
+import PrimaryButton from "@/lib/ui/action/PrimaryButton.vue";
+import NutritionalInfo from "./components/NutritionalInfo.vue";
+import MacroFill from "./components/MacroFill.vue";
 
 const emit = defineEmits<{
   (e: "cancel"): void,
@@ -71,7 +78,7 @@ const navTitle = computed(() => {
       <form @submit.prevent="handleSubmit">
         <h2>{{ props.trackable.name }}</h2>
 
-        <LabeledNumberInput label="Amount: " v-model:value="quantity" step="0.01" />
+        <LabeledNumberInput label="Amount" v-model:value="quantity" step="0.01" />
         <LabeledSelect label="Serving" v-model:selected="selectedServing"
           :options="servings.map(serving => ({ name: serving.name, value: serving }))" />
 
@@ -84,8 +91,10 @@ const navTitle = computed(() => {
     </div>
 
     <hr />
+
     <NutritionalInfo :key="props.trackable.id" :grams="totalSize" :macros="props.trackable.macronutrients"
       :micros="props.trackable.micronutrients" />
+
     <hr />
 
     <MacroFill :key="props.trackable.id" :grams="totalSize" :macros="props.trackable.macronutrients"

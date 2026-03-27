@@ -3,6 +3,8 @@
 import { useLogSelectionStore } from "@/lib/stores";
 import type { LogEntry } from "../../model";
 import DailyLog from "./overview/DailyLog.vue";
+import AddLogEntryForm from "./crud/AddLogEntryForm.vue";
+import EditLogEntryForm from "./crud/EditLogEntryForm.vue";
 
 const { logSelectionState, closeLogForm, openLogForm } = useLogSelectionStore();
 

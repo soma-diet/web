@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import OutlineButton from '@/lib/ui/action/OutlineButton.vue';
 import type { FormServing } from '../model/form-serving.ui.model';
+import CrossIcon from '@/lib/ui/icon/CrossIcon.vue';
+import LabeledInput from '@/lib/ui/form/input/labeled/LabeledInput.vue';
+import LabeledNumberInput from '@/lib/ui/form/input/labeled/LabeledNumberInput.vue';
 
 const servings = defineModel<FormServing[]>("servings", { required: true });
 

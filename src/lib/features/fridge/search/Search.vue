@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import { FoodSearchFilter } from "@/lib/api/food/food.filter";
+import { useFoodSelectionStore } from "@/lib/stores/food-selection.store";
+import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
+import SearchInput from "@/lib/ui/form/input/SearchInput.vue";
+import AddIcon from "@/lib/ui/icon/AddIcon.vue";
+import OffCentered from "@/lib/ui/layout/OffCentered.vue";
+import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
+import TabSelection from "@/lib/ui/list/TabSelection.vue";
 import { onMounted, ref, watch } from "vue";
 import { deleteFood, getFoods } from "../../../api";
 import type { Food } from "../../../model";
-import TabSelection from "@/lib/ui/list/TabSelection.vue";
+import NoResults from "./components/NoResults.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
-import SearchInput from "@/lib/ui/form/input/SearchInput.vue";
-import { useFoodSelectionStore } from "@/lib/stores/food-selection.store";
-import { FoodSearchFilter } from "@/lib/api/food/food.filter";
 
 const emit = defineEmits<{
   (e: "itemSelected", item: Food): void

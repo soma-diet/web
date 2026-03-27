@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue';
+import SomaLogoIcon from '../icon/SomaLogoIcon.vue';
 
 const props = defineProps<{
   duration: number,

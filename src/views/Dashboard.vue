@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import AnalysisSection from '@/lib/features/analysis/AnalysisSection.vue';
+import FridgeSection from '@/lib/features/fridge/FridgeSection.vue';
+import Header from '@/lib/features/layout/Header.vue';
+import LogSection from '@/lib/features/log/LogSection.vue';
+
 </script>
 
 <template>

@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useMobile } from "@/composables/use-mobile.composable";
 import { TrackableType } from "../../../model";
+
 import ItemDetails from "./components/ItemDetails.vue";
+import SwipeableItem from "./abstract/SwipeableItem.vue";
+import TrashIcon from "../../icon/TrashIcon.vue";
+import EditIcon from "../../icon/EditIcon.vue";
+import ActionItem from "./abstract/ActionItem.vue";
 
 interface Props {
   name: string;

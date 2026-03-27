@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { postFood } from '@/lib/api';
 import type { Food } from '@/lib/model';
+import FoodFormView from './FoodFormView.vue';
 
 const emit = defineEmits(["finished"]);
 

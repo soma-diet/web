@@ -2,6 +2,7 @@
 import { deleteFood } from '@/lib/api';
 import type { Food } from '@/lib/model';
 import { useFoodSelectionStore } from '@/lib/stores';
+import InteractableItem from '@/lib/ui/list/interactable/InteractableItem.vue';
 
 const emit = defineEmits<{
   (e: "loadMore"): void,

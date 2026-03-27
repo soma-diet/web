@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { useLogSelectionStore, useTargetsStore } from "@/lib/stores";
+import { useTargetsStore } from "@/lib/stores";
+import { useSummaryStore } from "@/lib/stores/summary.store";
 import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
 import BackArrowIcon from "@/lib/ui/icon/BackArrowIcon.vue";
 import ForwardArrowIcon from "@/lib/ui/icon/ForwardArrowIcon.vue";
 import { computed, ref, watch } from "vue";
 import { deleteLogEntry, getLogEntries } from "../../../api/log/log.api";
 import type { LogEntry } from "../../../model";
-import { useSummaryStore } from "@/lib/stores/summary.store";
+import InteractableItem from "@/lib/ui/list/interactable/InteractableItem.vue";
+import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
+import TargetsProgress from "./targets/TargetsProgress.vue";
 
 const emit = defineEmits<{
   (e: "itemSelected", entry: LogEntry): void

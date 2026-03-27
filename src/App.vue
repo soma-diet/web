@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Suspense } from 'vue';
-import ListLoadingEffect from './lib/ui/list/ListLoadingEffect.vue';
 import { useNetwork } from './composables/network.composable';
-import OfflineScreen from './layout/OfflineScreen.vue';
+
+import ListLoadingEffect from './lib/ui/list/ListLoadingEffect.vue';
+import OfflineScreen from '@/layout/OfflineScreen.vue';
 
 const { online } = useNetwork();
 </script>
@@ -10,7 +11,7 @@ const { online } = useNetwork();
 <template>
   <Suspense v-if="online">
     <template #default>
-      <router-view />
+      <RouterView />
     </template>
     <template #fallback>
       <ListLoadingEffect />

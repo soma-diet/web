@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import ImageInput from '@/lib/ui/form/input/ImageInput.vue';
+import LabeledCheckbox from '@/lib/ui/form/input/labeled/LabeledCheckbox.vue';
+import LabeledInput from '@/lib/ui/form/input/labeled/LabeledInput.vue';
 import { getImage, SomaImageSize } from '@/lib/utils/image.util';
 import { computed } from 'vue';
 

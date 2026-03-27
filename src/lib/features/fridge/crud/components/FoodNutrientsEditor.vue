@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MACROS_KEYS, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS } from '@/lib/constants';
+import LabeledNumberInput from '@/lib/ui/form/input/labeled/LabeledNumberInput.vue';
 
 const nutrientInput = defineModel<Record<string, number | null>>("nutrients", { required: true });
 </script>

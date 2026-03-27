@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper col center middle">
     <span>
       <slot />
     </span>
@@ -8,10 +8,6 @@
 
 <style scoped>
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   flex-grow: 1;
   padding-bottom: 4rem;
   height: 100%;

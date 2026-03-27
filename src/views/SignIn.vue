@@ -1,6 +1,6 @@
-  <script setup lang="ts">
-  import RotatingSomaLogo from '@/lib/ui/animated/RotatingSomaLogo.vue';
-
+<script setup lang="ts">
+import AuthForm from '@/lib/features/auth/AuthForm.vue';
+import RotatingSomaLogo from '@/lib/ui/animated/RotatingSomaLogo.vue';
 </script>
 
 <template>

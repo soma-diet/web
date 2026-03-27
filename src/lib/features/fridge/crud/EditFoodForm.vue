@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { putFood } from '@/lib/api';
 import type { Food } from '@/lib/model';
-import { useFoodSelectionStore } from '@/lib/stores';
+import FoodFormView from './FoodFormView.vue';
 
 const emit = defineEmits(["finished"]);
 const props = defineProps<{

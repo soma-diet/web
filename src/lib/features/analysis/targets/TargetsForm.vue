@@ -3,9 +3,10 @@
 import { kcalToKJ, kJToKcal, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS, roundNutrient } from "@/lib/constants";
 import { useTargetsStore } from "@/lib/stores";
 import { computed, ref } from "vue";
-import { putDailyTargets } from "../../../api";
-import LabeledNumberInput from "../../../ui/form/input/labeled/LabeledNumberInput.vue";
-import ListLoadingEffect from "../../../ui/list/ListLoadingEffect.vue";
+import { putDailyTargets } from "@/lib/api";
+
+import LabeledNumberInput from "@/lib/ui/form/input/labeled/LabeledNumberInput.vue";
+import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 
 const emit = defineEmits<{
   (e: "finished"): void

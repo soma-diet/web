@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { LogEntryRequestDto, postLogEntry } from '@/lib/api';
 import { type Trackable } from '@/lib/model';
+import LogEntryFormView from './LogEntryFormView.vue';
 
 const props = defineProps<{
   trackable: Trackable
