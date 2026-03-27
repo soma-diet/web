@@ -22,7 +22,7 @@ const props = defineProps<{
 const thumbnailSrc = computed(() =>
   props.trackable.imageFilename
     ? getImage(props.trackable.imageFilename, SomaImageSize.LARGE)
-    : "/assets/no-img-placeholder.jpg");
+    : "/assets/img/no-img-placeholder.jpg");
 
 // inputs
 const quantity = ref<number>(props.entry?.quantity ?? 100);
