@@ -2,25 +2,14 @@ import type { Serving, Trackable } from "../model";
 
 const SYSTEM_MASS_SERVINGS: Serving[] = [
   {
-        id: null,
-        name: "g",
-        size: 1,
-        isSystem: true,
-    },
-];
-const SYSTEM_LIQUID_SERVINGS: Serving[] = [
-  {
-      id: null,
-        name: "ml",
-        size: 1,
-        isSystem: true,
-    },
+    id: null,
+    name: "g",
+    size: 1,
+    isSystem: true,
+  },
 ];
 
 export function getWithSystemServings(trackable: Trackable): Serving[] {
-    // const systemServings = trackable.isMass
-    //     ? SYSTEM_MASS_SERVINGS
-    //     : SYSTEM_LIQUID_SERVINGS;
-    const systemServings = SYSTEM_MASS_SERVINGS; // TODO trackuje se asi vzdy v gramech takze serving v ml je zavadejici asi
-    return [...systemServings, ...trackable.servings];
+  const systemServings = SYSTEM_MASS_SERVINGS;
+  return [...systemServings, ...trackable.servings];
 }
