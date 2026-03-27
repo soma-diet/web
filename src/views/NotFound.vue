@@ -8,8 +8,8 @@
       <span class="italic">how did you get here</span>
     </section>
     <section class="bevel bevel-tl bevel-bl f2 center middle">
-      <video preload="none" onloadstart="this.playbackRate = 0.7;" autoplay muted loop playsinline id="pattern-bg"
-        src="/assets/video/pattern.mp4"></video>
+      <video preload="none" autoplay muted loop playsinline id="pattern-bg"
+        src="/assets/video/topographic-pattern.mp4"></video>
       <div class="logo-wrapper">
         <RotatingSomaLogo :duration="5" :delay="1" class="logo" />
       </div>
@@ -23,7 +23,7 @@ h1 {
 }
 
 video {
-  opacity: 0.3;
+  opacity: 0.1;
   z-index: -1;
 
   position: absolute;

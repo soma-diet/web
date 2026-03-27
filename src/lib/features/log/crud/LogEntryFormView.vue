@@ -7,10 +7,11 @@ import {
   type Trackable,
 } from "../../../model";
 import { getImage, SomaImageSize } from "../../../utils/image.util";
+import { makeDateFromISO } from "@/lib/utils/date.util";
 
 const emit = defineEmits<{
   (e: "cancel"): void,
-  (e: "submit", quantity: number, servingId: string | null, callback: () => void): void,
+  (e: "submit", quantity: number, servingId: string | null, date: Date, callback: () => void): void,
 }>();
 
 const props = defineProps<{
@@ -18,7 +19,6 @@ const props = defineProps<{
   entry?: LogEntry;
 }>();
 
-const unit = "g";
 const thumbnailSrc = computed(() =>
   props.trackable.imageFilename
     ? getImage(props.trackable.imageFilename, SomaImageSize.LARGE)
@@ -26,6 +26,8 @@ const thumbnailSrc = computed(() =>
 
 // inputs
 const quantity = ref<number>(props.entry?.quantity ?? 100);
+const selectedDate = ref<Date>(props.entry?.timestamp ? makeDateFromISO(props.entry.timestamp) : new Date());
+console.log("selected date", selectedDate.value);
 
 // servings
 const servings = computed(() => getWithSystemServings(props.trackable));
@@ -48,7 +50,7 @@ const originalTotalSize = computed(() => {
 function handleSubmit() {
   isSubmitting.value = true;
 
-  emit("submit", quantity.value, selectedServing.value.id, () => {
+  emit("submit", quantity.value, selectedServing.value.id, selectedDate.value, () => {
     isSubmitting.value = false;
   });
 }
@@ -69,14 +71,12 @@ const navTitle = computed(() => {
 
       <form @submit.prevent="handleSubmit">
         <h2>{{ props.trackable.name }}</h2>
-        <span>{{ props.trackable.author }}</span>
 
         <LabeledNumberInput label="Amount: " v-model:value="quantity" step="0.01" />
-
         <LabeledSelect label="Serving" v-model:selected="selectedServing"
           :options="servings.map(serving => ({ name: serving.name, value: serving }))" />
 
-        <span>{{ `totals ${totalSize} ${unit}` }}</span>
+        <LabeledDateInput :required="true" label="Date" v-model="selectedDate" />
 
         <PrimaryButton type="submit" :disabled="isSubmitting">
           {{ isSubmitting ? "saving.." : (props.entry ? "update" : "add") }}

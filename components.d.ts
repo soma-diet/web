@@ -42,6 +42,7 @@ declare module 'vue' {
     InteractableItem: typeof import('./src/lib/ui/list/interactable/InteractableItem.vue')['default']
     ItemDetails: typeof import('./src/lib/ui/list/interactable/components/ItemDetails.vue')['default']
     LabeledCheckbox: typeof import('./src/lib/ui/form/input/labeled/LabeledCheckbox.vue')['default']
+    LabeledDateInput: typeof import('./src/lib/ui/form/input/labeled/LabeledDateInput.vue')['default']
     LabeledHorizontalRule: typeof import('./src/lib/ui/util/LabeledHorizontalRule.vue')['default']
     LabeledInput: typeof import('./src/lib/ui/form/input/labeled/LabeledInput.vue')['default']
     LabeledNumberInput: typeof import('./src/lib/ui/form/input/labeled/LabeledNumberInput.vue')['default']

@@ -1,27 +1,19 @@
+import { makeInputDateString } from "@/lib/utils/date.util";
 import type { DailySummary, LogEntry } from "../../model";
 import { SomaError } from "../../utils/errors";
 import { fetchWithAuth } from "../client";
-import type { LogEntryRequestDto } from "./log.dto";
 import {
-  entryToRequestDto,
   rawToDailySumamry,
   rawToLogEntry,
 } from "./log.mapper";
+import type { LogEntryRequestDto } from "./log.dto";
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
-
-// TODO do jiny file (asi api.util.ts) (nebo udelat RequestDto a na to mapovat v mapperu)
-function toLocalDateString(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
 
 // #region Main CRUD
 export async function getLogEntries(date: Date): Promise<LogEntry[]> {
   const params = new URLSearchParams({
-    date: toLocalDateString(date),
+    date: makeInputDateString(date),
   });
   const endpoint = DIARY_LOG_ENDPOINT + "?" + params.toString();
   const response = await fetchWithAuth(endpoint);
@@ -71,7 +63,7 @@ export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
 const DAILY_SUMMARY_ENDPOINT = "/api/diary/summary";
 export async function getDailySummary(date: Date): Promise<DailySummary> {
   const params = new URLSearchParams({
-    date: toLocalDateString(date),
+    date: makeInputDateString(date),
   });
   const endpoint = DAILY_SUMMARY_ENDPOINT + "?" + params.toString();
   const response = await fetchWithAuth(endpoint);

@@ -18,7 +18,7 @@ const selectId = useId();
 <template>
   <div class="col">
     <label class="accent-heading" :for="selectId">{{ props.label }}</label>
-    <select :id="selectId" v-model="selected">
+    <select :id="selectId" v-model="selected" class="input-field">
       <option v-for="(opt, index) in options" :key="index" :value="opt.value">{{ opt.name }}</option>
     </select>
   </div>
@@ -27,17 +27,6 @@ const selectId = useId();
 <style scoped>
 div {
   gap: 0.5rem;
-}
-
-select {
-  background-color: var(--bg-surface);
-  color: var(--text-main);
-  padding: 0.5rem;
-}
-
-select:focus-visible {
-  outline: none;
-  border-color: var(--color-accent);
 }
 
 option {

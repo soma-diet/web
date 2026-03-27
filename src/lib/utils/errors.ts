@@ -24,3 +24,5 @@ export abstract class SomaError extends Error {
     console.error(this.logMsg);
   }
 }
+
+export class UtilError extends Error {}
