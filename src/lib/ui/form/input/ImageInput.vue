@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useId } from 'vue';
+import { computed, onMounted, ref, useId } from 'vue';
 import ImageIcon from '../../icon/ImageIcon.vue';
 
 const props = defineProps<{
@@ -8,7 +8,6 @@ const props = defineProps<{
 
 const id = useId();
 
-const previewUrl = ref<string | null>(null);
 const fileModel = defineModel<File | null>("file", { required: true });
 
 const displayImg = computed(() => {
@@ -16,26 +15,35 @@ const displayImg = computed(() => {
   if (props.initialImage) return props.initialImage;
 });
 
+// FileAPI nacteni souboru z eventu na file input elementu
 const handleFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  const files = target.files;
+  const files = target.files; // nactene soubory
+
   if (files && files.length > 0) {
     const file = files[0]!;
-    fileModel.value = file;
-    previewUrl.value = URL.createObjectURL(file); // vytvori preview url pro zobrazeni nahraneho obrazku
+    fileModel.value = file; // ulozit nacteny soubor do modelu pro rodicovskou komponentu, ktera ho zpracovava
   } else {
     fileModel.value = null;
-    previewUrl.value = null;
   }
 }
+// preview obrazek se odvodi z obsahu nahraneho souboru
+const previewUrl = computed<string | null>(() => fileModel.value ? URL.createObjectURL(fileModel.value) : null);
+
+onMounted(() => {
+  // napsano pro jistotu klasickym zpusobem
+  const inputElement = document.querySelector(`#${id}`);
+  inputElement?.addEventListener("change", handleFileChange);
+})
+
 </script>
 
 <template>
   <label :for="id" :class="{ 'without-preview': !displayImg }" class="col center middle">
-    <img v-if="displayImg" class="preview-img" :src="displayImg" alt="food" />
+    <img v-if="displayImg" class="preview-img" :src="displayImg" alt="preview of the uploaded image" />
     <ImageIcon v-else class="preview-img" />
   </label>
-  <input type="file" accept="image/*" :id="id" @change="handleFileChange" />
+  <input type="file" accept="image/*" :id="id" />
 </template>
 
 <style scoped>

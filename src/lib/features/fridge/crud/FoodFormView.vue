@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MACROS_KEYS, MICROS_KEYS } from "@/lib/constants";
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref, useId, watch } from "vue";
 import { createFood, createServing, type Food, type Serving } from "../../../model";
 import type { FormServing } from "./model/form-serving.ui.model";
 import FormNavigationBar from "@/lib/ui/form/nav/FormNavigationBar.vue";
@@ -8,6 +8,7 @@ import FoodDetailsEditor from "./components/FoodDetailsEditor.vue";
 import FoodServingsEditor from "./components/FoodServingsEditor.vue";
 import FoodNutrientsEditor from "./components/FoodNutrientsEditor.vue";
 import PrimaryButton from "@/lib/ui/action/PrimaryButton.vue";
+import DropHint from "./components/DropHint.vue";
 
 const emit = defineEmits<{
   (e: "cancel"): void,
@@ -66,7 +67,6 @@ function prepareServings(formServings: FormServing[]): Serving[] {
 const isSubmitting = ref<boolean>(false);
 function handleSubmit() {
   isSubmitting.value = true;
-
   const { kcal, protein, fats, carbs, fiber, sodium } = nutrientInput;
   const macros = { kcal: kcal!, protein: protein!, fats: fats!, carbs: carbs! }; // melo by byt davno zvalidovany formularem
   const micros = { fiber: fiber ?? null, sodium: sodium ?? null }; // null hodnoty jsou OK
@@ -95,21 +95,71 @@ function handleSubmit() {
     isSubmitting.value = false;
   });
 }
+
+// DragAndDrop obrazku jidla nad formular
+const isDraggingOver = ref(false);
+
+function handleDragOver(e: DragEvent) {
+  e.preventDefault();
+}
+function handleDragEnter(e: DragEvent) {
+  e.preventDefault();
+  isDraggingOver.value = true;
+}
+function handleDragLeave(e: DragEvent) {
+  const dragArea = e.currentTarget as HTMLElement;
+  const target = e.relatedTarget as Node | null; // Node kvuli contains funkci, relatedTarget = element na ktery prijizdi mys (s target nefunguje)
+  if (dragArea.contains(target)) return; // ignoruje kdyz se prejizdi mysi nad detmi formulare
+  isDraggingOver.value = false;
+}
+function handleDrop(e: DragEvent) {
+  e.preventDefault();
+  isDraggingOver.value = false;
+
+  const files = e.dataTransfer?.files;
+  if (!files || files.length === 0) {
+    selectedImg.value = null;
+  } else {
+    const file = files[0]!;
+    if (!file?.type.startsWith("image/")) {
+      alert("You can only upload an image.");
+      return;
+    }
+
+    selectedImg.value = file;
+  }
+}
+watch(selectedImg, (newValue) => {
+  console.log(newValue);
+})
+
+const id = useId();
+onMounted(() => {
+  const formElement = document.getElementById(id);
+
+  formElement?.addEventListener("dragenter", handleDragEnter);
+  formElement?.addEventListener("dragover", handleDragOver);
+  formElement?.addEventListener("dragleave", handleDragLeave);
+  formElement?.addEventListener("drop", handleDrop);
+});
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form :id @submit.prevent="handleSubmit">
     <FormNavigationBar :title="title" @close="emit('cancel')" />
     <FoodDetailsEditor :initial-image="food?.imageFilename ?? undefined" v-model:name="name" v-model:brand="brand"
       v-model:isLiquid="isLiquid" v-model:selectedImg="selectedImg" />
     <FoodServingsEditor v-model:servings="formServings" />
     <FoodNutrientsEditor v-model:nutrients="nutrientInput" />
     <PrimaryButton type="submit" :disabled="isSubmitting">{{ props.food ? "Save" : "Create" }}</PrimaryButton>
+
+    <DropHint v-if="isDraggingOver" class="hint" />
   </form>
 </template>
 
 <style scoped>
 form {
+  position: relative;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -117,5 +167,12 @@ form {
   gap: 0.75rem;
 
   overflow-y: auto;
+}
+
+.hint {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
 }
 </style>

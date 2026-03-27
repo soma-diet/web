@@ -1,5 +1,5 @@
 <template>
-  <button class="col center middle">
+  <button class="col center middle outlined">
     <slot />
   </button>
 </template>
@@ -7,11 +7,7 @@
 <style scoped>
 button {
   padding: 0.5rem;
-
-  border: 1px solid var(--border-main);
-  background-color: var(--bg-body);
   color: var(--text-dim);
-
   transition: all 0.2s;
 }
 

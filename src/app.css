@@ -342,4 +342,9 @@ input[type="date"] {
   color-scheme: dark;
 }
 
+.outlined {
+  border: 1px solid var(--border-main);
+  background-color: var(--bg-body);
+}
+
 /* #endregion */

@@ -12,15 +12,15 @@ macro-bar {
 
   background-color: var(--bg-surface, gray);
 
-  & div {
+  div {
     height: 100%;
   }
 
-  & div.fill {
+  div.fill {
     background-color: var(--color-accent, green);
   }
 
-  & div.project {
+  div.project {
     background-color: var(--color-accent-light, lime);
   }
 }

@@ -63,19 +63,19 @@ const data = computed(() => {
 ul {
   gap: 1rem;
 
-  & li {
+  li {
     gap: 0.25rem;
   }
 
-  & li span {
+  li span {
     font-size: 0.875rem;
   }
 
-  & li span:first-child {
+  li span:first-child {
     color: var(--text-main);
   }
 
-  & li span:last-child {
+  li span:last-child {
     color: var(--text-dim);
   }
 }
