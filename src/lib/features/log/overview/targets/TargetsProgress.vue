@@ -1,9 +1,8 @@
 <script setup lang="ts">
-
 import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/lib/constants";
 import { useTargetsStore } from "@/lib/stores";
 import { useSummaryStore } from "@/lib/stores/summary.store";
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, watch, watchEffect } from "vue";
 import type { DailyTargets } from "../../../../model";
 
 interface Props {
@@ -15,7 +14,6 @@ const shownTargetsKeys: (keyof DailyTargets)[] = ["kcal", "protein"];
 
 const { targetsState } = useTargetsStore();
 const { summaryState, loadForDate } = useSummaryStore();
-
 
 const targets = computed(() => {
   return shownTargetsKeys.map((key) => {
@@ -30,7 +28,9 @@ const targets = computed(() => {
   })
 });
 
-watch(props.date, loadForDate);
+watchEffect(() => {
+  loadForDate(props.date);
+});
 
 onMounted(() => {
   loadForDate(props.date);

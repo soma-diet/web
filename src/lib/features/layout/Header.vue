@@ -3,10 +3,13 @@ import { logOut } from '@/lib/api';
 import { useAuthStore } from '@/lib/stores';
 import { useAnalysisSelectionStore } from '@/lib/stores/analysis-selection.store';
 import { computed, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const { authState } = useAuthStore();
-let email = computed<string | null>(() => authState.user?.email ?? null);
+const { openTargetsForm } = useAnalysisSelectionStore();
 
+// rotating logo on hover logic
 const hoveringLogo = ref(false);
 const onLogoHovered = () => hoveringLogo.value = true;
 const onLogoLeft = () => hoveringLogo.value = false;
@@ -14,7 +17,13 @@ const logoRotationDuration = computed(() => hoveringLogo.value ? 0.75 : 10);
 const logoRotationDelay = computed(() => hoveringLogo.value ? 0.05 : 30);
 watch(hoveringLogo, (val: boolean) => console.log(val));
 
-const { openTargetsForm } = useAnalysisSelectionStore();
+function handleLogOut() {
+  logOut().then(() => {
+    router.push({ name: "SignIn" });
+  }).catch(() => {
+    // TODO sign out error poup
+  })
+}
 </script>
 
 <template>
@@ -26,7 +35,7 @@ const { openTargetsForm } = useAnalysisSelectionStore();
     </div>
     <div class="right center">
       <template v-if="authState.isLoggedIn">
-        <OutlineButton @click="logOut">
+        <OutlineButton @click="handleLogOut">
           <LogOutIcon />
         </OutlineButton>
         <OutlineButton @click="openTargetsForm">

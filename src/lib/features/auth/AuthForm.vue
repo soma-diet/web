@@ -1,7 +1,24 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { signInWithGitHub, signInWithGoogle } from "../../api";
 import GoogleSignInButton from "../../ui/ext/GoogleSignInButton.vue";
 import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.vue";
+
+const router = useRouter();
+
+type Provider = "google" | "github";
+const signInMethods = {
+  "google": signInWithGoogle,
+  "github": signInWithGitHub
+}
+function handleSignIn(provider: Provider) {
+  const signInMethod = signInMethods[provider];
+  signInMethod()
+    .then(() => router.push({ name: "Dashboard" }))
+    .catch(() => {
+      // TODO handle sign in error
+    })
+}
 </script>
 
 <template>
@@ -12,8 +29,8 @@ import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.vue";
     </div>
     <LabeledHorizontalRule><span>please sign in with</span></LabeledHorizontalRule>
     <div class="col center oauth">
-      <GoogleSignInButton @click="signInWithGoogle" />
-      <GitHubSignInButton @click="signInWithGitHub" />
+      <GoogleSignInButton @click="() => handleSignIn('google')" />
+      <GitHubSignInButton @click="() => handleSignIn('github')" />
     </div>
   </div>
 </template>
