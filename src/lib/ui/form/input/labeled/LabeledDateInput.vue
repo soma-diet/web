@@ -20,8 +20,7 @@ const dateInput = computed<string>({
       dateModel.value = new Date(); // pokud smaze date resetovat na dnesni datum
       return;
     }
-    dateModel.value = makeDateFromDateString(dateInput.value);
-    return makeDateFromDateString(dateInput.value);
+    dateModel.value = makeDateFromDateString(inputValue);
   }
 });
 watch(dateInput, (newVal: string) => console.log(newVal), { immediate: true });
@@ -40,6 +39,7 @@ input {
   color: var(--text-main);
   background-color: var(--bg-surface);
 }
+
 input:focus {
   border-color: var(--color-accent);
 }
