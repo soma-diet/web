@@ -38,5 +38,6 @@ export function rawToTrackable(raw: any): Trackable {
     type: raw.type === "FOOD" ? TrackableType.FOOD : TrackableType.RECIPE,
     macronutrients: rawToMacronutrients(raw.macronutrients),
     micronutrients: rawToMicronutrients(raw.micronutrients),
+    isPrivate: raw.isPrivate
   };
 }

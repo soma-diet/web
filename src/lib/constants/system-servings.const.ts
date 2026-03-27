@@ -1,14 +1,16 @@
 import type { Serving, Trackable } from "../model";
 
 const SYSTEM_MASS_SERVINGS: Serving[] = [
-    {
+  {
+        id: null,
         name: "g",
         size: 1,
         isSystem: true,
     },
 ];
 const SYSTEM_LIQUID_SERVINGS: Serving[] = [
-    {
+  {
+      id: null,
         name: "ml",
         size: 1,
         isSystem: true,

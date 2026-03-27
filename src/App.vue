@@ -5,9 +5,6 @@ import { useNetwork } from './composables/network.composable';
 import OfflineScreen from './layout/OfflineScreen.vue';
 
 const { online } = useNetwork();
-
-window.addEventListener('online', () => console.log("online"));
-window.addEventListener('online', () => console.log("offline"));
 </script>
 
 <template>
@@ -19,5 +16,5 @@ window.addEventListener('online', () => console.log("offline"));
       <ListLoadingEffect />
     </template>
   </Suspense>
-   <OfflineScreen v-else />
- </template>
+  <OfflineScreen v-else />
+</template>

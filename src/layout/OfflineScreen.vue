@@ -11,7 +11,8 @@
 </template>
 
 <style scoped>
-main, section {
+main,
+section {
   width: 100vw;
   height: 100vh;
 }
