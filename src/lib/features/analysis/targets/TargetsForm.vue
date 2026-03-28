@@ -1,20 +1,29 @@
 <!-- Form for setting daily targets. -->
 <script setup lang="ts">
-import { kcalToKJ, kJToKcal, NUTRIENT_DISPLAY_NAMES, NUTRITION_KEYS, roundNutrient } from "@/lib/constants";
-import { useTargetsStore } from "@/lib/stores";
-import { computed, ref } from "vue";
 import { putDailyTargets } from "@/lib/api";
+import {
+  kcalToKJ,
+  kJToKcal,
+  NUTRIENT_DISPLAY_NAMES,
+  NUTRITION_KEYS,
+  roundNutrient,
+} from "@/lib/constants";
+import { useTargetsStore } from "@/lib/stores";
+import { computed, onMounted, ref } from "vue";
 
+import type { DailyTargets } from "@/lib/model";
+import PrimaryButton from "@/lib/ui/action/PrimaryButton.vue";
 import LabeledNumberInput from "@/lib/ui/form/input/labeled/LabeledNumberInput.vue";
+import FormNavigationBar from "@/lib/ui/form/nav/FormNavigationBar.vue";
 import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 
 const emit = defineEmits<{
-  (e: "finished"): void
+  (e: "finished"): void;
 }>();
 
 const isSubmitting = ref(false);
 
-const { targetsState, reloadTargets } = useTargetsStore();
+const { targetsState } = useTargetsStore();
 
 const kJ = computed<number | null>({
   get: () => {
@@ -25,42 +34,66 @@ const kJ = computed<number | null>({
   },
   set: (newVal) => {
     if (targetsState.dailyTargets) {
-      targetsState.dailyTargets.kcal = newVal ? roundNutrient(kJToKcal(newVal)) : null;
+      targetsState.dailyTargets.kcal = newVal
+        ? roundNutrient(kJToKcal(newVal))
+        : null;
     }
-  }
+  },
 });
 
+let originalTargets = null as DailyTargets | null;
+function restoreTargets() {
+  if (!originalTargets) return;
+  targetsState.dailyTargets = originalTargets;
+}
 
 // FORM SUBMITTING
 async function handleTargetsSubmit() {
   isSubmitting.value = true;
-  if (!targetsState.dailyTargets) {
-    console.error("Daily targets shouldn't be null on form submit.");
-    return;
-  }
 
-  putDailyTargets(targetsState.dailyTargets!).catch((_) => {
-    // if error reload targets to saved values from the server
-    reloadTargets();
-  }).finally(() => {
-    isSubmitting.value = false;
-    emit("finished");
-  });
+  putDailyTargets(targetsState.dailyTargets!)
+    .catch((_) => restoreTargets)
+    .finally(() => {
+      isSubmitting.value = false;
+      emit("finished");
+    });
 }
 
+function onFormCancel() {
+  restoreTargets();
+  emit("finished");
+}
+
+onMounted(() => {
+  originalTargets = { ...targetsState.dailyTargets }; // ulozit kopii, kdyby dal cancel
+});
 </script>
 
 <template>
   <div class="wrapper col">
-    <FormNavigationBar title="SET DAILY TARGETS" @close="emit('finished')" />
+    <FormNavigationBar title="SET DAILY TARGETS" @close="onFormCancel" />
     <ListLoadingEffect v-if="isSubmitting || targetsState.isLoadingTargets" />
-    <form v-else-if="targetsState.dailyTargets" @submit.prevent="handleTargetsSubmit" class="col">
-      <LabeledNumberInput label="Energy (kJ)" v-model:value="kJ" />
-      <LabeledNumberInput :key="key" v-for="key in NUTRITION_KEYS" :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
-        v-model:value="targetsState.dailyTargets[key]" />
-      <PrimaryButton type="submit" :disabled="isSubmitting">Update daily targets</PrimaryButton>
+    <form
+      v-else-if="targetsState.dailyTargets"
+      @submit.prevent="handleTargetsSubmit"
+      class="col"
+    >
+      <LabeledNumberInput
+        label="Energy (kJ)"
+        v-model:value="kJ"
+        placeholder="Choose a daily target"
+      />
+      <LabeledNumberInput
+        :key="key"
+        v-for="key in NUTRITION_KEYS"
+        :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
+        v-model:value="targetsState.dailyTargets[key]"
+        placeholder="Choose a daily target"
+      />
+      <PrimaryButton type="submit" :disabled="isSubmitting"
+        >Update daily targets</PrimaryButton
+      >
     </form>
-    <span v-else>failed to load targets</span>
   </div>
 </template>
 

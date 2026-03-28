@@ -13,23 +13,29 @@ interface Props {
   subtext?: string;
   itemType: TrackableType;
   kcal?: number;
-  leftAction?: boolean,
-  rightAction?: boolean
+  leftAction?: boolean;
+  rightAction?: boolean;
 }
 
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-  (e: "ondelete"): void,
-  (e: "onedit"): void
+  (e: "click"): void;
+  (e: "ondelete"): void;
+  (e: "onedit"): void;
 }>();
 
 const { isMobile } = useMobile();
 </script>
 
 <template>
-  <SwipeableItem v-if="isMobile" :leftAction="leftAction" :rightAction="rightAction" @swipe-left="emit('onedit')"
-    @swipe-right="emit('ondelete')">
+  <SwipeableItem
+    v-if="isMobile"
+    :leftAction="leftAction"
+    :rightAction="rightAction"
+    @swipe-left="emit('onedit')"
+    @swipe-right="emit('ondelete')"
+  >
     <template #action-right>
       <TrashIcon class="action" />
     </template>
@@ -38,11 +44,22 @@ const { isMobile } = useMobile();
       <EditIcon class="action" />
     </template>
 
-    <ItemDetails :name="name" :subtext="subtext" :itemType="itemType" :kcal="kcal" />
+    <ItemDetails
+      :name="name"
+      :subtext="subtext"
+      :itemType="itemType"
+      :kcal="kcal"
+      @click="emit('click')"
+    />
   </SwipeableItem>
 
-  <ActionItem v-else :leftAction="leftAction" :rightAction="rightAction" @click-left="emit('ondelete')"
-    @click-right="emit('onedit')">
+  <ActionItem
+    v-else
+    :leftAction="leftAction"
+    :rightAction="rightAction"
+    @click-left="emit('ondelete')"
+    @click-right="emit('onedit')"
+  >
     <template #action-right>
       <TrashIcon class="action" />
     </template>
@@ -51,7 +68,13 @@ const { isMobile } = useMobile();
       <EditIcon class="action" />
     </template>
 
-    <ItemDetails :name="name" :subtext="subtext" :itemType="itemType" :kcal="kcal" />
+    <ItemDetails
+      :name="name"
+      :subtext="subtext"
+      :itemType="itemType"
+      :kcal="kcal"
+      @click="emit('click')"
+    />
   </ActionItem>
 </template>
 

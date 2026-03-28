@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { getWithSystemServings } from "../../../constants/system-servings.const";
-import {
-  type LogEntry,
-  type Serving,
-  type Trackable,
-} from "../../../model";
+import { type LogEntry, type Serving, type Trackable } from "../../../model";
 import { getImage, SomaImageSize } from "../../../utils/image.util";
 import { makeDateFromISO } from "@/lib/utils/date.util";
 import FormNavigationBar from "@/lib/ui/form/nav/FormNavigationBar.vue";
@@ -17,8 +13,14 @@ import NutritionalInfo from "./components/NutritionalInfo.vue";
 import MacroFill from "./components/MacroFill.vue";
 
 const emit = defineEmits<{
-  (e: "cancel"): void,
-  (e: "submit", quantity: number, servingId: string | null, date: Date, callback: () => void): void,
+  (e: "cancel"): void;
+  (
+    e: "submit",
+    quantity: number,
+    servingId: string | null,
+    date: Date,
+    callback: () => void,
+  ): void;
 }>();
 
 const props = defineProps<{
@@ -29,19 +31,24 @@ const props = defineProps<{
 const thumbnailSrc = computed(() =>
   props.trackable.imageFilename
     ? getImage(props.trackable.imageFilename, SomaImageSize.LARGE)
-    : "/assets/img/no-img-placeholder.jpg");
+    : "/assets/img/no-img-placeholder.jpg",
+);
 
 // inputs
 const quantity = ref<number>(props.entry?.quantity ?? 100);
-const selectedDate = ref<Date>(props.entry?.timestamp ? makeDateFromISO(props.entry.timestamp) : new Date());
+const selectedDate = ref<Date>(
+  props.entry?.timestamp ? makeDateFromISO(props.entry.timestamp) : new Date(),
+);
 
 // servings
 const servings = computed(() => getWithSystemServings(props.trackable));
-const systemServing = servings.value.find((serving: Serving) => serving.isSystem)!;
-const entryServing = props.entry ? servings.value.find((s: Serving) => s.id === props.entry!.servingId) : null;
-const selectedServing = ref<Serving>(
-  entryServing ?? systemServing
-);
+const systemServing = servings.value.find(
+  (serving: Serving) => serving.isSystem,
+)!;
+const entryServing = props.entry
+  ? servings.value.find((s: Serving) => s.id === props.entry!.servingId)
+  : null;
+const selectedServing = ref<Serving>(entryServing ?? systemServing);
 
 // helpers
 const totalSize = computed(() => quantity.value * selectedServing.value.size);
@@ -56,14 +63,20 @@ const originalTotalSize = computed(() => {
 function handleSubmit() {
   isSubmitting.value = true;
 
-  emit("submit", quantity.value, selectedServing.value.id, selectedDate.value, () => {
-    isSubmitting.value = false;
-  });
+  emit(
+    "submit",
+    quantity.value,
+    selectedServing.value.id,
+    selectedDate.value,
+    () => {
+      isSubmitting.value = false;
+    },
+  );
 }
 
 const navTitle = computed(() => {
-  return props.entry ? "update entry" : "log entry"
-})
+  return props.entry ? "update entry" : "log entry";
+});
 </script>
 
 <template>
@@ -78,27 +91,52 @@ const navTitle = computed(() => {
       <form @submit.prevent="handleSubmit">
         <h2>{{ props.trackable.name }}</h2>
 
-        <LabeledNumberInput label="Amount" v-model:value="quantity" step="0.01" />
-        <LabeledSelect label="Serving" v-model:selected="selectedServing"
-          :options="servings.map(serving => ({ name: serving.name, value: serving }))" />
+        <LabeledNumberInput
+          :required="true"
+          v-model:value="quantity"
+          label="Amount"
+          step="0.01"
+          placeholder="150"
+        />
+        <LabeledSelect
+          label="Serving"
+          v-model:selected="selectedServing"
+          :required="true"
+          :options="
+            servings.map((serving) => ({ name: serving.name, value: serving }))
+          "
+        />
 
-        <LabeledDateInput :required="true" label="Date" v-model="selectedDate" />
+        <LabeledDateInput
+          :required="true"
+          label="Date"
+          v-model="selectedDate"
+        />
 
         <PrimaryButton type="submit" :disabled="isSubmitting">
-          {{ isSubmitting ? "saving.." : (props.entry ? "update" : "add") }}
+          {{ isSubmitting ? "saving.." : props.entry ? "update" : "add" }}
         </PrimaryButton>
       </form>
     </div>
 
     <hr />
 
-    <NutritionalInfo :key="props.trackable.id" :grams="totalSize" :macros="props.trackable.macronutrients"
-      :micros="props.trackable.micronutrients" />
+    <NutritionalInfo
+      :key="props.trackable.id"
+      :grams="totalSize"
+      :macros="props.trackable.macronutrients"
+      :micros="props.trackable.micronutrients"
+    />
 
     <hr />
 
-    <MacroFill :key="props.trackable.id" :grams="totalSize" :macros="props.trackable.macronutrients"
-      :original-grams="originalTotalSize" />
+    <MacroFill
+      :key="props.trackable.id"
+      :grams="totalSize"
+      :macros="props.trackable.macronutrients"
+      :micros="props.trackable.micronutrients"
+      :original-grams="originalTotalSize"
+    />
   </div>
 </template>
 
@@ -132,7 +170,7 @@ form {
   border: 2px solid var(--border-main);
 }
 
-.food-thumbnail>img {
+.food-thumbnail > img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;

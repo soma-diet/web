@@ -2,16 +2,16 @@
 <script setup lang="ts">
 import LabeledInput from "./LabeledInput.vue";
 
-interface Props {
-  label: string;
-  name?: string;
-  step?: string;
-}
-
-// zklonovane props
-const props = withDefaults(defineProps<Props>(), {
-  step: "0.1"
-})
+const props = withDefaults(
+  defineProps<{
+    label: string;
+    name?: string;
+    step?: string;
+  }>(),
+  {
+    step: "0.1",
+  },
+);
 
 const inputModel = defineModel<number | string | null>("value");
 </script>

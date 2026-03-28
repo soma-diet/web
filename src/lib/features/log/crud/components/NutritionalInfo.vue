@@ -1,35 +1,54 @@
-    <script setup lang="ts">
-    import { kcalToKJ, NUTRIENT_DISPLAY_NAMES, NUTRIENT_SUFFIX, recalculateFields, roundNutrient } from "@/lib/constants";
-    import { computed } from "vue";
-    import type { Macronutrients, Micronutrients } from "../../../../model";
+<script setup lang="ts">
+import {
+  kcalToKJ,
+  NUTRIENT_DISPLAY_NAMES,
+  NUTRIENT_SUFFIX,
+  recalculateFields,
+  roundNutrient,
+} from "@/lib/constants";
+import { computed } from "vue";
+import type { Macronutrients, Micronutrients } from "../../../../model";
 
-    const props = defineProps<{
-      grams: number;
-      macros: Macronutrients;
-      micros: Micronutrients;
-    }>();
+const props = defineProps<{
+  grams: number;
+  macros: Macronutrients;
+  micros: Micronutrients;
+}>();
 
-    const mergedNutrients: Record<string, number | null> = { ...props.macros, ...props.micros };
+const mergedNutrients: Record<string, number | null> = {
+  ...props.macros,
+  ...props.micros,
+};
 
-    mergedNutrients["kj"] = mergedNutrients["kcal"] ? kcalToKJ(mergedNutrients["kcal"]) : null;
+mergedNutrients["kj"] = mergedNutrients["kcal"]
+  ? kcalToKJ(mergedNutrients["kcal"])
+  : null;
 
-    const coefficient = computed(() => props.grams / 100);
+const coefficient = computed(() => props.grams / 100);
 
-    // pro urceni poradi a nazvu v tabulce
-    const keyOrder = ["kj", "kcal", "fats", "protein", "carbs", "fiber", "sodium"]; // display order in nutrient table
-    const nutrientVisuals = computed(() => {
-      const visuals = [] as { label: string, value: string }[];
-      const adjustedNutrients = recalculateFields(mergedNutrients, coefficient.value);
-      for (const key of keyOrder) {
-        const value = adjustedNutrients[key] ?? null;
-        const displayValue = (value ? roundNutrient(value) : "?").toString() + " " + NUTRIENT_SUFFIX[key];
-        visuals.push({
-          label: NUTRIENT_DISPLAY_NAMES[key] ?? key,
-          value: displayValue
-        })
-      }
-      return visuals;
+// pro urceni poradi a nazvu v tabulce
+const keyOrder = ["kj", "kcal", "fats", "protein", "carbs", "fiber", "sodium"]; // display order in nutrient table
+const nutrientVisuals = computed(() => {
+  const visuals = [] as { label: string; value: string }[];
+  const adjustedNutrients = recalculateFields(
+    mergedNutrients,
+    coefficient.value,
+  );
+
+  // pro kazdy klic najit jeho display jmeno a spocitat mu zaokrouhlenou display hodnotu
+  for (const key of keyOrder) {
+    const value = adjustedNutrients[key] ?? null;
+    const displayValue =
+      (value ? roundNutrient(value) : "?").toString() +
+      " " +
+      NUTRIENT_SUFFIX[key];
+    visuals.push({
+      label: NUTRIENT_DISPLAY_NAMES[key] ?? key,
+      value: displayValue,
     });
+  }
+  return visuals;
+});
 </script>
 
 <template>

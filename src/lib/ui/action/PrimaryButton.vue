@@ -28,8 +28,6 @@ button {
 button:hover {
   background-color: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-
-  /* box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2); */
 }
 
 button:disabled {

@@ -3,12 +3,13 @@ import { computed } from 'vue';
 import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from '@/lib/constants';
 import { useTargetsStore } from '@/lib/stores';
 import { useSummaryStore } from '@/lib/stores/summary.store';
-import type { Macronutrients } from '@/lib/model';
+import type { Macronutrients, Micronutrients } from '@/lib/model';
 
 const props = defineProps<{
   grams: number;
   originalGrams: number;
   macros: Macronutrients;
+  micros: Micronutrients;
 }>();
 
 const { summaryState } = useSummaryStore();
@@ -18,18 +19,19 @@ const data = computed(() => {
   if (!targetsState.dailyTargets) return [];
 
   const loadedTargetKeys = Object.keys(targetsState.dailyTargets) as (keyof typeof targetsState.dailyTargets)[];
+  const nutrients = { ...props.macros, ...props.micros };
 
   return loadedTargetKeys.map((key) => {
     const max = targetsState.dailyTargets?.[key] ?? 0;
 
     const savedTotal = summaryState.dailySummary?.[key] ?? 0;
-    const macroSize = props.macros[key as keyof Macronutrients] ?? 0;
+    const nutrientSize = nutrients[key as (keyof Macronutrients | keyof Micronutrients)] ?? 0;
 
     // spocitat jake mnozstvi uz je zalogovane (kdyz updatujeme log entry tak jsou jeji macros uz zapocitane v summary)
-    const alreadyLoggedMacros = (macroSize / 100) * props.originalGrams;
+    const alreadyLoggedMacros = (nutrientSize / 100) * props.originalGrams;
     const baseCurrent = Math.max(0, savedTotal - alreadyLoggedMacros);
 
-    const projectedAdd = (macroSize / 100) * props.grams;
+    const projectedAdd = (nutrientSize / 100) * props.grams;
 
     return {
       key,
@@ -53,8 +55,7 @@ const data = computed(() => {
         </span>
       </div>
 
-      <macro-bar :filled="target.current" :projected="target.projected" :max="target.max">
-      </macro-bar>
+      <macro-bar :filled="target.current" :projected="target.projected" :max="target.max" />
     </li>
   </ul>
 </template>

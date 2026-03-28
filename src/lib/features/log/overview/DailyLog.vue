@@ -12,7 +12,7 @@ import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 import TargetsProgress from "./targets/TargetsProgress.vue";
 
 const emit = defineEmits<{
-  (e: "itemSelected", entry: LogEntry): void
+  (e: "itemSelected", entry: LogEntry): void;
 }>();
 
 const loadingEntries = ref(true);
@@ -27,7 +27,7 @@ const moveDate = (backwards: boolean) => {
   const changedDate = new Date(dateSelected.value);
   changedDate.setDate(changedDate.getDate() + increment);
   dateSelected.value = changedDate;
-}
+};
 
 function loadEntries(date: Date) {
   loadingEntries.value = true;
@@ -57,11 +57,13 @@ const dateString = computed(() => {
   yesterday.setDate(yesterday.getDate() - 1);
   if (date.getDate() === yesterday.getDate()) return "Yesterday";
 
-  return date.toLocaleDateString('cs-CZ');
+  return date.toLocaleDateString("cs-CZ");
 });
 
 async function handleEntryDelete(deletedEntry: LogEntry) {
-  logEntries.value = logEntries.value.filter((entry: LogEntry) => entry.id !== deletedEntry.id);
+  logEntries.value = logEntries.value.filter(
+    (entry: LogEntry) => entry.id !== deletedEntry.id,
+  );
   try {
     await deleteLogEntry(deletedEntry);
   } catch (e: any) {
@@ -72,7 +74,6 @@ async function handleEntryDelete(deletedEntry: LogEntry) {
 }
 
 reloadTargets();
-
 </script>
 
 <template>
@@ -83,7 +84,10 @@ reloadTargets();
       </OutlineButton>
       <h3>{{ dateString }}</h3>
     </div>
-    <OutlineButton @click="moveDate(false)" :class="{ 'hidden': isTodaySelected }">
+    <OutlineButton
+      @click="moveDate(false)"
+      :class="{ hidden: isTodaySelected }"
+    >
       <ForwardArrowIcon />
     </OutlineButton>
   </nav>
@@ -93,9 +97,14 @@ reloadTargets();
     <ul>
       <template v-for="entry in logEntries">
         <li>
-          <InteractableItem :name="entry.item.name" :subtext="`${entry.quantity} ${entry.servingName}`"
-            :itemType="entry.item.type" :leftAction="true" :rightAction="true" @onedit="emit('itemSelected', entry)"
-            @ondelete="() => handleEntryDelete(entry)" />
+          <InteractableItem
+            :name="entry.item.name"
+            :subtext="`${entry.quantity} ${entry.servingName}`"
+            :itemType="entry.item.type"
+            :leftAction="true"
+            @click="emit('itemSelected', entry)"
+            @ondelete="() => handleEntryDelete(entry)"
+          />
         </li>
       </template>
     </ul>
@@ -107,7 +116,7 @@ nav {
   padding: 1rem;
 }
 
-nav>.main {
+nav > .main {
   gap: 1rem;
 }
 
