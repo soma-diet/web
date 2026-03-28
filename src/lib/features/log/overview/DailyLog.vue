@@ -72,7 +72,6 @@ async function handleEntryDelete(deletedEntry: LogEntry) {
 }
 
 onMounted(() => {
-  reloadTargets();
   watch(dateSelected, (newDate) => loadEntries(newDate), { immediate: true });
 });
 </script>

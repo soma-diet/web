@@ -55,6 +55,7 @@ onMounted(() => {
         :name="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         :days="data.days"
         :values="data.values"
+        class="graph"
       />
     </template>
     <ListLoadingEffect v-else />

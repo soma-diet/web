@@ -52,5 +52,14 @@ function handleSignIn(provider: Provider) {
   h1 {
     font-size: 350%;
   }
+
+  p {
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: start;
+    padding: 1rem 2rem;
+  }
 }
 </style>

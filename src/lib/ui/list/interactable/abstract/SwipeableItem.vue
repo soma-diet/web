@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import OutlineButton from '@/lib/ui/action/OutlineButton.vue';
-import { onUnmounted, ref } from 'vue';
+import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
+import { onUnmounted, ref } from "vue";
 
 const emit = defineEmits(["swipe-left", "swipe-right"]);
 const props = defineProps<{
-  leftAction?: boolean,
-  rightAction?: boolean
+  leftAction?: boolean;
+  rightAction?: boolean;
 }>();
 
 const TRIGGER_THRESHOLD_PX = 50; // dragged pixels for action to be performed
@@ -17,7 +17,8 @@ const currentX = ref(0);
 
 // #region DRAGGING
 // utils
-const getPosX = (event: MouseEvent | TouchEvent) => 'touches' in event ? event.touches[0]!.clientX : event.clientX;
+const getPosX = (event: MouseEvent | TouchEvent) =>
+  "touches" in event ? event.touches[0]!.clientX : event.clientX;
 
 const startDrag = (event: MouseEvent | TouchEvent) => {
   isDragging.value = true;
@@ -25,10 +26,10 @@ const startDrag = (event: MouseEvent | TouchEvent) => {
   // get origin X position
   startX.value = getPosX(event);
 
-  window.addEventListener('mousemove', onDrag);
-  window.addEventListener('mouseup', stopDrag);
-  window.addEventListener('touchmove', onDrag, { passive: false }); // passive false potreba aby nescrolloval pri tazeni do strany
-  window.addEventListener('touchend', stopDrag);
+  window.addEventListener("mousemove", onDrag);
+  window.addEventListener("mouseup", stopDrag);
+  window.addEventListener("touchmove", onDrag, { passive: false }); // passive false potreba aby nescrolloval pri tazeni do strany
+  window.addEventListener("touchend", stopDrag);
 };
 
 // dragging
@@ -41,8 +42,10 @@ const onDrag = (event: MouseEvent | TouchEvent) => {
     deltaX = Math.max(-MAX_DRAG_PX, Math.min(MAX_DRAG_PX, deltaX));
   } else if (props.leftAction) {
     deltaX = Math.max(-MAX_DRAG_PX, Math.min(0, deltaX));
-  } else {
+  } else if (props.rightAction) {
     deltaX = Math.min(MAX_DRAG_PX, Math.max(0, deltaX));
+  } else {
+    deltaX = 0;
   }
 
   currentX.value = deltaX;
@@ -54,19 +57,19 @@ const stopDrag = () => {
   // activate on triggered
   if (currentX.value > TRIGGER_THRESHOLD_PX) {
     // drag RIGHT
-    emit('swipe-right');
+    emit("swipe-right");
   } else if (currentX.value < -TRIGGER_THRESHOLD_PX) {
     // drag LEFT
-    emit('swipe-left');
+    emit("swipe-left");
   }
 
   currentX.value = 0;
 
   // remove event listeners when drag ends
-  window.removeEventListener('mousemove', onDrag);
-  window.removeEventListener('mouseup', stopDrag);
-  window.removeEventListener('touchmove', onDrag);
-  window.removeEventListener('touchend', stopDrag);
+  window.removeEventListener("mousemove", onDrag);
+  window.removeEventListener("mouseup", stopDrag);
+  window.removeEventListener("touchmove", onDrag);
+  window.removeEventListener("touchend", stopDrag);
 };
 //#endregion
 
@@ -75,17 +78,28 @@ onUnmounted(() => stopDrag());
 
 <template>
   <div class="swipe-container">
-    <OutlineButton v-if="props.leftAction" class="swipe-action left-action"
-      :class="{ 'active': currentX > TRIGGER_THRESHOLD_PX }">
+    <OutlineButton
+      v-if="props.leftAction"
+      class="swipe-action left-action"
+      :class="{ active: currentX > TRIGGER_THRESHOLD_PX }"
+    >
       <slot name="action-right" />
     </OutlineButton>
 
-    <OutlineButton v-if="props.rightAction" class="swipe-action right-action"
-      :class="{ 'active': currentX < -TRIGGER_THRESHOLD_PX }">
+    <OutlineButton
+      v-if="props.rightAction"
+      class="swipe-action right-action"
+      :class="{ active: currentX < -TRIGGER_THRESHOLD_PX }"
+    >
       <slot name="action-left" />
     </OutlineButton>
 
-    <div class="swipe-content" :class="{ 'dragging': isDragging }" @mousedown="startDrag" @touchstart="startDrag">
+    <div
+      class="swipe-content"
+      :class="{ dragging: isDragging }"
+      @mousedown="startDrag"
+      @touchstart="startDrag"
+    >
       <slot></slot>
     </div>
   </div>

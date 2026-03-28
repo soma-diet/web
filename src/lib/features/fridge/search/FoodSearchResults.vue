@@ -3,6 +3,7 @@ import { FOOD_SEARCH_PAGE_SIZE } from "@/lib/constants/food.const";
 import type { Food } from "@/lib/model";
 import { useFoodSelectionStore } from "@/lib/stores";
 import InteractableItem from "@/lib/ui/list/interactable/InteractableItem.vue";
+import { onMounted, onUnmounted } from "vue";
 
 const emit = defineEmits<{
   (e: "loadMore"): void;
@@ -16,17 +17,30 @@ const props = defineProps<{
 
 const { openFoodForm } = useFoodSelectionStore();
 
-function handleScroll(e: Event) {
-  const el = e.target as HTMLElement;
+function handleScroll(e?: Event) {
+  let isBottom = false;
 
-  // vypocet toho zda uz doscrolloval dolu
-  const isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 200;
-  if (isBottom) {
-    setTimeout(() => {
-      emit("loadMore");
-    }, 100);
+  if (e && e.target instanceof HTMLElement) {
+    // scrollovani na PC (posila event z <ul> @scroll)
+    const el = e.target;
+    isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 200;
+  } else {
+    // scrollovani na mobile (nema event nad htmlelement)
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    isBottom = scrollY + windowHeight >= docHeight - 200;
   }
+
+  // staci setTimeout, parent resi debounce na loadMore, takze se nespamuje
+  if (isBottom) setTimeout(() => emit("loadMore"), 150);
 }
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <template>

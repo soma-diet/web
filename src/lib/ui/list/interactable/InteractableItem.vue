@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMobile } from "@/composables/mobile.composable";
+import { useMobile } from "@/lib/stores/mobile.store";
 import { TrackableType } from "../../../model";
 
 import { computed } from "vue";
@@ -9,7 +9,7 @@ import ActionItem from "./abstract/ActionItem.vue";
 import SwipeableItem from "./abstract/SwipeableItem.vue";
 import ItemDetails from "./components/ItemDetails.vue";
 
-interface Props {
+const props = defineProps<{
   name: string;
   subtext?: string;
   itemType: TrackableType;
@@ -17,9 +17,7 @@ interface Props {
   leftAction?: boolean;
   rightAction?: boolean;
   index: number; // pro animaci
-}
-
-const props = defineProps<Props>();
+}>();
 
 const emit = defineEmits<{
   (e: "click"): void;

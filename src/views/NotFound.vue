@@ -1,49 +1,59 @@
 <script setup lang="ts">
-import RotatingSomaLogo from "@/lib/ui/animated/RotatingSomaLogo.vue";
+import PrimaryButton from "@/lib/ui/action/PrimaryButton.vue";
 </script>
 
 <template>
   <main>
-    <section class="bevel bevel-tr bevel-br f3 center middle">
+    <section class="center middle">
       <h1 class="accent-heading">Page Not Found</h1>
+      <!-- TODO history api return? -->
+      <PrimaryButton class="safety-btn">Return to safety</PrimaryButton>
     </section>
-    <section class="bevel bevel-tl bevel-bl f2 center middle">
-      <video
-        preload="none"
-        autoplay
-        muted
-        loop
-        playsinline
-        id="pattern-bg"
-        src="/assets/video/topographic-pattern.mp4"
-      ></video>
-      <div class="logo-wrapper">
-        <RotatingSomaLogo :duration="5" :delay="1" class="logo" />
-      </div>
-    </section>
+    <video
+      preload="none"
+      autoplay
+      muted
+      loop
+      playsinline
+      id="pattern-bg"
+      src="/assets/video/topographic-pattern.mp4"
+    ></video>
   </main>
 </template>
 
 <style scoped>
-h1 {
-  font-size: 250%;
+main {
+  position: relative;
+
+  section {
+    width: 100%;
+    gap: 1rem;
+  }
+  h1 {
+    font-size: 250%;
+  }
+  video {
+    opacity: 0.02;
+    z-index: 0;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .safety-btn {
+    width: 30%;
+  }
 }
-
-video {
-  opacity: 0.1;
-  z-index: -1;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-.logo-wrapper {
-  width: 65%;
+@media (max-width: 768px) {
+  h1 {
+    font-size: 200%;
+  }
 }
 </style>
