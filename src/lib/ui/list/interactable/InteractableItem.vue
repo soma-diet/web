@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMobile } from "@/composables/use-mobile.composable";
+import { useMobile } from "@/composables/mobile.composable";
 import { TrackableType } from "../../../model";
 
 import { computed } from "vue";
