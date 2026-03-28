@@ -2,11 +2,12 @@
 import { useMobile } from "@/composables/use-mobile.composable";
 import { TrackableType } from "../../../model";
 
-import ItemDetails from "./components/ItemDetails.vue";
-import SwipeableItem from "./abstract/SwipeableItem.vue";
-import TrashIcon from "../../icon/TrashIcon.vue";
+import { computed } from "vue";
 import EditIcon from "../../icon/EditIcon.vue";
+import TrashIcon from "../../icon/TrashIcon.vue";
 import ActionItem from "./abstract/ActionItem.vue";
+import SwipeableItem from "./abstract/SwipeableItem.vue";
+import ItemDetails from "./components/ItemDetails.vue";
 
 interface Props {
   name: string;
@@ -15,6 +16,7 @@ interface Props {
   kcal?: number;
   leftAction?: boolean;
   rightAction?: boolean;
+  index: number; // pro animaci
 }
 
 const props = defineProps<Props>();
@@ -26,6 +28,8 @@ const emit = defineEmits<{
 }>();
 
 const { isMobile } = useMobile();
+
+const animDelay = computed(() => `${props.index * 0.1}s`);
 </script>
 
 <template>
@@ -35,6 +39,7 @@ const { isMobile } = useMobile();
     :rightAction="rightAction"
     @swipe-left="emit('onedit')"
     @swipe-right="emit('ondelete')"
+    class="animated"
   >
     <template #action-right>
       <TrashIcon class="action" />
@@ -59,6 +64,7 @@ const { isMobile } = useMobile();
     :rightAction="rightAction"
     @click-left="emit('ondelete')"
     @click-right="emit('onedit')"
+    class="animated"
   >
     <template #action-right>
       <TrashIcon class="action" />
@@ -81,5 +87,23 @@ const { isMobile } = useMobile();
 <style scoped>
 .action {
   margin: 0.5rem;
+}
+
+.animated {
+  opacity: 0;
+  animation: appearAnim 0.3s ease-out forwards;
+  /* anim delay spocten nahore */
+  animation-delay: v-bind(animDelay);
+}
+
+@keyframes appearAnim {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

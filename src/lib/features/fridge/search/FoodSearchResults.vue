@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { deleteFood } from '@/lib/api';
-import type { Food } from '@/lib/model';
-import { useFoodSelectionStore } from '@/lib/stores';
-import InteractableItem from '@/lib/ui/list/interactable/InteractableItem.vue';
+import { FOOD_SEARCH_PAGE_SIZE } from "@/lib/constants/food.const";
+import type { Food } from "@/lib/model";
+import { useFoodSelectionStore } from "@/lib/stores";
+import InteractableItem from "@/lib/ui/list/interactable/InteractableItem.vue";
 
 const emit = defineEmits<{
-  (e: "loadMore"): void,
-  (e: "itemSelected", item: Food): void,
-  (e: "itemDeleted", item: Food): void
+  (e: "loadMore"): void;
+  (e: "itemSelected", item: Food): void;
+  (e: "itemDeleted", item: Food): void;
 }>();
 
 const props = defineProps<{
-  items: Food[]
+  items: Food[];
 }>();
 
 const { openFoodForm } = useFoodSelectionStore();
@@ -24,18 +24,27 @@ function handleScroll(e: Event) {
   if (isBottom) {
     setTimeout(() => {
       emit("loadMore");
-    }, 50);
+    }, 100);
   }
 }
 </script>
 
 <template>
   <ul @scroll="handleScroll">
-    <template v-for="item in props.items" :key="item.id">
+    <template v-for="(item, index) in props.items" :key="item.id">
       <li>
-        <InteractableItem :name="item.name" :subtext="item.brand ?? undefined" :kcal="item.macronutrients.kcal"
-          :itemType="item.type" :leftAction="item.isPrivate" :rightAction="item.isPrivate"
-          @click="emit('itemSelected', item)" @onedit="openFoodForm(item)" @ondelete="emit('itemDeleted', item)" />
+        <InteractableItem
+          :index="index % FOOD_SEARCH_PAGE_SIZE"
+          :name="item.name"
+          :subtext="item.brand ?? undefined"
+          :kcal="item.macronutrients.kcal"
+          :itemType="item.type"
+          :leftAction="item.isPrivate"
+          :rightAction="item.isPrivate"
+          @click="emit('itemSelected', item)"
+          @onedit="openFoodForm(item)"
+          @ondelete="emit('itemDeleted', item)"
+        />
       </li>
     </template>
   </ul>

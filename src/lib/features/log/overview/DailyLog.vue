@@ -4,7 +4,7 @@ import { useSummaryStore } from "@/lib/stores/summary.store";
 import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
 import BackArrowIcon from "@/lib/ui/icon/BackArrowIcon.vue";
 import ForwardArrowIcon from "@/lib/ui/icon/ForwardArrowIcon.vue";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { deleteLogEntry, getLogEntries } from "../../../api/log/log.api";
 import type { LogEntry } from "../../../model";
 import InteractableItem from "@/lib/ui/list/interactable/InteractableItem.vue";
@@ -42,8 +42,6 @@ function loadEntries(date: Date) {
     });
 }
 
-watch(dateSelected, (newDate) => loadEntries(newDate), { immediate: true });
-
 const isTodaySelected = computed(() => {
   const date = dateSelected.value;
   const today = new Date();
@@ -73,7 +71,10 @@ async function handleEntryDelete(deletedEntry: LogEntry) {
   }
 }
 
-reloadTargets();
+onMounted(() => {
+  reloadTargets();
+  watch(dateSelected, (newDate) => loadEntries(newDate), { immediate: true });
+});
 </script>
 
 <template>
@@ -95,9 +96,10 @@ reloadTargets();
   <template v-else>
     <TargetsProgress :date="dateSelected" />
     <ul>
-      <template v-for="entry in logEntries">
+      <template v-for="(entry, index) in logEntries">
         <li>
           <InteractableItem
+            :index
             :name="entry.item.name"
             :subtext="`${entry.quantity} ${entry.servingName}`"
             :itemType="entry.item.type"

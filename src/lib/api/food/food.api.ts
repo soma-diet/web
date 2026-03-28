@@ -1,3 +1,4 @@
+import { FOOD_SEARCH_PAGE_SIZE } from "@/lib/constants/food.const";
 import type { Food } from "../../model";
 import { AuthError } from "../auth/auth.error";
 import { fetchWithAuth } from "../client";
@@ -19,7 +20,7 @@ export async function getFoods(
     query: query,
     filter: filter,
     page: page.toString(),
-    size: "20", // TODO put in config
+    size: FOOD_SEARCH_PAGE_SIZE.toString(),
   });
 
   const endpoint = `${FOOD_ENDPOINT}?${params.toString()}`;
