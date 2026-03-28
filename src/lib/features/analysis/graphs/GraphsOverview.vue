@@ -9,13 +9,16 @@ import {
 } from "./prepare-week-data";
 import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 import { NUTRIENT_DISPLAY_NAMES } from "@/lib/constants";
+import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
+import RefreshIcon from "@/lib/ui/icon/RefreshIcon.vue";
 
 const DISPLAY_ORDER = ["kcal", "protein", "carbs", "fats", "fiber", "sodium"];
 
-const isLoading = ref(true);
+const isLoading = ref(false);
 const nutrients = ref<Map<string, WeeklyNutrients>>(new Map());
 
-onMounted(() => {
+function loadWeeklySummary() {
+  if (isLoading.value) return;
   isLoading.value = true;
   getWeekData()
     .then((result) => {
@@ -30,12 +33,21 @@ onMounted(() => {
     .finally(() => {
       isLoading.value = false;
     });
+}
+
+onMounted(() => {
+  loadWeeklySummary();
 });
 </script>
 
 <template>
   <div class="wrapper col">
-    <h2 class="upper">Graphs</h2>
+    <div class="row apart center">
+      <h2 class="upper">Graphs</h2>
+      <OutlineButton @click="loadWeeklySummary">
+        <RefreshIcon />
+      </OutlineButton>
+    </div>
     <template v-if="!isLoading">
       <BarGraph
         v-for="[key, data] of nutrients"
@@ -53,5 +65,6 @@ onMounted(() => {
 .wrapper {
   padding: 1.5rem;
   overflow-y: scroll;
+  gap: 0.75rem;
 }
 </style>
