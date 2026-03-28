@@ -1,4 +1,5 @@
 import { getDailySummary } from "@/lib/api";
+import { roundNutrient } from "@/lib/constants";
 import type { DailySummary } from "@/lib/model";
 import { getDayOfWeek } from "@/lib/utils/date.util";
 
@@ -30,15 +31,19 @@ export async function getWeekData(
   }
 }
 
+export type WeeklyNutrients = { days: string[]; values: number[] };
 export function extractNutrientsFromWeek(
   key: string,
   data: Map<string, DailySummary>,
-) {
+): WeeklyNutrients {
   const days: string[] = [];
   const values: number[] = [];
   data.forEach((summary, day) => {
     days.push(day);
-    values.push(summary[key] ?? 0);
+
+    const dayValue = summary[key] ?? 0;
+    const roundedValue = roundNutrient(dayValue);
+    values.push(roundedValue);
   });
 
   return { days, values };
