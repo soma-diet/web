@@ -30,6 +30,15 @@ const emit = defineEmits<{
 const { isMobile } = useMobile();
 
 const animDelay = computed(() => `${props.index * 0.1}s`);
+
+// MediaAPI sound effect
+function handleDelete() {
+  const deleteSound = new Audio("/assets/sound/delete-effect.mp3");
+  deleteSound.volume = 0.2;
+  deleteSound.playbackRate = 0.9;
+  deleteSound.play();
+  emit("ondelete");
+}
 </script>
 
 <template>
@@ -38,7 +47,7 @@ const animDelay = computed(() => `${props.index * 0.1}s`);
     :leftAction="leftAction"
     :rightAction="rightAction"
     @swipe-left="emit('onedit')"
-    @swipe-right="emit('ondelete')"
+    @swipe-right="handleDelete"
     class="animated"
   >
     <template #action-right>
@@ -62,7 +71,7 @@ const animDelay = computed(() => `${props.index * 0.1}s`);
     v-else
     :leftAction="leftAction"
     :rightAction="rightAction"
-    @click-left="emit('ondelete')"
+    @click-left="handleDelete"
     @click-right="emit('onedit')"
     class="animated"
   >

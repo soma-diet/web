@@ -2,7 +2,7 @@
 import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/lib/constants";
 import { useTargetsStore } from "@/lib/stores";
 import { useSummaryStore } from "@/lib/stores/summary.store";
-import { computed, onMounted, watch, watchEffect } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import type { DailyTargets } from "../../../../model";
 
 interface Props {
@@ -10,7 +10,12 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const shownTargetsKeys: (keyof DailyTargets)[] = ["kcal", "protein"];
+const shownTargetsKeys: (keyof DailyTargets)[] = [
+  "kcal",
+  "protein",
+  "fats",
+  "carbs",
+]; // optionally enabled targets (prepared for the future)
 
 const { targetsState } = useTargetsStore();
 const { summaryState, loadForDate } = useSummaryStore();
@@ -23,9 +28,9 @@ const targets = computed(() => {
       name: NUTRIENT_DISPLAY_NAMES[key] ?? key,
       current: roundNutrient(current),
       max: max ? roundNutrient(max) : null,
-      percentage: max ? (current / max) * 100 : 0
-    }
-  })
+      percentage: max ? (current / max) * 100 : 0,
+    };
+  });
 });
 
 watchEffect(() => {
@@ -34,7 +39,7 @@ watchEffect(() => {
 
 onMounted(() => {
   loadForDate(props.date);
-})
+});
 </script>
 
 <template>
@@ -43,13 +48,18 @@ onMounted(() => {
       <div class="apart">
         <span>{{ target.name }}</span>
         <span>
-          {{ target.max != null
-            ? `${target.current} / ${target.max}`
-            : target.current }}
+          {{
+            target.max != null
+              ? `${target.current} / ${target.max}`
+              : target.current
+          }}
         </span>
       </div>
       <div class="progress-container">
-        <div class="progress-bar" :style="{ width: target.percentage + '%' }"></div>
+        <div
+          class="progress-bar"
+          :style="{ width: target.percentage + '%' }"
+        ></div>
       </div>
     </template>
   </div>
