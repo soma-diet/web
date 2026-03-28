@@ -2,10 +2,7 @@ import { makeDateString } from "@/lib/utils/date.util";
 import type { DailySummary, LogEntry } from "../../model";
 import { SomaError } from "../../utils/errors";
 import { fetchWithAuth } from "../client";
-import {
-  rawToDailySumamry,
-  rawToLogEntry,
-} from "./log.mapper";
+import { rawToDailySumamry as rawToDailySummary, rawToLogEntry } from "./log.mapper";
 import type { LogEntryRequestDto } from "./log.dto";
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
@@ -59,7 +56,6 @@ export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
   return response.ok;
 }
 
-// #region Utils
 const DAILY_SUMMARY_ENDPOINT = "/api/diary/summary";
 export async function getDailySummary(date: Date): Promise<DailySummary> {
   const params = new URLSearchParams({
@@ -68,6 +64,5 @@ export async function getDailySummary(date: Date): Promise<DailySummary> {
   const endpoint = DAILY_SUMMARY_ENDPOINT + "?" + params.toString();
   const response = await fetchWithAuth(endpoint);
   const raw = await response.json();
-  return rawToDailySumamry(raw);
+  return rawToDailySummary(raw);
 }
-// #endregion
