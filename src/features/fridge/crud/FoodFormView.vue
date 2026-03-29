@@ -91,7 +91,6 @@ function validate(): boolean {
   }
 
   for (const key of MACROS_KEYS) {
-    console.log(nutrientInput[key], !nutrientInput[key]);
     if (!nutrientInput[key]) {
       errors[key] = "macronutrient must be assigned";
       isValid = false;

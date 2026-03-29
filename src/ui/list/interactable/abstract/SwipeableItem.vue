@@ -41,9 +41,9 @@ const onDrag = (event: MouseEvent | TouchEvent) => {
   if (props.leftAction && props.rightAction) {
     deltaX = Math.max(-MAX_DRAG_PX, Math.min(MAX_DRAG_PX, deltaX));
   } else if (props.leftAction) {
-    deltaX = Math.max(-MAX_DRAG_PX, Math.min(0, deltaX));
-  } else if (props.rightAction) {
     deltaX = Math.min(MAX_DRAG_PX, Math.max(0, deltaX));
+  } else if (props.rightAction) {
+    deltaX = Math.max(-MAX_DRAG_PX, Math.min(0, deltaX));
   } else {
     deltaX = 0;
   }

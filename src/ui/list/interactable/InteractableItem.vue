@@ -95,7 +95,6 @@ function handleDelete() {
 .action {
   margin: 0.5rem;
   width: 2em;
-  height: 2em;
 }
 
 .animated {

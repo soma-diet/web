@@ -90,6 +90,7 @@ const activeSlideDist = computed(() => {
   bottom: 0;
   transition: opacity 0.2s;
   opacity: 0.5;
+  width: 60px;
 }
 
 .action:hover {
