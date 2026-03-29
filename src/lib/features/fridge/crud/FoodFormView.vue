@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { MACROS_KEYS, MICROS_KEYS } from "@/lib/constants";
 import { computed, onMounted, reactive, ref, useId, watch } from "vue";
-import { createFood, createServing, type Food, type Serving } from "../../../model";
-import type { FormServing } from "./model/form-serving.ui.model";
+import {
+  createFood,
+  createServing,
+  type Food,
+  type Serving,
+} from "../../../model";
+import type { FormServing } from "./types/form-serving.type";
 import FormNavigationBar from "@/lib/ui/form/nav/FormNavigationBar.vue";
 import FoodDetailsEditor from "./components/FoodDetailsEditor.vue";
 import FoodServingsEditor from "./components/FoodServingsEditor.vue";
@@ -11,16 +16,18 @@ import PrimaryButton from "@/lib/ui/action/PrimaryButton.vue";
 import DropHint from "./components/DropHint.vue";
 
 const emit = defineEmits<{
-  (e: "cancel"): void,
-  (e: "submit", food: Food, image: File | null, callback: () => void): void
+  (e: "cancel"): void;
+  (e: "submit", food: Food, image: File | null, callback: () => void): void;
 }>();
 
 const props = defineProps<{
-  food?: Food
+  food?: Food;
 }>();
 
 // Navigation bar
-const title = computed(() => props.food ? `Update ${props.food.name}` : 'Create a new food');
+const title = computed(() =>
+  props.food ? `Update ${props.food.name}` : "Create a new food",
+);
 
 // Details Editor State
 const name = ref(props.food?.name ?? "");
@@ -29,17 +36,23 @@ const isLiquid = ref(props.food?.isMass ? !props.food.isMass : false);
 const selectedImg = ref<File | null>(null);
 
 // Servings Editor State
-const formServings = ref<FormServing[]>(props.food?.servings.map(serving => {
-  return {
-    previousId: serving.id,
-    name: serving.name,
-    size: serving.size
-  }
-}) ?? []);
+const formServings = ref<FormServing[]>(
+  props.food?.servings.map((serving) => {
+    return {
+      previousId: serving.id,
+      name: serving.name,
+      size: serving.size,
+    };
+  }) ?? [],
+);
 
 // Nutrients Editor State
-const macros = Object.fromEntries(MACROS_KEYS.map(key => [key, props.food?.macronutrients[key] ?? null]));
-const micros = Object.fromEntries(MICROS_KEYS.map(key => [key, props.food?.micronutrients[key] ?? null]));
+const macros = Object.fromEntries(
+  MACROS_KEYS.map((key) => [key, props.food?.macronutrients[key] ?? null]),
+);
+const micros = Object.fromEntries(
+  MICROS_KEYS.map((key) => [key, props.food?.micronutrients[key] ?? null]),
+);
 let nutrientInput = reactive({ ...macros, ...micros });
 
 function prepareServings(formServings: FormServing[]): Serving[] {
@@ -55,8 +68,8 @@ function prepareServings(formServings: FormServing[]): Serving[] {
         id: formServing.previousId,
         name: formServing.name,
         size: formServing.size,
-        isSystem: false
-      }
+        isSystem: false,
+      };
     } else {
       return createServing(formServing.name, formServing.size);
     }
@@ -84,11 +97,18 @@ function handleSubmit() {
       isMass: !isLiquid.value,
       macronutrients: macros,
       micronutrients: micros,
-      servings: newServings
+      servings: newServings,
     });
   } else {
     // CREATE NEW
-    uploadedFood = createFood(name.value, !isLiquid.value, macros, micros, newServings, brand.value)
+    uploadedFood = createFood(
+      name.value,
+      !isLiquid.value,
+      macros,
+      micros,
+      newServings,
+      brand.value,
+    );
   }
 
   emit("submit", uploadedFood, selectedImg.value, () => {
@@ -131,7 +151,7 @@ function handleDrop(e: DragEvent) {
 }
 watch(selectedImg, (newValue) => {
   console.log(newValue);
-})
+});
 
 const id = useId();
 onMounted(() => {
@@ -147,11 +167,18 @@ onMounted(() => {
 <template>
   <form :id @submit.prevent="handleSubmit">
     <FormNavigationBar :title="title" @close="emit('cancel')" />
-    <FoodDetailsEditor :initial-image="food?.imageFilename ?? undefined" v-model:name="name" v-model:brand="brand"
-      v-model:isLiquid="isLiquid" v-model:selectedImg="selectedImg" />
+    <FoodDetailsEditor
+      :initial-image="food?.imageFilename ?? undefined"
+      v-model:name="name"
+      v-model:brand="brand"
+      v-model:isLiquid="isLiquid"
+      v-model:selectedImg="selectedImg"
+    />
     <FoodServingsEditor v-model:servings="formServings" />
     <FoodNutrientsEditor v-model:nutrients="nutrientInput" />
-    <PrimaryButton type="submit" :disabled="isSubmitting">{{ props.food ? "Save" : "Create" }}</PrimaryButton>
+    <PrimaryButton type="submit" :disabled="isSubmitting">{{
+      props.food ? "Save" : "Create"
+    }}</PrimaryButton>
 
     <DropHint v-if="isDraggingOver" class="hint" />
   </form>

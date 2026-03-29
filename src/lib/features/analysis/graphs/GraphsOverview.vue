@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import type { DailySummary } from "@/lib/model";
-import { onMounted, ref } from "vue";
-import BarGraph from "./components/BarGraph.vue";
-import {
-  extractNutrientsFromWeek,
-  getWeekData,
-  type WeeklyNutrients,
-} from "./prepare-week-data";
-import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 import { NUTRIENT_DISPLAY_NAMES } from "@/lib/constants";
 import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
 import RefreshIcon from "@/lib/ui/icon/RefreshIcon.vue";
+import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
+import { onMounted, ref } from "vue";
+import BarGraph from "./BarGraph.vue";
+import { useWeeklySummary, type WeeklyNutrients } from "./composables/weekly.composable";
 
 const DISPLAY_ORDER = ["kcal", "protein", "carbs", "fats", "fiber", "sodium"];
+
+const { getWeekData, extractNutrientsFromWeek } = useWeeklySummary();
 
 const isLoading = ref(false);
 const nutrients = ref<Map<string, WeeklyNutrients>>(new Map());

@@ -3,7 +3,9 @@ import { roundNutrient } from "@/lib/constants";
 import type { DailySummary } from "@/lib/model";
 import { getDayOfWeek } from "@/lib/utils/date.util";
 
-export async function getWeekData(
+export type WeeklyNutrients = { days: string[]; values: number[] };
+
+async function getWeekData(
   lastDay = new Date() as Date,
 ): Promise<Map<string, DailySummary>> {
   const promises: Promise<DailySummary>[] = [];
@@ -31,8 +33,7 @@ export async function getWeekData(
   }
 }
 
-export type WeeklyNutrients = { days: string[]; values: number[] };
-export function extractNutrientsFromWeek(
+function extractNutrientsFromWeek(
   key: string,
   data: Map<string, DailySummary>,
 ): WeeklyNutrients {
@@ -47,4 +48,11 @@ export function extractNutrientsFromWeek(
   });
 
   return { days, values };
+}
+
+export function useWeeklySummary() {
+  return {
+    getWeekData,
+    extractNutrientsFromWeek,
+  };
 }

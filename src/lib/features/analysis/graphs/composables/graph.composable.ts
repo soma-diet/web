@@ -64,4 +64,8 @@ function createBarGraphSvg(dates: string[], data: number[]): SVGElement {
   return svg;
 }
 
-export default createBarGraphSvg;
+export function useDrawGraph() {
+  return {
+    createBarGraphSvg,
+  };
+}

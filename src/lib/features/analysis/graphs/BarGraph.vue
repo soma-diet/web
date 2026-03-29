@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import createBarGraphSvg from "./draw-graph";
+import { useDrawGraph } from "./composables/graph.composable";
 
 const props = defineProps<{
   name: string;
@@ -8,6 +8,7 @@ const props = defineProps<{
   values: number[];
 }>();
 
+const { createBarGraphSvg } = useDrawGraph();
 const graphWrap = ref<HTMLElement | null>(null);
 onMounted(() => {
   if (graphWrap.value) {
