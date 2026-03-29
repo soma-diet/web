@@ -58,7 +58,7 @@ function handleTargetsPressed() {
         @mouseenter="onLogoHovered"
         class="logo"
       />
-      <h1>SOMA</h1>
+      <h1 v-show="!isMobile">SOMA</h1>
     </div>
     <div class="right center">
       <template v-if="authState.isLoggedIn">

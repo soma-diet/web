@@ -9,7 +9,7 @@ import SignInButton from "./SignInButton.vue";
         viewBox="0 0 16 16"
         width="100%"
         height="100%"
-        fill="#ffffff"
+        fill="#currentColor"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -19,3 +19,12 @@ import SignInButton from "./SignInButton.vue";
     </template>
   </SignInButton>
 </template>
+
+<style scoped>
+svg {
+  fill: white;
+  @media print {
+    filter: invert();
+  }
+}
+</style>

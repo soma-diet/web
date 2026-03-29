@@ -23,6 +23,15 @@ button {
   cursor: pointer;
   transition: all 0.2s;
   font-size: 0.85rem;
+
+  @media print {
+    /*
+      Source - https://stackoverflow.com/a/79741490
+      Posted by gre_gor
+      Retrieved 2026-03-29, License - CC BY-SA 4.0
+    */
+    color: rgb(from var(--text-main) calc(255 - r) calc(255 - g) calc(255 - b));
+  }
 }
 
 button:hover {

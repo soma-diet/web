@@ -45,6 +45,10 @@ main {
 
     object-fit: cover;
     pointer-events: none;
+
+    @media print {
+      display: none;
+    }
   }
 
   .safety-btn {

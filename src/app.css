@@ -40,6 +40,20 @@
   --bevel-size: 15px;
 }
 
+@media print {
+  :root {
+    --bg-body: #ffffff;
+    --bg-surface: #e0e0e0;
+
+    --text-main: #000000;
+    --text-dim: #777777;
+
+    --color-accent: #000000;
+    --color-accent-hover: #111111;
+    --color-accent-light: #222222;
+  }
+}
+
 html,
 body {
   height: 100%;
