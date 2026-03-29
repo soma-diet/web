@@ -1,5 +1,5 @@
 // router/router.ts
-import { useAuthStore } from "@/lib/stores";
+import { useAuthStore } from "@/stores";
 import Dashboard from "@/views/Dashboard.vue";
 import NotFound from "@/views/NotFound.vue";
 import SignIn from "@/views/SignIn.vue";
@@ -28,7 +28,7 @@ const routes = [
     name: "NotFound",
     component: NotFound,
   },
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),

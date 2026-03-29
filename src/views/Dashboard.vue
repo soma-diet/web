@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import AnalysisSection from "@/lib/features/analysis/AnalysisSection.vue";
-import FridgeSection from "@/lib/features/fridge/FridgeSection.vue";
-import Header from "@/lib/features/layout/Header.vue";
-import LogSection from "@/lib/features/log/LogSection.vue";
-import { useTargetsStore } from "@/lib/stores";
-import { useMobile } from "@/lib/stores/mobile.store";
+import AnalysisSection from "@/features/analysis/AnalysisSection.vue";
+import FridgeSection from "@/features/fridge/FridgeSection.vue";
+import Header from "@/features/header/Header.vue";
+import LogSection from "@/features/log/LogSection.vue";
+import { useTargetsStore } from "@/stores";
+import { useMobile } from "@/stores/mobile.store";
 import { onMounted } from "vue";
 
 const { isMobile, isFridgeActive, isLogActive, isGraphsActive } = useMobile();

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AuthForm from "@/lib/features/auth/AuthForm.vue";
-import { useMobile } from "@/lib/stores/mobile.store";
-import RotatingSomaLogo from "@/lib/ui/animated/RotatingSomaLogo.vue";
+import AuthForm from "@/features/auth/AuthForm.vue";
+import { useMobile } from "@/stores/mobile.store";
+import RotatingSomaLogo from "@/ui/animated/RotatingSomaLogo.vue";
 
 const { isMobile } = useMobile();
 </script>

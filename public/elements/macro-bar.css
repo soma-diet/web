@@ -24,7 +24,7 @@ macro-bar {
     background-color: var(--color-accent-light, lime);
   }
 
-  @media (min-width: 1920px) {
+  @media (min-width: 2560px) {
     height: 1rem;
     border-radius: 1rem;
   }
