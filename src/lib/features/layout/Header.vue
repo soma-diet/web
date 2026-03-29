@@ -114,5 +114,10 @@ header {
     color: var(--text-main);
     margin: 0;
   }
+
+  @media (min-width: 1920px) {
+    padding: 1.5rem;
+    height: 7rem;
+  }
 }
 </style>

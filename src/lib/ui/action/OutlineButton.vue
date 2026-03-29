@@ -6,9 +6,12 @@
 
 <style scoped>
 button {
-  padding: 0.5rem;
+  padding: 0.5em;
   color: var(--text-dim);
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
@@ -21,13 +24,12 @@ button:hover {
 
 button :deep(svg) {
   object-fit: contain;
-  width: 100%;
-  height: 100%;
+  width: 1.5em;
+  height: 1.5em;
 }
 
 @media (min-width: 1920px) {
   button {
-    padding: 1.5rem;
     font-size: 150%;
   }
 }
