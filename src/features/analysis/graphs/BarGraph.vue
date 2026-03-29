@@ -28,7 +28,6 @@ onMounted(() => {
 .graph {
   width: 100%;
   min-width: 0;
-  aspect-ratio: 4 / 3;
 }
 
 /* pristoupit k svg elementu grafu (vue) */

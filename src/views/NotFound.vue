@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import PrimaryButton from "@/ui/action/PrimaryButton.vue";
+
+// HistoryAPI jednoduche vraceni zpet
+function goBack() {
+  window.history.back();
+}
 </script>
 
 <template>
   <main>
     <section class="center middle">
       <h1 class="accent-heading">Page Not Found</h1>
-      <!-- TODO history api return? -->
-      <PrimaryButton class="safety-btn">Return to safety</PrimaryButton>
+      <PrimaryButton @click="goBack" class="safety-btn"
+        >Return to safety</PrimaryButton
+      >
     </section>
     <video
       preload="none"
