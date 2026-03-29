@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { MACROS_KEYS, MICROS_KEYS } from "@/constants";
+import { MAX_UPLOAD_SIZE_B } from "@/constants/upload.const";
+import { type Food, type Serving, createFood, createServing } from "@/model";
 import PrimaryButton from "@/ui/action/PrimaryButton.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import { computed, onMounted, reactive, ref, useId, watch } from "vue";
@@ -8,7 +10,6 @@ import FoodDetailsEditor from "./components/FoodDetailsEditor.vue";
 import FoodNutrientsEditor from "./components/FoodNutrientsEditor.vue";
 import FoodServingsEditor from "./components/FoodServingsEditor.vue";
 import type { FormServing } from "./types/form-serving.type";
-import { type Food, type Serving, createServing, createFood } from "@/model";
 
 const emit = defineEmits<{
   (e: "cancel"): void;
@@ -52,28 +53,78 @@ let nutrientInput = reactive({ ...macros, ...micros });
 
 function prepareServings(formServings: FormServing[]): Serving[] {
   return formServings.map((formServing: FormServing) => {
-    // TODO display error and prevent
-    if (!formServing.name || !formServing.size) {
-      console.error("serving must have name and size");
-      throw Error("serving must have name and size");
-    }
-
     if (formServing.previousId) {
       return {
         id: formServing.previousId,
-        name: formServing.name,
-        size: formServing.size,
+        name: formServing.name!,
+        size: formServing.size!,
         isSystem: false,
       };
     } else {
-      return createServing(formServing.name, formServing.size);
+      return createServing(formServing.name!, formServing.size!);
     }
   });
+}
+
+const BASE_ERRORS = {
+  servings: [] as { name?: string; size?: string }[], // pole erroru pro jednotlive servings pairs
+};
+const errors = reactive<Record<string, any>>(BASE_ERRORS);
+function validate(): boolean {
+  // vycistit stare errory
+  Object.keys(errors).forEach((key) => {
+    if (key === "servings") return;
+    delete errors[key];
+  });
+  errors.servings = [];
+
+  let isValid = true;
+
+  if (!name.value || !name.value.trim()) {
+    errors.name = "name cannot be empty";
+    isValid = false;
+  }
+  if (selectedImg.value && selectedImg.value.size > MAX_UPLOAD_SIZE_B) {
+    errors.img = `file exceeds maximum size (${MAX_UPLOAD_SIZE_B / 1_000_000} MB)`;
+    isValid = false;
+  }
+
+  for (const key in nutrientInput) {
+    if (nutrientInput[key] && nutrientInput[key] < 0) {
+      errors[key] = "cannot be negative";
+      isValid = false;
+    }
+  }
+
+  for (const key in MACROS_KEYS) {
+    if (!nutrientInput[key]) {
+      errors[key] = "macronutrient must be assigned";
+      isValid = false;
+    }
+  }
+
+  // validace servings
+  formServings.value.forEach((serving, index) => {
+    const servingError: { name?: string; size?: string } = {};
+    if (!serving.name || !serving.name.trim()) {
+      servingError.name = "serving name is required";
+      isValid = false;
+    }
+    if (serving.size === null || serving.size <= 0) {
+      servingError.size = "serving size must be a positive number";
+      isValid = false;
+    }
+    errors.servings[index] = servingError;
+  });
+
+  return isValid;
 }
 
 // SUBMITTING
 const isSubmitting = ref<boolean>(false);
 function handleSubmit() {
+  if (!validate()) return;
+
   isSubmitting.value = true;
   const { kcal, protein, fats, carbs, fiber, sodium } = nutrientInput;
   const macros = { kcal: kcal!, protein: protein!, fats: fats!, carbs: carbs! }; // melo by byt davno zvalidovany formularem
@@ -111,6 +162,7 @@ function handleSubmit() {
   });
 }
 
+// #region Drag n Drop
 // DragAndDrop obrazku jidla nad formular
 const isDraggingOver = ref(false);
 
@@ -144,9 +196,7 @@ function handleDrop(e: DragEvent) {
     selectedImg.value = file;
   }
 }
-watch(selectedImg, (newValue) => {
-  console.log(newValue);
-});
+//#endregion
 
 const id = useId();
 onMounted(() => {
@@ -168,9 +218,16 @@ onMounted(() => {
       v-model:brand="brand"
       v-model:isLiquid="isLiquid"
       v-model:selectedImg="selectedImg"
+      v-model:errors="errors"
     />
-    <FoodServingsEditor v-model:servings="formServings" />
-    <FoodNutrientsEditor v-model:nutrients="nutrientInput" />
+    <FoodServingsEditor
+      :errors="errors.servings"
+      v-model:servings="formServings"
+    />
+    <FoodNutrientsEditor
+      v-model:nutrients="nutrientInput"
+      v-model:errors="errors"
+    />
     <PrimaryButton type="submit" :disabled="isSubmitting">{{
       props.food ? "Save" : "Create"
     }}</PrimaryButton>

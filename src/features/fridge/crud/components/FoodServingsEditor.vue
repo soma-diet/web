@@ -6,6 +6,9 @@ import LabeledInput from "@/ui/form/input/labeled/LabeledInput.vue";
 import LabeledNumberInput from "@/ui/form/input/labeled/LabeledNumberInput.vue";
 
 const servings = defineModel<FormServing[]>("servings", { required: true });
+const props = defineProps<{
+  errors?: { name?: string; size?: string }[];
+}>();
 
 const addServingField = () => {
   servings.value.push({
@@ -38,14 +41,16 @@ const removeServingField = (index: number) => {
         type="text"
         label="Name"
         v-model="formServing.name"
-        :required="true"
         placeholder="Piece"
+        :error="errors?.[index]?.name"
+        @input="if (errors?.[index]) errors[index].name = '';"
       />
       <LabeledNumberInput
         label="Size (g)"
         v-model:value="formServing.size"
-        :required="true"
         placeholder="50"
+        :error="errors?.[index]?.size"
+        @input="if (errors?.[index]) errors[index].size = '';"
       />
     </li>
   </ul>

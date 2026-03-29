@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { useId } from "vue";
 
-interface Props {
-  label: string;
-  type: string;
-  step?: string;
-  required?: boolean;
-  placeholder?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  required: false,
-});
+const props = withDefaults(
+  defineProps<{
+    label: string;
+    type: string;
+    step?: string;
+    required?: boolean;
+    placeholder?: string;
+    error?: string;
+  }>(),
+  {
+    required: false,
+  },
+);
 const model = defineModel<any>();
 
 const inputId = useId();
@@ -27,16 +29,17 @@ const inputId = useId();
       :required="required"
       :placeholder="placeholder"
       v-model="model"
+      v-bind="$attrs"
+      :class="{ invalid: error }"
       class="input-field"
     />
+    <span v-if="error" class="error-text">{{ error }}</span>
   </div>
 </template>
 
 <style scoped>
-div {
-  gap: 0.5rem;
-}
 input {
+  margin: 0.5rem 0 0.1rem 0;
   font-size: 90%;
 }
 

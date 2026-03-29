@@ -7,7 +7,7 @@ import LabeledSelect from "@/ui/form/input/labeled/LabeledSelect.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import { makeDateFromISO } from "@/utils/date.util";
 import { getImage, SomaImageSize } from "@/utils/image.util";
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { getWithSystemServings } from "@/constants/system-servings.const";
 import MacroFill from "./components/MacroFill.vue";
 import NutritionalInfo from "./components/NutritionalInfo.vue";
@@ -60,7 +60,19 @@ const originalTotalSize = computed(() => {
   return 0;
 });
 
+// validation
+const errors = reactive<Record<string, string>>({});
+function validate(): boolean {
+  Object.keys(errors).forEach((key) => delete errors[key]);
+
+  if (!quantity.value || quantity.value <= 0)
+    errors.quantity = "quantity must be a positive number";
+
+  return Object.keys(errors).length === 0;
+}
+
 function handleSubmit() {
+  if (!validate()) return;
   isSubmitting.value = true;
 
   emit(
@@ -92,7 +104,8 @@ const navTitle = computed(() => {
         <h2>{{ props.trackable.name }}</h2>
 
         <LabeledNumberInput
-          :required="true"
+          :error="errors.quantity"
+          @input="delete errors.quantity"
           v-model:value="quantity"
           label="Amount"
           step="0.01"

@@ -7,6 +7,7 @@ const props = withDefaults(
     label: string;
     name?: string;
     step?: string;
+    error?: string;
   }>(),
   {
     step: "0.1",

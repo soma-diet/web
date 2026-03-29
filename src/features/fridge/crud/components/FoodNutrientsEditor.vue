@@ -10,6 +10,9 @@ import LabeledNumberInput from "@/ui/form/input/labeled/LabeledNumberInput.vue";
 const nutrientInput = defineModel<Record<string, number | null>>("nutrients", {
   required: true,
 });
+const errors = defineModel<Record<string, string>>("errors", {
+  required: true,
+});
 
 // pres const list, aby se nevypocitavali znova pri kazde zmene inputu
 const placeholders = NUTRITION_KEYS.map((_) =>
@@ -23,9 +26,11 @@ const placeholders = NUTRITION_KEYS.map((_) =>
       <LabeledNumberInput
         :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         :name="key"
-        v-model:value="nutrientInput[key]"
         :required="MACROS_KEYS.some((_key) => _key === key)"
         :placeholder="placeholders[index]"
+        :error="errors[key]"
+        @input="delete errors[key]"
+        v-model:value="nutrientInput[key]"
       />
     </li>
   </ul>

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, useId } from 'vue';
-import ImageIcon from '../../icon/ImageIcon.vue';
+import { computed, onMounted, useId } from "vue";
+import ImageIcon from "../../icon/ImageIcon.vue";
 
 const props = defineProps<{
   initialImage?: string;
-}>()
+  error?: string;
+}>();
 
 const id = useId();
 
@@ -26,24 +27,35 @@ const handleFileChange = (e: Event) => {
   } else {
     fileModel.value = null;
   }
-}
+};
 // preview obrazek se odvodi z obsahu nahraneho souboru
-const previewUrl = computed<string | null>(() => fileModel.value ? URL.createObjectURL(fileModel.value) : null);
+const previewUrl = computed<string | null>(() =>
+  fileModel.value ? URL.createObjectURL(fileModel.value) : null,
+);
 
 onMounted(() => {
   // napsano pro jistotu klasickym zpusobem
   const inputElement = document.querySelector(`#${id}`);
   inputElement?.addEventListener("change", handleFileChange);
-})
-
+});
 </script>
 
 <template>
-  <label :for="id" :class="{ 'without-preview': !displayImg }" class="col center middle">
-    <img v-if="displayImg" class="preview-img" :src="displayImg" alt="preview of the uploaded image" />
+  <label
+    :for="id"
+    :class="{ 'without-preview': !displayImg }"
+    class="col center middle"
+  >
+    <img
+      v-if="displayImg"
+      class="preview-img"
+      :src="displayImg"
+      alt="preview of the uploaded image"
+    />
     <ImageIcon v-else class="preview-img" />
   </label>
-  <input type="file" accept="image/*" :id="id" />
+  <input type="file" accept="image/*" :id="id" v-bind="$attrs" />
+  <span v-if="error" class="error-text">{{ error }}</span>
 </template>
 
 <style scoped>
@@ -79,7 +91,7 @@ label:hover .preview-img {
   object-fit: contain;
 }
 
-.without-preview>.preview-img {
+.without-preview > .preview-img {
   height: 100%;
 }
 </style>

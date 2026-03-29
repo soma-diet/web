@@ -112,3 +112,15 @@ input[type="date"] {
   border: 1px solid var(--border-main);
   background-color: var(--bg-body);
 }
+
+.invalid {
+  border-color: var(--color-accent);
+}
+
+.error-text {
+  color: var(--color-accent);
+  font-size: 80%;
+  font-family: var(--font-data);
+  text-transform: lowercase;
+  margin-top: 0.25rem;
+}
