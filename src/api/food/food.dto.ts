@@ -1,5 +1,4 @@
-import type { Food } from "../../../model";
-import type { Macronutrients, Micronutrients, Serving } from "../../../model";
+import type { Food, Macronutrients, Micronutrients, Serving } from "@/model";
 
 export interface FoodSearchResponse {
   foodItems: Food[];

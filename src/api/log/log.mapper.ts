@@ -1,7 +1,7 @@
-import type { DailySummary, LogEntry } from "../../../model";
 import type { LogEntryRequestDto } from "./log.dto";
 
 import { rawToTrackable } from "../trackable/trackable.mapper";
+import type { LogEntry, DailySummary } from "@/model";
 
 export function entryToRequestDto(entry: LogEntry): LogEntryRequestDto {
   return {

@@ -1,4 +1,4 @@
-import type { Serving, Trackable } from "../model";
+import type { Serving, Trackable } from "@/model";
 
 const SYSTEM_MASS_SERVINGS: Serving[] = [
   {

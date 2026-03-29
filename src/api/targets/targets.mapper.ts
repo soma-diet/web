@@ -1,4 +1,4 @@
-import type { DailyTargets } from "../../../model";
+import type { DailyTargets } from "@/model";
 
 export function rawToTargets(raw: any): DailyTargets {
   return {

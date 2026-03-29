@@ -1,4 +1,4 @@
-import type { DailyTargets } from "../../../model";
+import type { DailyTargets } from "@/model";
 import { fetchWithAuth } from "../client";
 import { rawToTargets } from "./targets.mapper";
 

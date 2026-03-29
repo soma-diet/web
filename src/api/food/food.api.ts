@@ -1,11 +1,11 @@
 import { FOOD_SEARCH_PAGE_SIZE } from "@/constants/food.const";
-import type { Food } from "../../../model";
 import { AuthError } from "../auth/auth.error";
 import { fetchWithAuth } from "../client";
 import { ApiError } from "../error";
 import type { FoodRequestDto, FoodSearchResponse } from "./food.dto";
 import { FoodSearchFilter } from "./food.filter";
 import { foodToDto, rawItemToFood } from "./food.mapper";
+import type { Food } from "@/model";
 
 const FOOD_ENDPOINT = "/api/foods";
 
