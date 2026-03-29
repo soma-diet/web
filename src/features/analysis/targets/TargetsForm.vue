@@ -4,12 +4,13 @@ import { putDailyTargets } from "@/api";
 import {
   kcalToKJ,
   kJToKcal,
+  MACROS_KEYS,
   NUTRIENT_DISPLAY_NAMES,
   NUTRITION_KEYS,
   roundNutrient,
 } from "@/constants";
 import { useTargetsStore } from "@/stores";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 
 import type { DailyTargets } from "@/model";
 import PrimaryButton from "@/ui/action/PrimaryButton.vue";
@@ -47,8 +48,30 @@ function restoreTargets() {
   targetsState.dailyTargets = originalTargets;
 }
 
+// validation
+const errors = reactive<Record<string, string>>({});
+function validate(): boolean {
+  Object.keys(errors).forEach((key) => delete errors[key]);
+  if (!targetsState.dailyTargets) {
+    console.log("no daily targets");
+    return false;
+  } // targets must be loaded to complete form (if none server provides default)
+
+  for (const key of NUTRITION_KEYS) {
+    if (targetsState.dailyTargets[key] && targetsState.dailyTargets[key] < 0) {
+      errors[key] = "cannot be a negative value";
+    }
+    if (kJ.value && kJ.value < 0) {
+      errors.kj = "cannot be a negative value";
+    }
+  }
+
+  return Object.keys(errors).length === 0;
+}
+
 // FORM SUBMITTING
-async function handleTargetsSubmit() {
+function handleTargetsSubmit() {
+  if (!validate()) return;
   isSubmitting.value = true;
 
   putDailyTargets(targetsState.dailyTargets!)
@@ -82,6 +105,8 @@ onMounted(() => {
         label="Energy (kJ)"
         v-model:value="kJ"
         placeholder="Choose a daily target"
+        :error="errors.kj"
+        @input="delete errors.kj"
       />
       <LabeledNumberInput
         :key="key"
@@ -89,6 +114,8 @@ onMounted(() => {
         :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         v-model:value="targetsState.dailyTargets[key]"
         placeholder="Choose a daily target"
+        :error="errors[key]"
+        @input="delete errors[key]"
       />
       <PrimaryButton type="submit" :disabled="isSubmitting"
         >Update daily targets</PrimaryButton

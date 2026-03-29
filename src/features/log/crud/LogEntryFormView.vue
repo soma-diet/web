@@ -65,8 +65,9 @@ const errors = reactive<Record<string, string>>({});
 function validate(): boolean {
   Object.keys(errors).forEach((key) => delete errors[key]);
 
-  if (!quantity.value || quantity.value <= 0)
+  if (!quantity.value || quantity.value <= 0) {
     errors.quantity = "quantity must be a positive number";
+  }
 
   return Object.keys(errors).length === 0;
 }

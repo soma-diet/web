@@ -1,2 +1,2 @@
 export type DailySummary = Record<string, number>;
-export type DailyTargets = Partial<Record<string, number | null>>;
+export type DailyTargets = Record<string, number | null>;
