@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;700;800;900&display=swap');
+
+:root {
+  --bg-body: #0e0e0e;
+  --bg-surface: #252525;
+
+  --text-main: #ffffff;
+  --text-dim: #888888;
+
+  --border-main: #333333;
+  --border-dim: #222222;
+
+  --color-accent: #ff0000;
+  --color-accent-hover: #fd3e3e;
+  --color-accent-light: #ff4c4c;
+  --text-on-accent: #ffffff;
+
+  --color-positive: lime;
+  --color-positive-dim: green;
+
+  --font-header: 'Michroma', sans-serif;
+  --font-main: 'Inter', sans-serif;
+  --font-data: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
+
+  --cutout-width: 3px;
+  --bevel-size: 15px;
+}

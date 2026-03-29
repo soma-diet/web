@@ -82,7 +82,7 @@ onMounted(() => {
       <OutlineButton @click="moveDate(true)">
         <BackArrowIcon />
       </OutlineButton>
-      <h3>{{ dateString }}</h3>
+      <h2 class="section-title">{{ dateString }}</h2>
     </div>
     <OutlineButton
       @click="moveDate(false)"

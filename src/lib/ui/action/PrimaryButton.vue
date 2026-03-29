@@ -32,6 +32,11 @@ button {
     */
     color: rgb(from var(--text-main) calc(255 - r) calc(255 - g) calc(255 - b));
   }
+
+  @media (min-width: 1920px) {
+    font-size: 150%;
+    padding: 1.5rem 2rem;
+  }
 }
 
 button:hover {

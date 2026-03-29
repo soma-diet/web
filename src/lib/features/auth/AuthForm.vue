@@ -57,7 +57,7 @@ function handleSignIn(provider: Provider) {
     text-align: center;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     justify-content: start;
     padding: 1rem 2rem;
   }

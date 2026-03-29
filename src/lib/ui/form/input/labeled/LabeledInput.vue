@@ -36,4 +36,13 @@ const inputId = useId();
 div {
   gap: 0.5rem;
 }
+input {
+  font-size: 90%;
+}
+
+@media (min-width: 1920px) {
+  input {
+    font-size: 150%;
+  }
+}
 </style>

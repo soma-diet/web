@@ -43,7 +43,7 @@ onMounted(() => {
 <template>
   <div class="wrapper col">
     <div class="row apart center">
-      <h2 class="upper">Graphs</h2>
+      <h2 class="section-title">Graphs</h2>
       <OutlineButton @click="loadWeeklySummary">
         <RefreshIcon />
       </OutlineButton>
@@ -55,7 +55,6 @@ onMounted(() => {
         :name="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         :days="data.days"
         :values="data.values"
-        class="graph"
       />
     </template>
     <ListLoadingEffect v-else />

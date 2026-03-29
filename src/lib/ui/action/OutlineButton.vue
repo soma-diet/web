@@ -24,4 +24,11 @@ button :deep(svg) {
   width: 100%;
   height: 100%;
 }
+
+@media (min-width: 1920px) {
+  button {
+    padding: 1.5rem;
+    font-size: 150%;
+  }
+}
 </style>

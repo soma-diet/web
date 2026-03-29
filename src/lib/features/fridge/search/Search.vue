@@ -125,15 +125,25 @@ onMounted(() => {
 <style scoped>
 .search-controls {
   gap: 0.25rem;
+  .actions {
+    padding: 0.5rem;
+    gap: 0.5rem;
+    height: 4rem;
+  }
+  .plus-btn {
+    aspect-ratio: 1;
+  }
 }
 
-.actions {
-  padding: 0.5rem;
-  gap: 0.5rem;
-  height: 4rem;
-}
-
-.plus-btn {
-  aspect-ratio: 1;
+@media (min-width: 1920px) {
+  .search-controls {
+    .actions {
+      height: 6rem;
+    }
+    .search {
+      padding-left: 2rem;
+      font-size: 150%;
+    }
+  }
 }
 </style>

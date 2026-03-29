@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { makeDateFromDateString, makeDateString } from '@/lib/utils/date.util';
-import { computed, useId } from 'vue';
+import { makeDateFromDateString, makeDateString } from "@/lib/utils/date.util";
+import { computed, useId } from "vue";
 
 const id = useId();
 
 const props = defineProps<{
-  label: string,
-  required?: boolean
-}>()
+  label: string;
+  required?: boolean;
+}>();
 
 const dateModel = defineModel<Date>();
 const dateInput = computed<string>({
   get() {
-    if (!dateModel.value) return '';
+    if (!dateModel.value) return "";
     return makeDateString(dateModel.value);
   },
   set(inputValue) {
@@ -21,7 +21,7 @@ const dateInput = computed<string>({
       return;
     }
     dateModel.value = makeDateFromDateString(inputValue);
-  }
+  },
 });
 
 const todayDate = new Date();
@@ -30,7 +30,14 @@ const maxDateCap: string = makeDateString(todayDate);
 
 <template>
   <label :id="id" class="accent-heading">{{ props.label }}</label>
-  <input :id="id" :max="maxDateCap" :required="required" v-model="dateInput" type="date" class="input-field" />
+  <input
+    :id="id"
+    :max="maxDateCap"
+    :required="required"
+    v-model="dateInput"
+    type="date"
+    class="input-field"
+  />
 </template>
 
 <style>
@@ -41,5 +48,11 @@ input {
 
 input:focus {
   border-color: var(--color-accent);
+}
+
+@media (min-width: 1920px) {
+  input {
+    font-size: 150%;
+  }
 }
 </style>

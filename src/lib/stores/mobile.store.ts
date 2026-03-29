@@ -1,6 +1,6 @@
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 
-const MOBILE_FROM_PX = 768;
+const MOBILE_FROM_PX = 1000;
 
 const isMobile = ref(window.innerWidth <= MOBILE_FROM_PX);
 

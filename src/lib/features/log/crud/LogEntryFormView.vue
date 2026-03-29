@@ -175,4 +175,10 @@ form {
   max-height: 100%;
   object-fit: contain;
 }
+
+@media (min-width: 1920px) {
+  .intro-info {
+    max-height: 50rem;
+  }
+}
 </style>

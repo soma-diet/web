@@ -23,4 +23,9 @@ macro-bar {
   div.project {
     background-color: var(--color-accent-light, lime);
   }
+
+  @media (min-width: 1920px) {
+    height: 1rem;
+    border-radius: 1rem;
+  }
 }

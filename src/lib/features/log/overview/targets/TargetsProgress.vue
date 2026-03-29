@@ -45,7 +45,7 @@ onMounted(() => {
 <template>
   <div class="col stretch-h middle container">
     <template v-for="target in targets" :key="target.name">
-      <div class="apart">
+      <div class="target apart center">
         <span>{{ target.name }}</span>
         <span>
           {{
@@ -72,19 +72,46 @@ onMounted(() => {
   gap: 0.5rem;
   background-color: var(--bg-surface);
   border-radius: 0.5em;
+
+  .target {
+    span:first-child {
+      font-size: 100%;
+    }
+    span:last-child {
+      font-size: 90%;
+      color: var(--text-dim);
+    }
+  }
+
+  .progress-container {
+    height: 0.4rem;
+    border-radius: 9999px;
+    width: 100%;
+    background-color: var(--border-main);
+    overflow: hidden;
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--color-accent);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
 }
 
-.progress-container {
-  height: 5px;
-  border-radius: 9999px;
-  width: 100%;
-  background-color: var(--border-dim);
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background-color: var(--color-accent);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+@media (min-width: 1920px) {
+  .container {
+    gap: 1rem;
+    .target {
+      span:first-child {
+        font-size: 150%;
+      }
+      span:last-child {
+        font-size: 130%;
+      }
+    }
+    .progress-container {
+      height: 0.7rem;
+    }
+  }
 }
 </style>

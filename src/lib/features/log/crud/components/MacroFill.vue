@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from '@/lib/constants';
-import { useTargetsStore } from '@/lib/stores';
-import { useSummaryStore } from '@/lib/stores/summary.store';
-import type { Macronutrients, Micronutrients } from '@/lib/model';
+import { computed } from "vue";
+import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/lib/constants";
+import { useTargetsStore } from "@/lib/stores";
+import { useSummaryStore } from "@/lib/stores/summary.store";
+import type { Macronutrients, Micronutrients } from "@/lib/model";
 
 const props = defineProps<{
   grams: number;
@@ -18,14 +18,17 @@ const { targetsState } = useTargetsStore();
 const data = computed(() => {
   if (!targetsState.dailyTargets) return [];
 
-  const loadedTargetKeys = Object.keys(targetsState.dailyTargets) as (keyof typeof targetsState.dailyTargets)[];
+  const loadedTargetKeys = Object.keys(
+    targetsState.dailyTargets,
+  ) as (keyof typeof targetsState.dailyTargets)[];
   const nutrients = { ...props.macros, ...props.micros };
 
   return loadedTargetKeys.map((key) => {
     const max = targetsState.dailyTargets?.[key] ?? 0;
 
     const savedTotal = summaryState.dailySummary?.[key] ?? 0;
-    const nutrientSize = nutrients[key as (keyof Macronutrients | keyof Micronutrients)] ?? 0;
+    const nutrientSize =
+      nutrients[key as keyof Macronutrients | keyof Micronutrients] ?? 0;
 
     // spocitat jake mnozstvi uz je zalogovane (kdyz updatujeme log entry tak jsou jeji macros uz zapocitane v summary)
     const alreadyLoggedMacros = (nutrientSize / 100) * props.originalGrams;
@@ -40,7 +43,7 @@ const data = computed(() => {
       projected: roundNutrient(projectedAdd),
       projectedTotal: roundNutrient(baseCurrent + projectedAdd),
       max: roundNutrient(max),
-    }
+    };
   });
 });
 </script>
@@ -50,12 +53,14 @@ const data = computed(() => {
     <li v-for="target in data" :key="target.key" class="col">
       <div class="row apart">
         <span>{{ target.name }}</span>
-        <span>
-          {{ target.projectedTotal }} / {{ target.max }}
-        </span>
+        <span> {{ target.projectedTotal }} / {{ target.max }} </span>
       </div>
 
-      <macro-bar :filled="target.current" :projected="target.projected" :max="target.max" />
+      <macro-bar
+        :filled="target.current"
+        :projected="target.projected"
+        :max="target.max"
+      />
     </li>
   </ul>
 </template>
@@ -65,11 +70,11 @@ ul {
   gap: 1rem;
 
   li {
-    gap: 0.25rem;
+    gap: 0.4rem;
   }
 
   li span {
-    font-size: 0.875rem;
+    font-size: 90%;
   }
 
   li span:first-child {
@@ -78,6 +83,18 @@ ul {
 
   li span:last-child {
     color: var(--text-dim);
+  }
+}
+
+@media (min-width: 1920px) {
+  ul {
+    li {
+      gap: 1rem;
+
+      span {
+        font-size: 150%;
+      }
+    }
   }
 }
 </style>

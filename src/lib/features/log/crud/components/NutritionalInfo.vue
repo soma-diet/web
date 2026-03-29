@@ -87,4 +87,11 @@ thead td {
 .text-center {
   text-align: center;
 }
+
+@media (min-width: 1920px) {
+  td {
+    font-size: 150%;
+    padding: 0.3rem 0.5rem;
+  }
+}
 </style>

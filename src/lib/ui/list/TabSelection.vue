@@ -26,7 +26,7 @@ button {
   border: none;
   border-bottom: 2px solid transparent;
 
-  font-size: 0.75rem;
+  font-size: 80%;
   font-weight: 800;
   letter-spacing: 0.15rem;
 
@@ -35,6 +35,11 @@ button {
 
   transition: all 0.2s;
   cursor: pointer;
+
+  @media (min-width: 1920px) {
+    height: 4rem;
+    font-size: 150%;
+  }
 }
 
 button:hover {

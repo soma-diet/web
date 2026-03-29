@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useId } from 'vue';
+import { useId } from "vue";
 
 const selected = defineModel<any>("selected", { required: true });
 
 interface Option {
-  name: string,
-  value: any
+  name: string;
+  value: any;
 }
 const props = defineProps<{
-  label: string,
-  options: Option[]
+  label: string;
+  options: Option[];
 }>();
 
 const selectId = useId();
@@ -19,7 +19,9 @@ const selectId = useId();
   <div class="col">
     <label class="accent-heading" :for="selectId">{{ props.label }}</label>
     <select :id="selectId" v-model="selected" class="input-field">
-      <option v-for="(opt, index) in options" :key="index" :value="opt.value">{{ opt.name }}</option>
+      <option v-for="(opt, index) in options" :key="index" :value="opt.value">
+        {{ opt.name }}
+      </option>
     </select>
   </div>
 </template>
@@ -35,5 +37,11 @@ option {
 
 option:checked {
   color: var(--color-accent);
+}
+
+@media (min-width: 1920px) {
+  select {
+    font-size: 150%;
+  }
 }
 </style>
