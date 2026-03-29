@@ -2,6 +2,7 @@
 import { LogEntryRequestDto, postLogEntry } from "@/api";
 import { type Trackable } from "@/model";
 import LogEntryFormView from "./LogEntryFormView.vue";
+import { useAlerts } from "@/composables/alert.composable";
 
 const props = defineProps<{
   trackable: Trackable;
@@ -10,6 +11,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "finished"): void;
 }>();
+
+const { scheduleAlert } = useAlerts();
 
 async function createLogEntry(
   quantity: number,
@@ -23,8 +26,13 @@ async function createLogEntry(
     quantity,
     date,
   );
-  const success = await postLogEntry(newEntryRequest);
-  // TODO pokud success false, mohl by dat pres callback funkci informace proc selhalo a pak by UI mohlo vykreslit
+
+  try {
+    await postLogEntry(newEntryRequest);
+  } catch (_) {
+    scheduleAlert("Adding a new log entry failed. Please try again.");
+  }
+
   emit("finished");
   callback();
 }

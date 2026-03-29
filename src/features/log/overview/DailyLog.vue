@@ -10,6 +10,7 @@ import InteractableItem from "@/ui/list/interactable/InteractableItem.vue";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
 import TargetsProgress from "./targets/TargetsProgress.vue";
 import type { LogEntry } from "@/model";
+import { useAlerts } from "@/composables/alert.composable";
 
 const emit = defineEmits<{
   (e: "itemSelected", entry: LogEntry): void;
@@ -19,8 +20,9 @@ const loadingEntries = ref(true);
 const logEntries = ref<LogEntry[]>([]);
 const dateSelected = ref<Date>(new Date());
 
-const { targetsState, reloadTargets } = useTargetsStore();
+const { targetsState } = useTargetsStore();
 const { reloadSummary } = useSummaryStore();
+const { scheduleAlert } = useAlerts();
 
 const moveDate = (backwards: boolean) => {
   const increment = backwards ? -1 : 1;
@@ -36,6 +38,11 @@ function loadEntries(date: Date) {
   getLogEntries(date)
     .then((entries: LogEntry[]) => {
       logEntries.value = entries;
+    })
+    .catch((_) => {
+      scheduleAlert(
+        "Failed to load your log entries. Try refreshing the page.",
+      );
     })
     .finally(() => {
       loadingEntries.value = false;

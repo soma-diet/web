@@ -2,15 +2,22 @@
 import { postFood } from "@/api";
 import type { Food } from "@/model";
 import FoodFormView from "./FoodFormView.vue";
+import { useAlerts } from "@/composables/alert.composable";
 
 const emit = defineEmits(["finished"]);
+
+const { scheduleAlert } = useAlerts();
 
 function onCancel() {
   emit("finished");
 }
 
 async function onSubmit(food: Food, image: File | null, callback: () => void) {
-  await postFood(food, image);
+  try {
+    await postFood(food, image);
+  } catch (err) {
+    scheduleAlert("Adding a new food failed. Please try again.");
+  }
   callback();
   emit("finished");
 }

@@ -17,6 +17,7 @@ import PrimaryButton from "@/ui/action/PrimaryButton.vue";
 import LabeledNumberInput from "@/ui/form/input/labeled/LabeledNumberInput.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
+import { useAlerts } from "@/composables/alert.composable";
 
 const emit = defineEmits<{
   (e: "finished"): void;
@@ -25,6 +26,7 @@ const emit = defineEmits<{
 const isSubmitting = ref(false);
 
 const { targetsState } = useTargetsStore();
+const { scheduleAlert } = useAlerts();
 
 const kJ = computed<number | null>({
   get: () => {
@@ -52,10 +54,7 @@ function restoreTargets() {
 const errors = reactive<Record<string, string>>({});
 function validate(): boolean {
   Object.keys(errors).forEach((key) => delete errors[key]);
-  if (!targetsState.dailyTargets) {
-    console.log("no daily targets");
-    return false;
-  } // targets must be loaded to complete form (if none server provides default)
+  if (!targetsState.dailyTargets) return false; // targets must be loaded to complete form (if none server provides default)
 
   for (const key of NUTRITION_KEYS) {
     if (targetsState.dailyTargets[key] && targetsState.dailyTargets[key] < 0) {
@@ -75,7 +74,10 @@ function handleTargetsSubmit() {
   isSubmitting.value = true;
 
   putDailyTargets(targetsState.dailyTargets!)
-    .catch((_) => restoreTargets)
+    .catch((_) => {
+      scheduleAlert("Updating daily targets failed. Please try again.");
+      restoreTargets();
+    })
     .finally(() => {
       isSubmitting.value = false;
       emit("finished");
