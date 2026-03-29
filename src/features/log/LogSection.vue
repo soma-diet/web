@@ -1,10 +1,10 @@
 <!-- Center section displaying DailyLog and forms for adding and updating log entries. -->
 <script setup lang="ts">
 import { useLogSelectionStore } from "@/stores";
-import type { LogEntry } from "../../../model";
 import DailyLog from "./overview/DailyLog.vue";
 import AddLogEntryForm from "./crud/AddLogEntryForm.vue";
 import EditLogEntryForm from "./crud/EditLogEntryForm.vue";
+import type { LogEntry } from "@/model";
 
 const { logSelectionState, closeLogForm, openLogForm } = useLogSelectionStore();
 

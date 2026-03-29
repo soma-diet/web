@@ -8,9 +8,9 @@ import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
 import TabSelection from "@/ui/list/TabSelection.vue";
 import { onMounted, ref, watch } from "vue";
 import { deleteFood, getFoods } from "../../../api";
-import type { Food } from "../../../../model";
 import NoResults from "./components/NoResults.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
+import type { Food } from "@/model";
 
 const emit = defineEmits<{
   (e: "itemSelected", item: Food): void;

@@ -6,8 +6,8 @@ import {
   recalculateFields,
   roundNutrient,
 } from "@/constants";
+import type { Macronutrients, Micronutrients } from "@/model";
 import { computed } from "vue";
-import type { Macronutrients, Micronutrients } from "../../../../../model";
 
 const props = defineProps<{
   grams: number;

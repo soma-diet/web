@@ -43,7 +43,7 @@ const activeSlideDist = computed(() => {
 
 <template>
   <div
-    class="swipe-container"
+    class="container"
     @mousemove="checkHoverPosition"
     @mouseleave="resetHover"
   >
@@ -65,14 +65,14 @@ const activeSlideDist = computed(() => {
       <slot name="action-left" />
     </OutlineButton>
 
-    <div class="swipe-content">
+    <div class="content">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <style scoped>
-.swipe-container {
+.container {
   position: relative;
   overflow: hidden;
   background-color: transparent;
@@ -104,7 +104,7 @@ const activeSlideDist = computed(() => {
   right: 0;
 }
 
-.swipe-content {
+.content {
   position: relative;
   z-index: 1;
   width: 100%;

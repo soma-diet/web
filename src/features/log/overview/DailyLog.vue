@@ -6,10 +6,10 @@ import BackArrowIcon from "@/ui/icon/BackArrowIcon.vue";
 import ForwardArrowIcon from "@/ui/icon/ForwardArrowIcon.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { deleteLogEntry, getLogEntries } from "../../../api/log/log.api";
-import type { LogEntry } from "../../../../model";
 import InteractableItem from "@/ui/list/interactable/InteractableItem.vue";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
 import TargetsProgress from "./targets/TargetsProgress.vue";
+import type { LogEntry } from "@/model";
 
 const emit = defineEmits<{
   (e: "itemSelected", entry: LogEntry): void;

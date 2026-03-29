@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/constants";
+import type { DailyTargets } from "@/model";
 import { useTargetsStore } from "@/stores";
 import { useSummaryStore } from "@/stores/summary.store";
 import { computed, onMounted, watchEffect } from "vue";
-import type { DailyTargets } from "../../../../../model";
 
 interface Props {
   date: Date;
