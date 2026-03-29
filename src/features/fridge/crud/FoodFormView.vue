@@ -21,7 +21,7 @@ const props = defineProps<{
 
 // Navigation bar
 const title = computed(() =>
-  props.food ? `Update ${props.food.name}` : "Create a new food",
+  props.food ? `Edit ${props.food.name}` : "Add new food",
 );
 
 // Details Editor State

@@ -71,7 +71,7 @@ onMounted(() => {
 
 <template>
   <div class="wrapper col">
-    <FormNavigationBar title="SET DAILY TARGETS" @close="onFormCancel" />
+    <FormNavigationBar title="nutritional targets" @close="onFormCancel" />
     <ListLoadingEffect v-if="isSubmitting || targetsState.isLoadingTargets" />
     <form
       v-else-if="targetsState.dailyTargets"

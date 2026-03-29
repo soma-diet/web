@@ -75,7 +75,7 @@ function handleSubmit() {
 }
 
 const navTitle = computed(() => {
-  return props.entry ? "update entry" : "log entry";
+  return props.entry ? "log consumed food" : "edit entry";
 });
 </script>
 

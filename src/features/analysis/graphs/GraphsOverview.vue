@@ -43,7 +43,7 @@ onMounted(() => {
 <template>
   <div class="wrapper col">
     <div class="row apart center">
-      <h2 class="section-title">Graphs</h2>
+      <h2 class="section-title">Weekly summary</h2>
       <OutlineButton @click="loadWeeklySummary">
         <RefreshIcon />
       </OutlineButton>
