@@ -67,7 +67,7 @@ button:hover {
   width: 2.5rem;
   min-width: 2.5rem;
   height: 2.5rem;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .info {
@@ -75,13 +75,11 @@ button:hover {
 }
 
 .item-name {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 105%;
 }
 
 .meta {
-  font-size: 0.6rem;
-  font-weight: 600;
+  font-size: 80%;
   color: var(--text-dim);
   letter-spacing: 0.05em;
 }
@@ -92,14 +90,25 @@ button:hover {
 }
 
 .value {
-  font-size: 1rem;
+  font-size: 120%;
   font-weight: 700;
 }
 
 .unit {
-  font-size: 0.55rem;
-  font-weight: 900;
+  font-size: 60%;
   color: var(--color-accent);
   letter-spacing: 0.125rem;
+}
+
+@media (min-width: 1920px) {
+  button {
+    height: 6rem;
+  }
+  .item-name {
+    font-size: 150%;
+  }
+  .meta {
+    font-size: 1rem;
+  }
 }
 </style>

@@ -343,7 +343,7 @@ input[type="number"] {
 
 /* #region Shared CSS design */
 .accent-heading {
-  font-size: 0.75rem;
+  font-size: 76%;
   font-weight: 600;
   color: var(--color-accent);
   letter-spacing: 0.15em;
@@ -363,6 +363,7 @@ select.input-field:focus-visible {
   border-color: var(--color-accent);
 }
 
+/* prebarvit date ikonku v date inputu na bilo */
 input[type="date"] {
   color-scheme: dark;
 }
