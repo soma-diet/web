@@ -4,7 +4,7 @@ import { MAX_UPLOAD_SIZE_B } from "@/constants/upload.const";
 import { type Food, type Serving, createFood, createServing } from "@/model";
 import PrimaryButton from "@/ui/action/PrimaryButton.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
-import { computed, onMounted, reactive, ref, useId, watch } from "vue";
+import { computed, onMounted, ref, useId } from "vue";
 import DropHint from "./components/DropHint.vue";
 import FoodDetailsEditor from "./components/FoodDetailsEditor.vue";
 import FoodNutrientsEditor from "./components/FoodNutrientsEditor.vue";
@@ -49,7 +49,7 @@ const macros = Object.fromEntries(
 const micros = Object.fromEntries(
   MICROS_KEYS.map((key) => [key, props.food?.micronutrients[key] ?? null]),
 );
-let nutrientInput = reactive({ ...macros, ...micros });
+const nutrientInput = ref({ ...macros, ...micros });
 
 function prepareServings(formServings: FormServing[]): Serving[] {
   return formServings.map((formServing: FormServing) => {
@@ -69,37 +69,37 @@ function prepareServings(formServings: FormServing[]): Serving[] {
 const BASE_ERRORS = {
   servings: [] as { name?: string; size?: string }[], // pole erroru pro jednotlive servings pairs
 };
-const errors = reactive<Record<string, any>>(BASE_ERRORS);
+const errors = ref<Record<string, any>>({ ...BASE_ERRORS });
 function validate(): boolean {
   // vycistit stare errory
-  Object.keys(errors).forEach((key) => {
+  Object.keys(errors.value).forEach((key) => {
     if (key === "servings") return;
-    delete errors[key];
+    delete errors.value[key];
   });
-  errors.servings = [];
+  errors.value.servings = [];
 
   let isValid = true;
 
   if (!name.value || !name.value.trim()) {
-    errors.name = "name cannot be empty";
+    errors.value.name = "name cannot be empty";
     isValid = false;
   }
 
   if (selectedImg.value && selectedImg.value.size > MAX_UPLOAD_SIZE_B) {
-    errors.img = `file exceeds maximum size (${MAX_UPLOAD_SIZE_B / 1_000_000} MB)`;
+    errors.value.img = `file exceeds maximum size (${MAX_UPLOAD_SIZE_B / 1_000_000} MB)`;
     isValid = false;
   }
 
   for (const key of MACROS_KEYS) {
-    if (!nutrientInput[key]) {
-      errors[key] = "macronutrient must be assigned";
+    if (!nutrientInput.value[key]) {
+      errors.value[key] = "macronutrient must be assigned";
       isValid = false;
     }
   }
 
-  for (const key in nutrientInput) {
-    if (nutrientInput[key] && nutrientInput[key] < 0) {
-      errors[key] = "cannot be negative";
+  for (const key in nutrientInput.value) {
+    if (nutrientInput.value[key] && nutrientInput.value[key] < 0) {
+      errors.value[key] = "cannot be negative";
       isValid = false;
     }
   }
@@ -115,7 +115,7 @@ function validate(): boolean {
       servingError.size = "serving size must be a positive number";
       isValid = false;
     }
-    errors.servings[index] = servingError;
+    errors.value.servings[index] = servingError;
   });
 
   return isValid;
@@ -127,7 +127,7 @@ function handleSubmit() {
   if (!validate()) return;
 
   isSubmitting.value = true;
-  const { kcal, protein, fats, carbs, fiber, sodium } = nutrientInput;
+  const { kcal, protein, fats, carbs, fiber, sodium } = nutrientInput.value;
   const macros = { kcal: kcal!, protein: protein!, fats: fats!, carbs: carbs! }; // melo by byt davno zvalidovany formularem
   const micros = { fiber: fiber ?? null, sodium: sodium ?? null }; // null hodnoty jsou OK
 

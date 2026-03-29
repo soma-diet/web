@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getWithSystemServings } from "@/constants/system-servings.const";
 import type { LogEntry, Serving, Trackable } from "@/model";
 import PrimaryButton from "@/ui/action/PrimaryButton.vue";
 import LabeledDateInput from "@/ui/form/input/labeled/LabeledDateInput.vue";
@@ -7,8 +8,7 @@ import LabeledSelect from "@/ui/form/input/labeled/LabeledSelect.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import { makeDateFromISO } from "@/utils/date.util";
 import { getImage, SomaImageSize } from "@/utils/image.util";
-import { computed, reactive, ref } from "vue";
-import { getWithSystemServings } from "@/constants/system-servings.const";
+import { computed, ref } from "vue";
 import MacroFill from "./components/MacroFill.vue";
 import NutritionalInfo from "./components/NutritionalInfo.vue";
 
@@ -61,15 +61,15 @@ const originalTotalSize = computed(() => {
 });
 
 // validation
-const errors = reactive<Record<string, string>>({});
+const errors = ref<Record<string, string>>({});
 function validate(): boolean {
-  Object.keys(errors).forEach((key) => delete errors[key]);
+  Object.keys(errors.value).forEach((key) => delete errors.value[key]);
 
   if (!quantity.value || quantity.value <= 0) {
-    errors.quantity = "quantity must be a positive number";
+    errors.value.quantity = "quantity must be a positive number";
   }
 
-  return Object.keys(errors).length === 0;
+  return Object.keys(errors.value).length === 0;
 }
 
 function handleSubmit() {

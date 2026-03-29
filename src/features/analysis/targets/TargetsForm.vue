@@ -9,14 +9,14 @@ import {
   roundNutrient,
 } from "@/constants";
 import { useTargetsStore } from "@/stores";
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
+import { useAlerts } from "@/composables/alert.composable";
 import type { DailyTargets } from "@/model";
 import PrimaryButton from "@/ui/action/PrimaryButton.vue";
 import LabeledNumberInput from "@/ui/form/input/labeled/LabeledNumberInput.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
-import { useAlerts } from "@/composables/alert.composable";
 import ServerError from "@/ui/util/ServerError.vue";
 
 const emit = defineEmits<{
@@ -51,21 +51,21 @@ function restoreTargets() {
 }
 
 // validation
-const errors = reactive<Record<string, string>>({});
+const errors = ref<Record<string, string>>({});
 function validate(): boolean {
-  Object.keys(errors).forEach((key) => delete errors[key]);
+  Object.keys(errors.value).forEach((key) => delete errors.value[key]);
   if (!targetsState.dailyTargets) return false; // targets must be loaded to complete form (if none server provides default)
 
   for (const key of NUTRITION_KEYS) {
     if (targetsState.dailyTargets[key] && targetsState.dailyTargets[key] < 0) {
-      errors[key] = "cannot be a negative value";
+      errors.value[key] = "cannot be a negative value";
     }
     if (kJ.value && kJ.value < 0) {
-      errors.kj = "cannot be a negative value";
+      errors.value.kj = "cannot be a negative value";
     }
   }
 
-  return Object.keys(errors).length === 0;
+  return Object.keys(errors.value).length === 0;
 }
 
 // FORM SUBMITTING
