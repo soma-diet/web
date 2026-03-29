@@ -9,6 +9,7 @@ import {
   useWeeklySummary,
   type WeeklyNutrients,
 } from "./composables/weekly.composable";
+import ServerError from "@/ui/util/ServerError.vue";
 
 const DISPLAY_ORDER = ["kcal", "protein", "carbs", "fats", "fiber", "sodium"];
 
@@ -16,10 +17,12 @@ const { getWeekData, extractNutrientsFromWeek } = useWeeklySummary();
 
 const isLoading = ref(false);
 const nutrients = ref<Map<string, WeeklyNutrients>>(new Map());
+const fetchError = ref(false);
 
 function loadWeeklySummary() {
   if (isLoading.value) return;
   isLoading.value = true;
+  fetchError.value = false;
   getWeekData()
     .then((result) => {
       for (const key of DISPLAY_ORDER) {
@@ -27,8 +30,8 @@ function loadWeeklySummary() {
         nutrients.value.set(key, expanded);
       }
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((_) => {
+      fetchError.value = true;
     })
     .finally(() => {
       isLoading.value = false;
@@ -48,7 +51,8 @@ onMounted(() => {
         <RefreshIcon />
       </OutlineButton>
     </div>
-    <template v-if="!isLoading">
+    <ListLoadingEffect v-if="isLoading" />
+    <template v-else-if="!isLoading && !fetchError">
       <BarGraph
         v-for="[key, data] of nutrients"
         :key
@@ -57,7 +61,7 @@ onMounted(() => {
         :values="data.values"
       />
     </template>
-    <ListLoadingEffect v-else />
+    <ServerError class="offcenter" v-else />
   </div>
 </template>
 

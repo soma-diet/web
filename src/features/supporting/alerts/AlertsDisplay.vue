@@ -24,6 +24,7 @@ ul {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  pointer-events: none;
 
   li {
     max-width: 50%;

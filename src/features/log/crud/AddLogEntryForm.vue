@@ -30,9 +30,10 @@ async function createLogEntry(
   try {
     await postLogEntry(newEntryRequest);
     emit("finished");
-    callback();
   } catch (_) {
     scheduleAlert("Adding a new log entry failed. Please try again.");
+  } finally {
+    callback();
   }
 }
 </script>

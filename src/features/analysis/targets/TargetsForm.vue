@@ -4,7 +4,6 @@ import { putDailyTargets } from "@/api";
 import {
   kcalToKJ,
   kJToKcal,
-  MACROS_KEYS,
   NUTRIENT_DISPLAY_NAMES,
   NUTRITION_KEYS,
   roundNutrient,
@@ -18,7 +17,7 @@ import LabeledNumberInput from "@/ui/form/input/labeled/LabeledNumberInput.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
 import { useAlerts } from "@/composables/alert.composable";
-import { B } from "vue-router/dist/index-BzEKChPW.js";
+import ServerError from "@/ui/util/ServerError.vue";
 
 const emit = defineEmits<{
   (e: "finished"): void;
@@ -80,7 +79,6 @@ function handleTargetsSubmit() {
     })
     .catch((_) => {
       scheduleAlert("Updating daily targets failed. Please try again.");
-      restoreTargets();
     })
     .finally(() => {
       isSubmitting.value = false;
@@ -126,6 +124,7 @@ onMounted(() => {
         >Update daily targets</PrimaryButton
       >
     </form>
+    <ServerError class="offcenter" v-else />
   </div>
 </template>
 
@@ -134,6 +133,7 @@ onMounted(() => {
   padding: 1.5rem;
   gap: 1rem;
   overflow-y: scroll;
+  height: 100%;
 }
 
 form {

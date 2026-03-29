@@ -101,7 +101,7 @@ onMounted(() => {
   <ListLoadingEffect v-if="loadingEntries || targetsState.isLoadingTargets" />
   <template v-else>
     <TargetsProgress :date="dateSelected" />
-    <ul>
+    <ul v-if="logEntries.length > 0">
       <template v-for="(entry, index) in logEntries">
         <li>
           <InteractableItem
@@ -116,6 +116,9 @@ onMounted(() => {
         </li>
       </template>
     </ul>
+    <div class="offcenter" v-else>
+      <span class="italic">Have you eaten yet?</span>
+    </div>
   </template>
 </template>
 

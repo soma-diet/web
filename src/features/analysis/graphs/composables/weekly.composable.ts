@@ -19,18 +19,13 @@ async function getWeekData(
     dates.push(day);
   }
 
-  try {
-    const summaries = await Promise.all(promises);
-    const weeklySummary = new Map<string, DailySummary>();
-    summaries.forEach((summary, i) => {
-      const day = getDayOfWeek(dates[i]!.getDay());
-      weeklySummary.set(day, summary);
-    });
-    return weeklySummary;
-  } catch (err) {
-    console.error("Failed to get weekly summary!");
-    return new Map();
-  }
+  const summaries = await Promise.all(promises);
+  const weeklySummary = new Map<string, DailySummary>();
+  summaries.forEach((summary, i) => {
+    const day = getDayOfWeek(dates[i]!.getDay());
+    weeklySummary.set(day, summary);
+  });
+  return weeklySummary;
 }
 
 function extractNutrientsFromWeek(

@@ -8,10 +8,10 @@ const props = defineProps<{
 <template>
   <OutlineButton class="btn">
     <div class="row center wrapper">
-      <div class="icon">
+      <div class="icon middle">
         <slot name="svg" />
       </div>
-      <span>{{ label }}</span>
+      <span class="label">{{ label }}</span>
     </div>
   </OutlineButton>
 </template>
@@ -19,14 +19,17 @@ const props = defineProps<{
 <style scoped>
 .btn {
   width: 100%;
+  padding: 1rem;
+}
+.label {
+  font-size: 140%;
 }
 .wrapper {
   width: 100%;
   height: 100%;
 
   .icon {
-    width: 1.25rem;
-    height: 1.25rem;
+    object-fit: contain;
   }
 
   span {

@@ -31,9 +31,10 @@ async function updateLogEntry(
   try {
     await putLogEntry(newEntryRequest);
     emit("finished");
-    callback();
   } catch (_) {
     scheduleAlert("Updating a log entry failed. Please try again.");
+  } finally {
+    callback();
   }
 }
 </script>
