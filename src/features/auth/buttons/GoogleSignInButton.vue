@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import OutlineButton from "../action/OutlineButton.vue";
 import SignInButton from "./SignInButton.vue";
 </script>
 
