@@ -358,4 +358,13 @@ input[type="date"] {
   background-color: var(--bg-body);
 }
 
+.offcenter {
+  flex-grow: 1;
+  padding-bottom: 4rem;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
 /* #endregion */

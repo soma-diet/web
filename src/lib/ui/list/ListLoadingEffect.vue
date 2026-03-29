@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import OffCentered from '../layout/OffCentered.vue';
-import LoadingEffect from '../util/LoadingEffect.vue';
-
+import LoadingEffect from "../util/LoadingEffect.vue";
 </script>
 
 <template>
-  <OffCentered>
+  <div class="offcenter">
     <LoadingEffect />
-  </OffCentered>
+  </div>
 </template>
-
-<style scoped></style>

@@ -5,7 +5,10 @@ import RefreshIcon from "@/lib/ui/icon/RefreshIcon.vue";
 import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 import { onMounted, ref } from "vue";
 import BarGraph from "./BarGraph.vue";
-import { useWeeklySummary, type WeeklyNutrients } from "./composables/weekly.composable";
+import {
+  useWeeklySummary,
+  type WeeklyNutrients,
+} from "./composables/weekly.composable";
 
 const DISPLAY_ORDER = ["kcal", "protein", "carbs", "fats", "fiber", "sodium"];
 
@@ -64,5 +67,6 @@ onMounted(() => {
   padding: 1.5rem;
   overflow-y: scroll;
   gap: 0.75rem;
+  height: 100%;
 }
 </style>

@@ -4,7 +4,6 @@ import { useFoodSelectionStore } from "@/lib/stores/food-selection.store";
 import OutlineButton from "@/lib/ui/action/OutlineButton.vue";
 import SearchInput from "@/lib/ui/form/input/SearchInput.vue";
 import AddIcon from "@/lib/ui/icon/AddIcon.vue";
-import OffCentered from "@/lib/ui/layout/OffCentered.vue";
 import ListLoadingEffect from "@/lib/ui/list/ListLoadingEffect.vue";
 import TabSelection from "@/lib/ui/list/TabSelection.vue";
 import { onMounted, ref, watch } from "vue";
@@ -14,7 +13,7 @@ import NoResults from "./components/NoResults.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
 
 const emit = defineEmits<{
-  (e: "itemSelected", item: Food): void
+  (e: "itemSelected", item: Food): void;
 }>();
 
 const TIMEOUT_MS = 300;
@@ -57,7 +56,7 @@ async function search(currentQuery: string, newQuery: boolean) {
 watch(query, (newQuery) => {
   clearTimeout(timer);
   timer = setTimeout(() => search(newQuery, true), TIMEOUT_MS);
-})
+});
 
 async function loadMore() {
   if (searching.value || !hasMore.value) return;
@@ -79,24 +78,27 @@ const searchFilters = ["All", "Private", "Public"];
 const selectedSearchFilter = ref<string>("All");
 const getActiveFilter = () => {
   switch (selectedSearchFilter.value) {
-    case "Private": return FoodSearchFilter.PRIVATE;
-    case "Public": return FoodSearchFilter.PUBLIC;
-    default: return FoodSearchFilter.ALL;
+    case "Private":
+      return FoodSearchFilter.PRIVATE;
+    case "Public":
+      return FoodSearchFilter.PUBLIC;
+    default:
+      return FoodSearchFilter.ALL;
   }
-}
+};
 
 watch(query, (newQuery) => {
   clearTimeout(timer);
   timer = setTimeout(() => search(newQuery, true), TIMEOUT_MS);
-})
+});
 
 watch(selectedSearchFilter, () => {
   search(query.value, true);
-})
+});
 
 onMounted(() => {
   search(query.value, true);
-})
+});
 </script>
 
 <template>
@@ -110,17 +112,18 @@ onMounted(() => {
     </div>
   </div>
   <ListLoadingEffect v-if="searching && foodItems.length === 0" />
-  <FoodSearchResults v-else-if="foodItems.length > 0" :items="foodItems" @loadMore="loadMore"
-    @itemSelected="(item: Food) => emit('itemSelected', item)" @itemDeleted="triggerDelete" />
-  <OffCentered v-else>
-    <NoResults />
-  </OffCentered>
+  <FoodSearchResults
+    v-else-if="foodItems.length > 0"
+    :items="foodItems"
+    @loadMore="loadMore"
+    @itemSelected="(item: Food) => emit('itemSelected', item)"
+    @itemDeleted="triggerDelete"
+  />
+  <NoResults class="offcenter" v-else />
 </template>
 
 <style scoped>
 .search-controls {
-  /* aby nacitaci column food search results nezmackla input a tab selection */
-  flex-shrink: 0;
   gap: 0.25rem;
 }
 
