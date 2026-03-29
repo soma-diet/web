@@ -18,6 +18,7 @@ import LabeledNumberInput from "@/ui/form/input/labeled/LabeledNumberInput.vue";
 import FormNavigationBar from "@/ui/form/nav/FormNavigationBar.vue";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
 import { useAlerts } from "@/composables/alert.composable";
+import { B } from "vue-router/dist/index-BzEKChPW.js";
 
 const emit = defineEmits<{
   (e: "finished"): void;
@@ -74,13 +75,15 @@ function handleTargetsSubmit() {
   isSubmitting.value = true;
 
   putDailyTargets(targetsState.dailyTargets!)
+    .then(() => {
+      emit("finished");
+    })
     .catch((_) => {
       scheduleAlert("Updating daily targets failed. Please try again.");
       restoreTargets();
     })
     .finally(() => {
       isSubmitting.value = false;
-      emit("finished");
     });
 }
 

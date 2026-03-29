@@ -1,11 +1,9 @@
 import { FOOD_SEARCH_PAGE_SIZE } from "@/constants/food.const";
-import { AuthError } from "../auth/auth.error";
+import type { Food } from "@/model";
 import { fetchWithAuth } from "../client";
-import { ApiError } from "../error";
 import type { FoodRequestDto, FoodSearchResponse } from "./food.dto";
 import { FoodSearchFilter } from "./food.filter";
 import { foodToDto, rawItemToFood } from "./food.mapper";
-import type { Food } from "@/model";
 
 const FOOD_ENDPOINT = "/api/foods";
 
@@ -35,10 +33,7 @@ export async function getFoods(
   };
 }
 
-export async function postFood(
-  food: Food,
-  imgFile = null as File | null,
-): Promise<boolean> {
+export async function postFood(food: Food, imgFile = null as File | null) {
   const foodRequestDto: FoodRequestDto = foodToDto(food);
 
   const formData = new FormData();
@@ -48,35 +43,20 @@ export async function postFood(
   formData.append("food", foodBlob);
   if (imgFile) formData.append("file", imgFile);
 
-  try {
-    const response = await fetchWithAuth(
-      FOOD_ENDPOINT,
-      {
-        method: "POST",
-        body: formData,
-      },
-      true,
-    );
-
-    return response.ok;
-  } catch (err: unknown) {
-    if (err instanceof AuthError) {
-      err.log();
-      return false;
-    } else {
-      throw new ApiError(
-        "Unexpected error when posting a food to backend!",
-        null,
-        true,
-      );
-    }
-  }
+  await fetchWithAuth(
+    FOOD_ENDPOINT,
+    {
+      method: "POST",
+      body: formData,
+    },
+    true,
+  );
 }
 
 export async function putFood(
   food: Food,
   changedImageFile = null as File | null,
-): Promise<boolean> {
+) {
   const foodRequestDto = foodToDto(food);
   const formData = new FormData();
   const foodBlob = new Blob([JSON.stringify(foodRequestDto)], {
@@ -86,35 +66,19 @@ export async function putFood(
   if (changedImageFile) formData.append("file", changedImageFile);
 
   const endpoint = FOOD_ENDPOINT + "/" + food.id;
-  try {
-    const response = await fetchWithAuth(
-      endpoint,
-      {
-        method: "PUT",
-        body: formData,
-      },
-      true,
-    );
-
-    return response.ok;
-  } catch (err: unknown) {
-    if (err instanceof AuthError) {
-      err.log();
-      return false;
-    } else {
-      throw new ApiError(
-        "Unexpected error when posting a food to backend!",
-        null,
-        true,
-      );
-    }
-  }
+  await fetchWithAuth(
+    endpoint,
+    {
+      method: "PUT",
+      body: formData,
+    },
+    true,
+  );
 }
 
-export async function deleteFood(food: Food): Promise<boolean> {
+export async function deleteFood(food: Food) {
   const endpoint = FOOD_ENDPOINT + "/" + food.id;
-  const resposne = await fetchWithAuth(endpoint, {
+  const response = await fetchWithAuth(endpoint, {
     method: "DELETE",
   });
-  return resposne.ok;
 }

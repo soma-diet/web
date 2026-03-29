@@ -10,10 +10,9 @@ export async function getDailyTargets(): Promise<DailyTargets> {
   return rawToTargets(raw);
 }
 
-export async function putDailyTargets(targets: DailyTargets): Promise<boolean> {
-  const response = await fetchWithAuth(TARGETS_ENDPOINT, {
+export async function putDailyTargets(targets: DailyTargets) {
+  await fetchWithAuth(TARGETS_ENDPOINT, {
     method: "PUT",
     body: JSON.stringify(targets),
   });
-  return response.ok;
 }

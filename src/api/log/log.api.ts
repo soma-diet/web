@@ -10,7 +10,6 @@ import { SomaError } from "@/utils/errors";
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
 
-// #region Main CRUD
 export async function getLogEntries(date: Date): Promise<LogEntry[]> {
   const params = new URLSearchParams({
     date: makeDateString(date),
@@ -22,41 +21,27 @@ export async function getLogEntries(date: Date): Promise<LogEntry[]> {
   return entries;
 }
 
-export async function postLogEntry(
-  requestDto: LogEntryRequestDto,
-): Promise<boolean> {
-  try {
-    const response = await fetchWithAuth(DIARY_LOG_ENDPOINT, {
-      method: "POST",
-      body: JSON.stringify(requestDto),
-    });
-    return response.ok;
-  } catch (err: unknown) {
-    if (err instanceof SomaError) {
-    }
-    return false;
-  }
+export async function postLogEntry(requestDto: LogEntryRequestDto) {
+  await fetchWithAuth(DIARY_LOG_ENDPOINT, {
+    method: "POST",
+    body: JSON.stringify(requestDto),
+  });
 }
 
-export async function putLogEntry(
-  requestDto: LogEntryRequestDto,
-): Promise<boolean> {
+export async function putLogEntry(requestDto: LogEntryRequestDto) {
   const endpoint = DIARY_LOG_ENDPOINT + "/" + requestDto.id;
 
-  const response = await fetchWithAuth(endpoint, {
+  await fetchWithAuth(endpoint, {
     method: "PUT",
     body: JSON.stringify(requestDto),
   });
-  return response.ok;
 }
-// #endregion
 
-export async function deleteLogEntry(entry: LogEntry): Promise<boolean> {
+export async function deleteLogEntry(entry: LogEntry) {
   const endpoint = DIARY_LOG_ENDPOINT + "/" + entry.id;
-  const response = await fetchWithAuth(endpoint, {
+  await fetchWithAuth(endpoint, {
     method: "DELETE",
   });
-  return response.ok;
 }
 
 const DAILY_SUMMARY_ENDPOINT = "/api/diary/summary";

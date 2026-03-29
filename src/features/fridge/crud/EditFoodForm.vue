@@ -18,11 +18,11 @@ function onCancel() {
 async function onSubmit(food: Food, image: File | null, callback: () => void) {
   try {
     await putFood(food, image);
+    callback();
+    emit("finished");
   } catch (err) {
     scheduleAlert("Editing food failed. Please try again.");
   }
-  callback();
-  emit("finished");
 }
 </script>
 

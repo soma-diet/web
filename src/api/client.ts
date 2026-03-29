@@ -38,10 +38,9 @@ export async function fetchWithAuth(
   });
 
   if (!response.ok) {
-    const errorBody = await response.text();
     throw new ApiError(
       `${response.status}: ${response.statusText}`,
-      errorBody,
+      null,
       true,
     );
   }
