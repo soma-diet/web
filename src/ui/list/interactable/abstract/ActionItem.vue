@@ -88,7 +88,6 @@ const activeSlideDist = computed(() => {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 60px;
   transition: opacity 0.2s;
   opacity: 0.5;
 }

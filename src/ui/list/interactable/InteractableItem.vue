@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useMobile } from "@/stores/mobile.store";
-import { TrackableType } from "../../../../model";
 
 import { computed } from "vue";
 import EditIcon from "../../icon/EditIcon.vue";
@@ -8,6 +7,7 @@ import TrashIcon from "../../icon/TrashIcon.vue";
 import ActionItem from "./abstract/ActionItem.vue";
 import SwipeableItem from "./abstract/SwipeableItem.vue";
 import ItemDetails from "./components/ItemDetails.vue";
+import type { TrackableType } from "@/model";
 
 const props = defineProps<{
   name: string;
@@ -94,6 +94,8 @@ function handleDelete() {
 <style scoped>
 .action {
   margin: 0.5rem;
+  width: 2em;
+  height: 2em;
 }
 
 .animated {
