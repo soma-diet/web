@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  MACROS_KEYS,
   NUTRIENT_DISPLAY_NAMES,
   NUTRITION_KEYS,
   roundNutrient,
@@ -26,7 +25,6 @@ const placeholders = NUTRITION_KEYS.map((_) =>
       <LabeledNumberInput
         :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         :name="key"
-        :required="MACROS_KEYS.some((_key) => _key === key)"
         :placeholder="placeholders[index]"
         :error="errors[key]"
         @input="delete errors[key]"

@@ -84,21 +84,23 @@ function validate(): boolean {
     errors.name = "name cannot be empty";
     isValid = false;
   }
+
   if (selectedImg.value && selectedImg.value.size > MAX_UPLOAD_SIZE_B) {
     errors.img = `file exceeds maximum size (${MAX_UPLOAD_SIZE_B / 1_000_000} MB)`;
     isValid = false;
   }
 
-  for (const key in nutrientInput) {
-    if (nutrientInput[key] && nutrientInput[key] < 0) {
-      errors[key] = "cannot be negative";
+  for (const key of MACROS_KEYS) {
+    console.log(nutrientInput[key], !nutrientInput[key]);
+    if (!nutrientInput[key]) {
+      errors[key] = "macronutrient must be assigned";
       isValid = false;
     }
   }
 
-  for (const key in MACROS_KEYS) {
-    if (!nutrientInput[key]) {
-      errors[key] = "macronutrient must be assigned";
+  for (const key in nutrientInput) {
+    if (nutrientInput[key] && nutrientInput[key] < 0) {
+      errors[key] = "cannot be negative";
       isValid = false;
     }
   }

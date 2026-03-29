@@ -1,5 +1,5 @@
 <template>
-  <button class="col center middle outlined">
+  <button type="button" class="col center middle outlined">
     <slot />
   </button>
 </template>
@@ -24,8 +24,8 @@ button:hover {
 
 button :deep(svg) {
   object-fit: contain;
-  width: 1.5em;
-  height: 1.5em;
+  width: 2em;
+  height: 2em;
 }
 
 @media (min-width: 2560px) {
