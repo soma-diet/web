@@ -40,6 +40,7 @@ span,
 input,
 label,
 button,
+th,
 td {
   color: var(--text-main);
 }
@@ -58,6 +59,7 @@ p,
 span,
 li,
 td,
+th,
 button,
 input {
   font-family: var(--font-data);

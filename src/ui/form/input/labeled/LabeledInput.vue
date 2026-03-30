@@ -38,8 +38,12 @@ const inputId = useId();
 </template>
 
 <style scoped>
+label + input {
+  margin-top: 0.5rem;
+}
+
 input {
-  margin: 0.5rem 0 0.1rem 0;
+  margin-bottom: 0.1rem;
   font-size: 90%;
 }
 

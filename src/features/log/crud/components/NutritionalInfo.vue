@@ -81,12 +81,8 @@ thead th {
   font-weight: bold;
 }
 
-.text-left {
-  text-align: left;
-}
-
-.text-center {
-  text-align: center;
+tbody tr:nth-child(odd) {
+  background-color: var(--bg-surface);
 }
 
 @media (min-width: 2560px) {

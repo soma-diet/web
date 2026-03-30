@@ -90,8 +90,17 @@ function validate(): boolean {
     isValid = false;
   }
 
+  if (
+    selectedImg.value &&
+    selectedImg.value.type !== "image/png" &&
+    selectedImg.value.type !== "image/jpeg"
+  ) {
+    errors.value.img = "file must be a png or jpeg";
+    isValid = false;
+  }
+
   for (const key of MACROS_KEYS) {
-    if (!nutrientInput.value[key]) {
+    if (!nutrientInput.value[key] && nutrientInput.value[key] !== 0) {
       errors.value[key] = "macronutrient must be assigned";
       isValid = false;
     }

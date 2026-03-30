@@ -10,6 +10,7 @@ const createSvgElement = (element: string) =>
 
 function createBarGraphSvg(dates: string[], data: number[]): SVGElement {
   if (dates.length !== data.length) {
+    // nemelo by se stat jen kontrola
     throw new Error("Dates and data must have the same amount of items!");
   }
 

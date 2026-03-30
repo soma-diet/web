@@ -5,3 +5,11 @@
 .upper {
   text-transform: uppercase;
 }
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}

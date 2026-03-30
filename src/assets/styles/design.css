@@ -103,6 +103,10 @@ select.input-field:focus-visible {
   border-color: var(--color-accent);
 }
 
+.input-field:hover:not(:focus) {
+  border-color: var(--text-dim);
+}
+
 /* prebarvit date ikonku v date inputu na bilo */
 input[type="date"] {
   color-scheme: dark;
