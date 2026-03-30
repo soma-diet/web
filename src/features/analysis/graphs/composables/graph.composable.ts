@@ -13,7 +13,7 @@ function createBarGraphSvg(dates: string[], data: number[]): SVGElement {
     throw new Error("Dates and data must have the same amount of items!");
   }
 
-  const max = Math.max(...data); // rozbali data a vybere max hodnotu
+  const max = Math.max(...data) || 1; // avoid division by zero if all data is 0
   const barWidth = GRAPH_WIDTH_PX / data.length - BAR_SPACE_PX;
 
   const svg = createSvgElement("svg");
