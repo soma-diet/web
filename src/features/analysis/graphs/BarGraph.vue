@@ -49,6 +49,7 @@ onMounted(() => {
   }
   .date {
     fill: var(--text-dim);
+    font-size: 60%;
   }
 }
 </style>
