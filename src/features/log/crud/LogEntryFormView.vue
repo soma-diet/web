@@ -26,6 +26,7 @@ const emit = defineEmits<{
 const props = defineProps<{
   trackable: Trackable;
   entry?: LogEntry;
+  initialLogDate?: Date;
 }>();
 
 // nacteni url obrazku ze serveru nebo placeholder
@@ -38,7 +39,11 @@ const thumbnailSrc = computed(() =>
 // inputs
 const quantity = ref<number>(props.entry?.quantity ?? 100);
 const selectedDate = ref<Date>(
-  props.entry?.timestamp ? makeDateFromISO(props.entry.timestamp) : new Date(),
+  props.entry?.timestamp // priorita je datum zaznamu
+    ? makeDateFromISO(props.entry.timestamp)
+    : props.initialLogDate
+      ? new Date(props.initialLogDate)
+      : new Date(),
 );
 
 // servings
@@ -89,7 +94,7 @@ function handleSubmit() {
 }
 
 const navTitle = computed(() => {
-  return props.entry ? "log consumed food" : "edit entry";
+  return props.entry ? "edit entry" : "log consumed food";
 });
 </script>
 

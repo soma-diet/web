@@ -18,10 +18,10 @@ const emit = defineEmits<{
 
 const loadingEntries = ref(true);
 const logEntries = ref<LogEntry[]>([]);
-const dateSelected = ref<Date>(new Date());
+const { summaryState, reloadSummary, loadForDate } = useSummaryStore();
+const dateSelected = ref<Date>(new Date(summaryState.selectedDate)); // date logu se odvozuje z aktualne nactene summary
 
 const { targetsState } = useTargetsStore();
-const { reloadSummary } = useSummaryStore();
 const { scheduleAlert } = useAlerts();
 
 // funkce pro posunuti datum
@@ -30,6 +30,7 @@ const moveDate = (backwards: boolean) => {
   const changedDate = new Date(dateSelected.value);
   changedDate.setDate(changedDate.getDate() + increment);
   dateSelected.value = changedDate;
+  loadForDate(changedDate);
 };
 
 function loadEntries(date: Date) {

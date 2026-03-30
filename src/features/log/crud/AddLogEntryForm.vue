@@ -6,6 +6,7 @@ import { useAlerts } from "@/composables/alert.composable";
 
 const props = defineProps<{
   trackable: Trackable;
+  date?: Date;
 }>();
 
 const emit = defineEmits<{
@@ -43,5 +44,6 @@ async function createLogEntry(
     @cancel="emit('finished')"
     @submit="createLogEntry"
     :trackable="trackable"
+    :initialLogDate="date"
   />
 </template>
