@@ -1,13 +1,12 @@
 <!-- Center section displaying DailyLog and forms for adding and updating log entries. -->
 <script setup lang="ts">
-import { useLogSelectionStore, useSummaryStore } from "@/stores";
-import DailyLog from "./overview/DailyLog.vue";
+import type { LogEntry } from "@/model";
+import { useLogStore } from "@/stores";
 import AddLogEntryForm from "./crud/AddLogEntryForm.vue";
 import EditLogEntryForm from "./crud/EditLogEntryForm.vue";
-import type { LogEntry } from "@/model";
+import DailyLog from "./overview/DailyLog.vue";
 
-const { logSelectionState, closeLogForm, openLogForm } = useLogSelectionStore();
-const { summaryState } = useSummaryStore();
+const { logSelectionState, closeLogForm, openLogForm } = useLogStore();
 
 const showOverview = () => closeLogForm();
 const showEdit = (entry: LogEntry) => openLogForm(entry.item, entry);
@@ -22,7 +21,6 @@ const showEdit = (entry: LogEntry) => openLogForm(entry.item, entry);
     v-else-if="!logSelectionState.activeLogSelection.entry"
     @finished="showOverview"
     :trackable="logSelectionState.activeLogSelection.trackable"
-    :date="summaryState.selectedDate"
   />
   <EditLogEntryForm
     v-else="!logSelectionState.activeLogSelection.entry"

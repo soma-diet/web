@@ -2,7 +2,7 @@
 import { logOut } from "@/api";
 import { useAlerts } from "@/composables/alert.composable";
 import { useAuthStore } from "@/stores";
-import { useAnalysisSelectionStore } from "@/stores/analysis-selection.store";
+import { useGraphsStore } from "@/stores/graph.store";
 import { useMobile } from "@/stores/mobile.store";
 import OutlineButton from "@/ui/action/OutlineButton.vue";
 import RotatingSomaLogo from "@/ui/animated/RotatingSomaLogo.vue";
@@ -16,7 +16,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const { authState } = useAuthStore();
-const { analysisSelectionState, openTargetsForm } = useAnalysisSelectionStore();
+const { analysisSelectionState, openTargetsForm } = useGraphsStore();
 const {
   isMobile,
   setActiveSection,

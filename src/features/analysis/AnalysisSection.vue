@@ -1,11 +1,11 @@
 <!-- Section for Targets and Graphs -->
 <script setup lang="ts">
-import { useAnalysisSelectionStore } from "@/stores/analysis-selection.store";
 import TargetsForm from "./targets/TargetsForm.vue";
 import GraphsOverview from "./graphs/GraphsOverview.vue";
+import { useGraphsStore } from "@/stores/graph.store";
 
 const { analysisSelectionState, closeTargetsForm } =
-  useAnalysisSelectionStore();
+  useGraphsStore();
 </script>
 
 <template>

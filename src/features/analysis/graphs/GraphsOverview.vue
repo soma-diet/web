@@ -1,61 +1,30 @@
 <script setup lang="ts">
 import { NUTRIENT_DISPLAY_NAMES } from "@/constants";
-import OutlineButton from "@/ui/action/OutlineButton.vue";
-import RefreshIcon from "@/ui/icon/RefreshIcon.vue";
+import { useGraphsStore } from "@/stores/graph.store";
 import ListLoadingEffect from "@/ui/list/ListLoadingEffect.vue";
-import { onMounted, ref } from "vue";
-import BarGraph from "./BarGraph.vue";
-import {
-  useWeeklySummary,
-  type WeeklyNutrients,
-} from "./composables/weekly.composable";
 import ServerError from "@/ui/util/ServerError.vue";
+import BarGraph from "./BarGraph.vue";
 
-const DISPLAY_ORDER = ["kcal", "protein", "carbs", "fats", "fiber", "sodium"];
-
-const { getWeekData, extractNutrientsFromWeek } = useWeeklySummary();
-
-const isLoading = ref(false);
-const nutrients = ref<Map<string, WeeklyNutrients>>(new Map());
-const fetchError = ref(false);
-
-function loadWeeklySummary() {
-  if (isLoading.value) return;
-  isLoading.value = true;
-  fetchError.value = false;
-  getWeekData()
-    .then((result) => {
-      for (const key of DISPLAY_ORDER) {
-        const expanded = extractNutrientsFromWeek(key, result);
-        nutrients.value.set(key, expanded);
-      }
-    })
-    .catch((_) => {
-      fetchError.value = true;
-    })
-    .finally(() => {
-      isLoading.value = false;
-    });
-}
-
-onMounted(() => {
-  loadWeeklySummary();
-});
+const { graphsState, isReloadingGraphs } = useGraphsStore();
 </script>
 
 <template>
   <div class="wrapper col">
     <div class="row apart center">
       <h2 class="section-title">Weekly summary</h2>
-      <OutlineButton @click="loadWeeklySummary">
-        <RefreshIcon />
-      </OutlineButton>
     </div>
-    <ListLoadingEffect v-if="isLoading" />
-    <template v-else-if="!isLoading && !fetchError">
+    <ListLoadingEffect
+      v-if="graphsState.isLoadingGraphs && !isReloadingGraphs"
+    />
+    <template
+      v-else-if="
+        (!graphsState.isLoadingGraphs || isReloadingGraphs) &&
+        !graphsState.isFetchError
+      "
+    >
       <BarGraph
-        v-for="[key, data] of nutrients"
-        :key
+        v-for="[key, data] of graphsState.graphs"
+        :key="data.values.reduce((a, b) => a + b)"
         :name="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         :days="data.days"
         :values="data.values"

@@ -8,15 +8,16 @@ const targetsState = reactive({
   isLoadingTargets: true as boolean,
 });
 
-function reloadTargets() {
+async function reloadTargets() {
   targetsState.isLoadingTargets = true;
-  getDailyTargets()
-    .then((response: DailyTargets) => {
-      targetsState.dailyTargets = response;
-    })
-    .finally(() => {
-      targetsState.isLoadingTargets = false;
-    });
+  try {
+    const targets = await getDailyTargets();
+    targetsState.dailyTargets = targets;
+  } catch (err) {
+    targetsState.dailyTargets = null;
+  } finally {
+    targetsState.isLoadingTargets = false;
+  }
 }
 
 export function useTargetsStore() {

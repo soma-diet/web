@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useData } from "@/composables/data.composable";
 import AnalysisSection from "@/features/analysis/AnalysisSection.vue";
 import FridgeSection from "@/features/fridge/FridgeSection.vue";
 import Header from "@/features/header/Header.vue";
@@ -9,9 +10,11 @@ import { onMounted } from "vue";
 
 const { isMobile, isFridgeActive, isLogActive, isGraphsActive } = useMobile();
 const { reloadTargets } = useTargetsStore();
+const { reloadData } = useData();
 
 onMounted(() => {
   reloadTargets();
+  reloadData(new Date());
 });
 </script>
 

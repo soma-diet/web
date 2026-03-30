@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FoodSearchFilter } from "@/api/food/food.filter";
-import { useFoodSelectionStore } from "@/stores/food-selection.store";
+import { useFoodSelectionStore } from "@/stores/food.store";
 import OutlineButton from "@/ui/action/OutlineButton.vue";
 import SearchInput from "@/ui/form/input/SearchInput.vue";
 import AddIcon from "@/ui/icon/AddIcon.vue";

@@ -3,7 +3,7 @@ import { NUTRIENT_DISPLAY_NAMES, roundNutrient } from "@/constants";
 import type { DailyTargets } from "@/model";
 import { useTargetsStore } from "@/stores";
 import { useSummaryStore } from "@/stores/summary.store";
-import { computed, onMounted, watchEffect } from "vue";
+import { computed } from "vue";
 
 interface Props {
   date: Date;
@@ -18,7 +18,7 @@ const shownTargetsKeys: (keyof DailyTargets)[] = [
 ]; // optionally enabled targets (prepared for the future)
 
 const { targetsState } = useTargetsStore();
-const { summaryState, loadForDate } = useSummaryStore();
+const { summaryState } = useSummaryStore();
 
 // extracnuti dat pro template
 const targets = computed(() => {
@@ -32,14 +32,6 @@ const targets = computed(() => {
       percentage: max ? (current / max) * 100 : 0,
     };
   });
-});
-
-watchEffect(() => {
-  loadForDate(props.date);
-});
-
-onMounted(() => {
-  loadForDate(props.date);
 });
 </script>
 

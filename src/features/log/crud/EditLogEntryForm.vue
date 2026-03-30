@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { LogEntryRequestDto, putLogEntry } from "@/api";
+import { useAlerts } from "@/composables/alert.composable";
+import { useLog } from "@/composables/log.composable";
 import { type LogEntry, type Trackable } from "@/model";
 import LogEntryFormView from "./LogEntryFormView.vue";
-import { useAlerts } from "@/composables/alert.composable";
 
 const props = defineProps<{
   trackable: Trackable;
@@ -13,26 +13,17 @@ const emit = defineEmits<{
   (e: "finished"): void;
 }>();
 
-const { scheduleAlert } = useAlerts();
+const { updateLogEntry } = useLog();
 
-async function updateLogEntry(
+async function submitUpdatedEntry(
   quantity: number,
   servingId: string | null,
   date: Date,
   callback: () => void,
 ) {
-  const newEntryRequest: LogEntryRequestDto = LogEntryRequestDto.updateRequest(
-    props.entry,
-    servingId,
-    quantity,
-    date,
-  );
-
   try {
-    await putLogEntry(newEntryRequest);
+    await updateLogEntry(props.entry, quantity, servingId, date);
     emit("finished");
-  } catch (_) {
-    scheduleAlert("Updating a log entry failed. Please try again.");
   } finally {
     callback();
   }
@@ -42,7 +33,7 @@ async function updateLogEntry(
 <template>
   <LogEntryFormView
     @cancel="emit('finished')"
-    @submit="updateLogEntry"
+    @submit="submitUpdatedEntry"
     :trackable="trackable"
     :entry="entry"
   />

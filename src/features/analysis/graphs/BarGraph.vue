@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { useDrawGraph } from "./composables/graph.composable";
+import { useDrawGraph } from "../../../composables/graph.composable";
 
 const props = defineProps<{
   name: string;
