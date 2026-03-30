@@ -44,7 +44,11 @@ export function recalculateFields(
   const copy = { ...data };
   for (const key in copy) {
     const original = copy[key];
-    copy[key] = original ? original * coefficient : null;
+
+    copy[key] =
+      original === undefined || original === null
+        ? null
+        : original * coefficient;
   }
   return copy;
 }

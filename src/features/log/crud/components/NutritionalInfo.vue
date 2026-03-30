@@ -39,7 +39,7 @@ const nutrientVisuals = computed(() => {
   for (const key of keyOrder) {
     const value = adjustedNutrients[key] ?? null;
     const displayValue =
-      (value ? roundNutrient(value) : "?").toString() +
+      (value !== null ? roundNutrient(value) : "?").toString() +
       " " +
       NUTRIENT_SUFFIX[key];
     visuals.push({
