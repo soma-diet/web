@@ -31,6 +31,8 @@ async function loadWeeklyGraphs(since: Date) {
 
   try {
     const data = await getWeekData(since);
+    graphsState.graphs.clear();
+
     for (const key of GRAPH_ORDER) {
       const expanded = extractNutrientsFromWeek(key, data);
       graphsState.graphs.set(key, expanded);

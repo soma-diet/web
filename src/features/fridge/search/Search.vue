@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { FoodSearchFilter } from "@/api/food/food.filter";
+import { useAlerts } from "@/composables/alert.composable";
+import type { Food } from "@/model";
 import { useFoodSelectionStore } from "@/stores/food.store";
 import OutlineButton from "@/ui/action/OutlineButton.vue";
 import SearchInput from "@/ui/form/input/SearchInput.vue";
@@ -10,7 +12,6 @@ import { onMounted, ref, watch } from "vue";
 import { deleteFood, getFoods } from "../../../api";
 import NoResults from "./components/NoResults.vue";
 import FoodSearchResults from "./FoodSearchResults.vue";
-import type { Food } from "@/model";
 
 const emit = defineEmits<{
   (e: "itemSelected", item: Food): void;
@@ -25,6 +26,7 @@ const searching = ref(false);
 const page = ref(0); // vychozi load je 0
 const hasMore = ref(true);
 
+const { scheduleAlert } = useAlerts();
 const { openFoodForm } = useFoodSelectionStore();
 
 // debounce timer
@@ -69,7 +71,7 @@ async function triggerDelete(item: Food) {
   try {
     await deleteFood(item);
   } catch (e) {
-    console.error("Failed to delete food item:", e);
+    scheduleAlert("Failed to delete the food item. Please try again.");
   }
 }
 

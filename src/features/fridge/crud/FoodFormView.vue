@@ -11,6 +11,7 @@ import FoodNutrientsEditor from "./components/FoodNutrientsEditor.vue";
 import FoodServingsEditor from "./components/FoodServingsEditor.vue";
 import type { FormServing } from "./types/form-serving.type";
 import { useAlerts } from "@/composables/alert.composable";
+import { useDragAndDrop } from "./composables/dragdrop.composable";
 
 const emit = defineEmits<{
   (e: "cancel"): void;
@@ -25,7 +26,8 @@ const title = computed(() =>
   props.food ? `Edit ${props.food.name}` : "Add new food",
 );
 
-const { scheduleAlert } = useAlerts();
+// importnuti meho bindingu na drag n drop
+const { bindDragAndDrop, isDraggingOver } = useDragAndDrop();
 
 const name = ref(props.food?.name ?? "");
 const brand = ref(props.food?.brand ?? "");
@@ -176,51 +178,10 @@ function handleSubmit() {
   });
 }
 
-// #region Drag n Drop
-// DragAndDrop obrazku jidla nad formular
-const isDraggingOver = ref(false);
-
-function handleDragOver(e: DragEvent) {
-  e.preventDefault();
-}
-function handleDragEnter(e: DragEvent) {
-  e.preventDefault();
-  isDraggingOver.value = true;
-}
-function handleDragLeave(e: DragEvent) {
-  const dragArea = e.currentTarget as HTMLElement;
-  const target = e.relatedTarget as Node | null; // Node kvuli contains funkci, relatedTarget = element na ktery prijizdi mys (s target nefunguje)
-  if (dragArea.contains(target)) return; // ignoruje kdyz se prejizdi mysi nad detmi formulare
-  isDraggingOver.value = false;
-}
-function handleDrop(e: DragEvent) {
-  e.preventDefault();
-  isDraggingOver.value = false;
-
-  // nacteni souboru z eventu
-  const files = e.dataTransfer?.files;
-  if (!files || files.length === 0) {
-    selectedImg.value = null;
-  } else {
-    const file = files[0]!;
-    if (!file?.type.startsWith("image/")) {
-      scheduleAlert("You can only upload an image!");
-      return;
-    }
-
-    selectedImg.value = file;
-  }
-}
-//#endregion
-
 const id = useId();
 onMounted(() => {
   const formElement = document.getElementById(id);
-
-  formElement?.addEventListener("dragenter", handleDragEnter);
-  formElement?.addEventListener("dragover", handleDragOver);
-  formElement?.addEventListener("dragleave", handleDragLeave);
-  formElement?.addEventListener("drop", handleDrop);
+  if (formElement) bindDragAndDrop(formElement, selectedImg);
 });
 </script>
 

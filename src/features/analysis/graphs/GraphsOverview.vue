@@ -24,7 +24,7 @@ const { graphsState, isReloadingGraphs } = useGraphsStore();
     >
       <BarGraph
         v-for="[key, data] of graphsState.graphs"
-        :key="data.values.reduce((a, b) => a + b)"
+        :key="key+data.values.reduce((a, b) => a + b)"
         :name="NUTRIENT_DISPLAY_NAMES[key] ?? key"
         :days="data.days"
         :values="data.values"

@@ -36,7 +36,7 @@ Zde jsou vypsány některé z snad splněných požadavků, protože by je mohlo
     </tr>
     <tr>
       <td>Použití pokročilých JS API (File API, Geolocation, Drag & Drop, LocalStorage, Sockety, ...)</td>
-      <td>Použito fetchAPI, FileAPI v ImageInput.vue, Drag & Drop API v FoodFormView.vue</td>
+      <td>Použito fetchAPI, FileAPI v ImageInput.vue, Drag & Drop API v dragdrop.composable.ts (FoodFormView.vue)</td>
     </tr>
     <tr>
       <td>Funkční historie (posun tlačítky zpět/vpřed prohlížeče - History API)</td>

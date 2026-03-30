@@ -72,7 +72,7 @@ Přes hoverování myší na kraji itemu na PC nebo swipeováním na mobilních 
 
 Pro mobil z logiky aplikace bylo nutné upravit i logiku vyměňování oken. Styly mobilu se aplikují pod 1000px šířky okna.
 
-<p align="center">
+<p align="center" style="display:flex; gap=1rem;">
 <img src="./o_projektu.assets/Screenshot From 2026-03-30 20-50-42.png" alt="Screenshot From 2026-03-30 20-50-42" height="300px" />
 <img src="./o_projektu.assets/Screenshot From 2026-03-30 20-50-49.png" alt="Screenshot From 2026-03-30 20-50-49" height="300px" />
 </p>
