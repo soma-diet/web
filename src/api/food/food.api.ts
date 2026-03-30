@@ -7,6 +7,7 @@ import { foodToDto, rawItemToFood } from "./food.mapper";
 
 const FOOD_ENDPOINT = "/api/foods";
 
+// vrati page objekt s informaci o dalsi strance a vysledky vyhledavani
 export async function getFoods(
   query: string,
   filter = FoodSearchFilter.ALL as FoodSearchFilter,
@@ -33,9 +34,11 @@ export async function getFoods(
   };
 }
 
+// vytvoreni noveho jidla na serveru
 export async function postFood(food: Food, imgFile = null as File | null) {
   const foodRequestDto: FoodRequestDto = foodToDto(food);
 
+  // posila se jako multiform data kvuli obrazku
   const formData = new FormData();
   const foodBlob = new Blob([JSON.stringify(foodRequestDto)], {
     type: "application/json",
@@ -53,6 +56,7 @@ export async function postFood(food: Food, imgFile = null as File | null) {
   );
 }
 
+// updatuje jidlo
 export async function putFood(
   food: Food,
   changedImageFile = null as File | null,
@@ -78,7 +82,7 @@ export async function putFood(
 
 export async function deleteFood(food: Food) {
   const endpoint = FOOD_ENDPOINT + "/" + food.id;
-  const response = await fetchWithAuth(endpoint, {
+  await fetchWithAuth(endpoint, {
     method: "DELETE",
   });
 }

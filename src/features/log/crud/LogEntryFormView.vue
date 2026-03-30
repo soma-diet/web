@@ -28,6 +28,7 @@ const props = defineProps<{
   entry?: LogEntry;
 }>();
 
+// nacteni url obrazku ze serveru nebo placeholder
 const thumbnailSrc = computed(() =>
   props.trackable.imageFilename
     ? getImage(props.trackable.imageFilename, SomaImageSize.LARGE)

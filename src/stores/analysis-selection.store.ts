@@ -1,3 +1,4 @@
+// udrzuje stav v analysis sekci
 import { reactive, readonly } from "vue";
 
 const analysisSelectionState = reactive({

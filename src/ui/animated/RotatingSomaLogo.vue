@@ -25,6 +25,7 @@ const getRandomRotation = () => {
 const rotation = ref(getRandomRotation());
 const active = ref(false);
 
+// returntype jen ts typehint
 let initialDelayId: ReturnType<typeof setTimeout>;
 let intervalId: ReturnType<typeof setInterval>;
 let timeoutId: ReturnType<typeof setTimeout>;
@@ -50,7 +51,7 @@ function animationCycle() {
 }
 
 function startAnimation(immediate: boolean) {
-  clearAllTimers();
+  clearAllTimers(); // vypnout stare timery
 
   const startLoop = () => {
     animationCycle();
@@ -58,12 +59,13 @@ function startAnimation(immediate: boolean) {
   };
 
   if (immediate) {
-    startLoop();
+    startLoop(); // zacit hned
   } else {
-    initialDelayId = setTimeout(startLoop, props.delay * 1000);
+    initialDelayId = setTimeout(startLoop, props.delay * 1000); // zacit opozdene
   }
 }
 
+// pokud se zmeni props tak se restartuje animace
 watch(() => [props.duration, props.delay], () => {
   startAnimation(true);
 });
@@ -72,6 +74,7 @@ onMounted(() => {
   startAnimation(false);
 });
 
+// cleanup
 onUnmounted(() => {
   clearAllTimers();
 });

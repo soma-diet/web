@@ -1,3 +1,4 @@
+// nastaveni firebase
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -8,6 +9,7 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 
+// je verejny config
 const firebaseConfig = {
   apiKey: "AIzaSyDIgpS7J7PO8_PUgm4a-2fHimDxDIcEgto",
   authDomain: "soma-universe.firebaseapp.com",

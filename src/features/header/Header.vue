@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { logOut } from "@/api";
+import { useAlerts } from "@/composables/alert.composable";
 import { useAuthStore } from "@/stores";
 import { useAnalysisSelectionStore } from "@/stores/analysis-selection.store";
 import { useMobile } from "@/stores/mobile.store";
@@ -23,6 +24,7 @@ const {
   isGraphsActive,
   isLogActive,
 } = useMobile();
+const { scheduleAlert } = useAlerts();
 
 // rotating logo on hover logic
 const hoveringLogo = ref(false);
@@ -37,7 +39,7 @@ function handleLogOut() {
       router.push({ name: "SignIn" });
     })
     .catch(() => {
-      // TODO sign out error poup
+      scheduleAlert("Failed to log out. Please try again.");
     });
 }
 

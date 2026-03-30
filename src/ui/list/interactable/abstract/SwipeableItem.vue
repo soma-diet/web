@@ -16,7 +16,7 @@ const startX = ref(0);
 const currentX = ref(0);
 
 // #region DRAGGING
-// utils
+// util funkce, zjisti pozici X v pripade mouse eventu ale i touch eventu
 const getPosX = (event: MouseEvent | TouchEvent) =>
   "touches" in event ? event.touches[0]!.clientX : event.clientX;
 
@@ -28,7 +28,7 @@ const startDrag = (event: MouseEvent | TouchEvent) => {
 
   window.addEventListener("mousemove", onDrag);
   window.addEventListener("mouseup", stopDrag);
-  window.addEventListener("touchmove", onDrag, { passive: false }); // passive false potreba aby nescrolloval pri tazeni do strany
+  window.addEventListener("touchmove", onDrag, { passive: false }); // passive false potreba pry aby nescrolloval pri tazeni do strany
   window.addEventListener("touchend", stopDrag);
 };
 
@@ -38,13 +38,18 @@ const onDrag = (event: MouseEvent | TouchEvent) => {
 
   let deltaX = getPosX(event) - startX.value;
 
+  // vypocitat posun a capnout na nastavenych hranicich
   if (props.leftAction && props.rightAction) {
+    // swipe na obe strany
     deltaX = Math.max(-MAX_DRAG_PX, Math.min(MAX_DRAG_PX, deltaX));
   } else if (props.leftAction) {
+    // swipe jen doleva
     deltaX = Math.min(MAX_DRAG_PX, Math.max(0, deltaX));
   } else if (props.rightAction) {
+    // swipe jen doprava
     deltaX = Math.max(-MAX_DRAG_PX, Math.min(0, deltaX));
   } else {
+    // pro jistotu
     deltaX = 0;
   }
 

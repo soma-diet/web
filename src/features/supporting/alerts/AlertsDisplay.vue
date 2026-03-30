@@ -4,6 +4,7 @@ import { useAlerts } from "@/composables/alert.composable";
 const { alertsState } = useAlerts();
 </script>
 
+<!-- vykresleni zobrazenych alerts pres obrazovku -->
 <template>
   <ul v-show="alertsState.active.length > 0" class="alerts">
     <li v-for="alert in alertsState.active" :key="alert.id">

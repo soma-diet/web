@@ -11,6 +11,7 @@ async function getWeekData(
   const promises: Promise<DailySummary>[] = [];
   const dates: Date[] = [];
 
+  // ziskani summaries za poslednich 7 dni
   for (let i = 6; i >= 0; i--) {
     const day = new Date(lastDay);
     day.setDate(day.getDate() - i);
@@ -19,6 +20,7 @@ async function getWeekData(
     dates.push(day);
   }
 
+  // fetchnuti naraz
   const summaries = await Promise.all(promises);
   const weeklySummary = new Map<string, DailySummary>();
   summaries.forEach((summary, i) => {

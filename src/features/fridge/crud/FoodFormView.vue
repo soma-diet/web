@@ -10,6 +10,7 @@ import FoodDetailsEditor from "./components/FoodDetailsEditor.vue";
 import FoodNutrientsEditor from "./components/FoodNutrientsEditor.vue";
 import FoodServingsEditor from "./components/FoodServingsEditor.vue";
 import type { FormServing } from "./types/form-serving.type";
+import { useAlerts } from "@/composables/alert.composable";
 
 const emit = defineEmits<{
   (e: "cancel"): void;
@@ -20,18 +21,17 @@ const props = defineProps<{
   food?: Food;
 }>();
 
-// Navigation bar
 const title = computed(() =>
   props.food ? `Edit ${props.food.name}` : "Add new food",
 );
 
-// Details Editor State
+const { scheduleAlert } = useAlerts();
+
 const name = ref(props.food?.name ?? "");
 const brand = ref(props.food?.brand ?? "");
 const isLiquid = ref(props.food?.isMass ? !props.food.isMass : false);
 const selectedImg = ref<File | null>(null);
 
-// Servings Editor State
 const formServings = ref<FormServing[]>(
   props.food?.servings.map((serving) => {
     return {
@@ -42,7 +42,7 @@ const formServings = ref<FormServing[]>(
   }) ?? [],
 );
 
-// Nutrients Editor State
+// extracnout data do formulare z klicu zivin
 const macros = Object.fromEntries(
   MACROS_KEYS.map((key) => [key, props.food?.macronutrients[key] ?? null]),
 );
@@ -51,6 +51,7 @@ const micros = Object.fromEntries(
 );
 const nutrientInput = ref({ ...macros, ...micros });
 
+// podle typu formServing udela novy serving do databaze
 function prepareServings(formServings: FormServing[]): Serving[] {
   return formServings.map((formServing: FormServing) => {
     if (formServing.previousId) {
@@ -85,6 +86,7 @@ function validate(): boolean {
     isValid = false;
   }
 
+  // kontrola velikosti nahravaneho obrazku
   if (selectedImg.value && selectedImg.value.size > MAX_UPLOAD_SIZE_B) {
     errors.value.img = `file exceeds maximum size (${MAX_UPLOAD_SIZE_B / 1_000_000} MB)`;
     isValid = false;
@@ -100,6 +102,7 @@ function validate(): boolean {
   }
 
   for (const key of MACROS_KEYS) {
+    // makra musi byt vyplnena
     if (!nutrientInput.value[key] && nutrientInput.value[key] !== 0) {
       errors.value[key] = "macronutrient must be assigned";
       isValid = false;
@@ -107,13 +110,14 @@ function validate(): boolean {
   }
 
   for (const key in nutrientInput.value) {
+    // hodnoty nesmi byt pod nulou
     if (nutrientInput.value[key] && nutrientInput.value[key] < 0) {
       errors.value[key] = "cannot be negative";
       isValid = false;
     }
   }
 
-  // validace servings
+  // validace vsech zadanych porci
   formServings.value.forEach((serving, index) => {
     const servingError: { name?: string; size?: string } = {};
     if (!serving.name || !serving.name.trim()) {
@@ -193,13 +197,14 @@ function handleDrop(e: DragEvent) {
   e.preventDefault();
   isDraggingOver.value = false;
 
+  // nacteni souboru z eventu
   const files = e.dataTransfer?.files;
   if (!files || files.length === 0) {
     selectedImg.value = null;
   } else {
     const file = files[0]!;
     if (!file?.type.startsWith("image/")) {
-      alert("You can only upload an image.");
+      scheduleAlert("You can only upload an image!");
       return;
     }
 

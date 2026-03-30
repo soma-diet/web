@@ -6,7 +6,6 @@ import {
 } from "./log.mapper";
 import type { LogEntryRequestDto } from "./log.dto";
 import type { LogEntry, DailySummary } from "@/model";
-import { SomaError } from "@/utils/errors";
 
 const DIARY_LOG_ENDPOINT = "/api/diary";
 

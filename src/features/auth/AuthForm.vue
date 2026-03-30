@@ -4,8 +4,10 @@ import { signInWithGitHub, signInWithGoogle } from "../../api";
 import LabeledHorizontalRule from "../../ui/util/LabeledHorizontalRule.vue";
 import GoogleSignInButton from "./buttons/GoogleSignInButton.vue";
 import GitHubSignInButton from "./buttons/GitHubSignInButton.vue";
+import { useAlerts } from "@/composables/alert.composable";
 
 const router = useRouter();
+const { scheduleAlert } = useAlerts();
 
 type Provider = "google" | "github";
 const signInMethods = {
@@ -17,7 +19,7 @@ function handleSignIn(provider: Provider) {
   signInMethod()
     .then(() => router.push({ name: "Dashboard" }))
     .catch(() => {
-      // TODO handle sign in error
+      scheduleAlert("Failed to sign in. Please try again.");
     });
 }
 </script>

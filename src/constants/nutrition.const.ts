@@ -28,6 +28,7 @@ export const NUTRIENT_SUFFIX: Record<string, string> = {
   sodium: "g",
 };
 
+// conversions
 export const kcalToKJ = (kcal: number): number =>
   kcal * NUTRITION_RATIOS.KCAL_TO_KJ_MULT;
 export const kJToKcal = (kJ: number): number =>
@@ -35,6 +36,7 @@ export const kJToKcal = (kJ: number): number =>
 export const roundNutrient = (nutrient: number) =>
   Math.round(nutrient * 10) / 10;
 
+// util
 export function recalculateFields(
   data: Record<string, number | null>,
   coefficient: number,

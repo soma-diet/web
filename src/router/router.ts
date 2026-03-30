@@ -7,32 +7,30 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const { authState } = useAuthStore();
 
-const routes = [
-  {
-    path: "/",
-    redirect: "/dashboard",
-  },
-  {
-    path: "/signin",
-    name: "SignIn",
-    component: SignIn,
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "NotFound",
-    component: NotFound,
-  },
-];
-
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: routes,
+  routes: [
+    {
+      path: "/",
+      redirect: "/dashboard",
+    },
+    {
+      path: "/signin",
+      name: "SignIn",
+      component: SignIn,
+    },
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: Dashboard,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFound,
+    },
+  ],
 });
 
 router.beforeEach((to) => {

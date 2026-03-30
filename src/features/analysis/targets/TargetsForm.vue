@@ -28,6 +28,7 @@ const isSubmitting = ref(false);
 const { targetsState } = useTargetsStore();
 const { scheduleAlert } = useAlerts();
 
+// prepocteni kJ z kcal
 const kJ = computed<number | null>({
   get: () => {
     if (targetsState.dailyTargets && targetsState.dailyTargets.kcal != null) {
@@ -60,9 +61,9 @@ function validate(): boolean {
     if (targetsState.dailyTargets[key] && targetsState.dailyTargets[key] < 0) {
       errors.value[key] = "cannot be a negative value";
     }
-    if (kJ.value && kJ.value < 0) {
-      errors.value.kj = "cannot be a negative value";
-    }
+  }
+  if (kJ.value && kJ.value < 0) {
+    errors.value.kj = "cannot be a negative value";
   }
 
   return Object.keys(errors.value).length === 0;

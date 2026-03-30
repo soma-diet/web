@@ -18,7 +18,7 @@ const addServingField = () => {
   } as FormServing);
 };
 const removeServingField = (index: number) => {
-  servings.value.splice(index, 1);
+  servings.value.splice(index, 1); // odstrani z servings element na indexu
 };
 </script>
 

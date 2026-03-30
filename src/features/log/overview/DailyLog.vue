@@ -24,6 +24,7 @@ const { targetsState } = useTargetsStore();
 const { reloadSummary } = useSummaryStore();
 const { scheduleAlert } = useAlerts();
 
+// funkce pro posunuti datum
 const moveDate = (backwards: boolean) => {
   const increment = backwards ? -1 : 1;
   const changedDate = new Date(dateSelected.value);
@@ -55,6 +56,7 @@ const isTodaySelected = computed(() => {
   return date.getDate() === today.getDate();
 });
 
+// nastaveni nazvu sekce
 const dateString = computed(() => {
   if (isTodaySelected.value) return "Today";
   const date = dateSelected.value;
@@ -72,7 +74,7 @@ async function handleEntryDelete(deletedEntry: LogEntry) {
   try {
     await deleteLogEntry(deletedEntry);
   } catch (e: any) {
-    console.error("Failed to delete log entry", e);
+    scheduleAlert("Failed to delete your log entry. Please try again.");
   } finally {
     reloadSummary();
   }

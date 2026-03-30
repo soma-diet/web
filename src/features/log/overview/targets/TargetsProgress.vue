@@ -20,6 +20,7 @@ const shownTargetsKeys: (keyof DailyTargets)[] = [
 const { targetsState } = useTargetsStore();
 const { summaryState, loadForDate } = useSummaryStore();
 
+// extracnuti dat pro template
 const targets = computed(() => {
   return shownTargetsKeys.map((key) => {
     const max = targetsState.dailyTargets?.[key];

@@ -4,15 +4,17 @@ import { computed, ref } from "vue";
 
 const emit = defineEmits(["click-left", "click-right"]);
 const props = defineProps<{
-  leftAction?: boolean;
-  rightAction?: boolean;
+  leftAction?: boolean; // zapnout levou akci?
+  rightAction?: boolean; // zapnout pravou akci?
 }>();
 
 const SLIDE_DISTANCE = 60;
-const ACTIVATION_FRACTION = 5;
+const ACTIVATION_FRACTION = 5; // 1/5 elementu zpusobi akci
 
 const isHoveringLeft = ref(false);
 const isHoveringRight = ref(false);
+
+// zapnout hovering refs podle toho, kde na elementu hoveruje
 const checkHoverPosition = (event: MouseEvent) => {
   const element = event.currentTarget as HTMLElement;
   const rectangle = element.getBoundingClientRect();
@@ -27,6 +29,7 @@ const resetHover = () => {
   isHoveringRight.value = false;
 };
 
+// computed z toho zda hoveruje a zda je vubec akce zapnuta
 const activeLeft = computed(() => {
   return props.leftAction && isHoveringLeft.value;
 });
@@ -34,6 +37,7 @@ const activeRight = computed(() => {
   return props.rightAction && isHoveringRight.value;
 });
 
+// vypocita hodnotu vlastnosti posunu
 const activeSlideDist = computed(() => {
   if (activeLeft.value) return SLIDE_DISTANCE;
   if (activeRight.value) return -SLIDE_DISTANCE;

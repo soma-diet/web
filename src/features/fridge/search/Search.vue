@@ -43,7 +43,7 @@ async function search(currentQuery: string, newQuery: boolean) {
   const filter = getActiveFilter();
   try {
     const response = await getFoods(currentQuery, filter, page.value);
-    foodItems.value = [...foodItems.value, ...response.foodItems];
+    foodItems.value = [...foodItems.value, ...response.foodItems]; // rozbaleni s aktualnimi food itemy
     hasMore.value = response.hasMore;
   } catch (e) {
     console.error("Searching food items failed:", e);
@@ -54,11 +54,11 @@ async function search(currentQuery: string, newQuery: boolean) {
 }
 
 watch(query, (newQuery) => {
-  clearTimeout(timer);
+  clearTimeout(timer); // resetovat timer, aby se request nestihl poslat
   timer = setTimeout(() => search(newQuery, true), TIMEOUT_MS);
 });
 
-async function loadMore() {
+function loadMore() {
   if (searching.value || !hasMore.value) return;
   search(query.value, false);
 }

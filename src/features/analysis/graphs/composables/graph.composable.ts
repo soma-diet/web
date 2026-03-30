@@ -17,6 +17,7 @@ function createBarGraphSvg(dates: string[], data: number[]): SVGElement {
   const max = Math.max(...data) || 1; // avoid division by zero if all data is 0
   const barWidth = GRAPH_WIDTH_PX / data.length - BAR_SPACE_PX;
 
+  // nastaveni svg
   const svg = createSvgElement("svg");
   svg.setAttribute("width", GRAPH_WIDTH_PX.toString());
   svg.setAttribute("height", GRAPH_HEIGHT_PX.toString());
@@ -32,6 +33,7 @@ function createBarGraphSvg(dates: string[], data: number[]): SVGElement {
 
     const group = createSvgElement("g"); // svg varianta div
 
+    // text s hodnotou sloupce
     const valText = createSvgElement("text");
     const valTextX = x + barWidth / 2; // stred baru
     const valTextY = y - GRAPH_TOP_SPACING_PX / 2; // umisteni textu nad bar
@@ -40,12 +42,14 @@ function createBarGraphSvg(dates: string[], data: number[]): SVGElement {
     valText.classList.add("value");
     valText.textContent = value.toString();
 
+    // sloupec
     const rect = createSvgElement("rect");
     rect.setAttribute("x", x.toString());
     rect.setAttribute("y", y.toString());
     rect.setAttribute("width", barWidth.toString());
     rect.setAttribute("height", barHeight.toString());
 
+    // text s datumem
     const dateText = createSvgElement("text");
     const dateTextX = valTextX; // stred baru
     const dateTextY = GRAPH_HEIGHT_PX - GRAPH_BOTTOM_SPACING_PX / 2;

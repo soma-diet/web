@@ -1,3 +1,4 @@
+// udrzuje globalne nactene targets
 import { reactive } from "vue";
 import { getDailyTargets } from "../api";
 import type { DailyTargets } from "../model";

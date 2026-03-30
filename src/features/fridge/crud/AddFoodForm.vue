@@ -19,7 +19,7 @@ async function onSubmit(food: Food, image: File | null, callback: () => void) {
   } catch (err) {
     scheduleAlert("Adding a new food failed. Please try again.");
   } finally {
-    callback();
+    callback(); // pro formular na zruseni isSubmitting
   }
 }
 </script>
