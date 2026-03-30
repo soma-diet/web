@@ -5,6 +5,7 @@ import { getDayOfWeek } from "@/utils/date.util";
 
 export type WeeklyNutrients = { days: string[]; values: number[] };
 
+// nacte dohromady summaries za 7 dni (lepsi by urcite bylo, kdyby backend vracel sam summary v 1 requestu)
 async function getWeekData(
   lastDay = new Date() as Date,
 ): Promise<Map<string, DailySummary>> {

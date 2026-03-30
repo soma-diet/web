@@ -16,7 +16,7 @@ const emit = defineEmits<{
 
 const { moveDate, deleteEntry } = useLog();
 
-const { logState, logSelectionState, isReloadingEntries } = useLogStore();
+const { logState, logSelectionState } = useLogStore();
 const { targetsState } = useTargetsStore();
 
 // ziskat nadpis podle datumu
@@ -46,16 +46,12 @@ const dateString = computed(() => {
       </OutlineButton>
       <h2 class="section-title">{{ dateString }}</h2>
     </div>
-    <!-- <OutlineButton v-show="!isTodaySelected" @click="moveDate(false)"> -->
-    <OutlineButton v-show="true" @click="moveDate(false)">
+    <OutlineButton v-show="!isTodaySelected" @click="moveDate(false)">
       <ForwardArrowIcon />
     </OutlineButton>
   </nav>
   <ListLoadingEffect
-    v-if="
-      (logState.isLoadingEntries && !isReloadingEntries) ||
-      targetsState.isLoadingTargets
-    "
+    v-if="logState.isLoadingEntries || targetsState.isLoadingTargets"
   />
   <template v-else>
     <TargetsProgress :date="logSelectionState.logDate" />

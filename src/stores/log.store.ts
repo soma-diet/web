@@ -16,9 +16,6 @@ const logState = reactive({
   isLoadingEntries: false as boolean,
   entries: [] as LogEntry[],
 });
-const isReloadingEntries = computed(() => {
-  return logState.isLoadingEntries && logState.entries.length !== 0;
-})
 
 async function loadEntries(date: Date) {
   logState.isLoadingEntries = true;
@@ -45,6 +42,5 @@ export function useLogStore() {
     closeLogForm,
     logState,
     loadEntries,
-    isReloadingEntries
   };
 }

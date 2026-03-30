@@ -21,7 +21,7 @@
 
   --font-header: 'Michroma', sans-serif;
   --font-main: 'Inter', sans-serif;
-  --font-data: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
+  --font-data: Consolas, monospace;
 
   --cutout-width: 3px;
   --bevel-size: 15px;
