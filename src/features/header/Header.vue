@@ -10,7 +10,7 @@ import GraphIcon from "@/ui/icon/GraphIcon.vue";
 import LogOutIcon from "@/ui/icon/LogOutIcon.vue";
 import SearchIcon from "@/ui/icon/SearchIcon.vue";
 import TargetIcon from "@/ui/icon/TargetIcon.vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -60,7 +60,7 @@ function handleTargetsPressed() {
       />
       <h1 v-show="!isMobile">SOMA</h1>
     </div>
-    <div class="right center">
+    <nav class="right center">
       <template v-if="authState.isLoggedIn">
         <OutlineButton @click="handleLogOut">
           <LogOutIcon />
@@ -90,7 +90,7 @@ function handleTargetsPressed() {
           </OutlineButton>
         </template>
       </template>
-    </div>
+    </nav>
   </header>
 </template>
 
@@ -105,7 +105,8 @@ header {
     width: auto;
   }
 
-  div {
+  div,
+  nav {
     height: 100%;
     gap: 1rem;
   }

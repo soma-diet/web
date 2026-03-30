@@ -1,14 +1,14 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="col center">
+  <article class="col center">
     <h3 class="upper">something went wrong</h3>
     <p class="italic">Your data could not be fetched from the server.</p>
-  </div>
+  </article>
 </template>
 
 <style scoped>
-div {
+article {
   margin: 30% 15%;
   text-align: center;
 }

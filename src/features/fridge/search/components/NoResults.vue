@@ -3,17 +3,17 @@ import SadMagnifierIcon from "@/ui/icon/SadMagnifierIcon.vue";
 </script>
 
 <template>
-  <div class="col center">
+  <article class="col center">
     <SadMagnifierIcon class="icon" />
     <h3 class="upper">No items found</h3>
     <p class="italic">
       Sorry, we can't find any items that match your query. Please try again.
     </p>
-  </div>
+  </article>
 </template>
 
 <style scoped>
-div {
+article {
   margin: 30% 15%;
   text-align: center;
 }

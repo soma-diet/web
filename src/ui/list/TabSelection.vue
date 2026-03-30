@@ -8,7 +8,7 @@ const onOptionSelected = (opt: string) => (selected.value = opt);
 </script>
 
 <template>
-  <div class="row stretch-h">
+  <nav class="row stretch-h">
     <button
       v-for="opt in props.options"
       :key="opt"
@@ -17,7 +17,7 @@ const onOptionSelected = (opt: string) => (selected.value = opt);
     >
       {{ opt }}
     </button>
-  </div>
+  </nav>
 </template>
 
 <style scoped>

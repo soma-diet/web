@@ -116,9 +116,9 @@ onMounted(() => {
         </li>
       </template>
     </ul>
-    <div class="offcenter" v-else>
+    <p class="offcenter" v-else>
       <span class="italic">Have you eaten yet?</span>
-    </div>
+    </p>
   </template>
 </template>
 

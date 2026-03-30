@@ -130,8 +130,15 @@ onMounted(() => {
     gap: 0.5rem;
     height: 4rem;
   }
+  .search {
+    flex: 1;
+    min-width: 0;
+  }
   .plus-btn {
     aspect-ratio: 1;
+    height: 100%;
+    width: fit-content;
+    flex-shrink: 0;
   }
 }
 

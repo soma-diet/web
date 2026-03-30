@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface Props {
-  placeholder?: string,
+  placeholder?: string;
 }
 const props = defineProps<Props>();
 const model = defineModel<string>();
 </script>
 
 <template>
-  <input type="text" :placeholder="props.placeholder" v-model="model" />
+  <input type="search" :placeholder="props.placeholder" v-model="model" />
 </template>
 
 <style scoped>
@@ -19,7 +19,6 @@ input {
   border: none;
   padding: 0 1rem;
   outline: none;
-  width: 100%;
 
   font-size: 100%;
 }

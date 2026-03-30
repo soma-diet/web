@@ -9,10 +9,10 @@ const emit = defineEmits(["close"]);
 </script>
 
 <template>
-  <div class="row apart center">
+  <header class="row apart center">
     <h2 class="section-title">{{ props.title ?? "" }}</h2>
     <OutlineButton @click="emit('close')">
       <CrossIcon></CrossIcon>
     </OutlineButton>
-  </div>
+  </header>
 </template>

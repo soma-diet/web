@@ -55,8 +55,8 @@ const nutrientVisuals = computed(() => {
   <table>
     <thead>
       <tr>
-        <td>Nutritional information</td>
-        <td class="text-center">per {{ props.grams }} g</td>
+        <th scope="col" class="text-left">Nutritional information</th>
+        <th scope="col" class="text-center">per {{ props.grams }} g</th>
       </tr>
     </thead>
     <tbody>
@@ -70,13 +70,14 @@ const nutrientVisuals = computed(() => {
 
 <style scoped>
 table,
+th,
 td {
   border: 1px solid var(--border-main);
   border-collapse: collapse;
   padding: 0.15rem 0.3rem;
 }
 
-thead td {
+thead th {
   font-weight: bold;
 }
 
@@ -89,6 +90,7 @@ thead td {
 }
 
 @media (min-width: 2560px) {
+  th,
   td {
     font-size: 150%;
     padding: 0.3rem 0.5rem;
