@@ -1,9 +1,16 @@
-import { mount } from 'svelte'
-import './app.css'
-import App from './App.svelte'
+import { createApp } from "vue";
+import "./assets/styles/main.css";
 
-const app = mount(App, {
-  target: document.getElementById('app')!,
-})
+import App from "./App.vue";
+import router from "./router/router";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./infra/firebase";
 
-export default app
+let app: any;
+// build app only after firebase auth loads
+onAuthStateChanged(auth, () => {
+  if (app) return;
+  app = createApp(App);
+  app.use(router);
+  app.mount("#app");
+});

@@ -1,0 +1,1 @@
+export const FOOD_SEARCH_PAGE_SIZE = 20;

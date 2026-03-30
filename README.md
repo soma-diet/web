@@ -1,47 +1,36 @@
-# Svelte + TS + Vite
+# SOMA - Sledování stravy
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+![TypeScript](https://img.shields.io/badge/typescript-%23007acc.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-## Recommended IDE Setup
+Tento repozitář obsahuje webové rozhraní aplikace SOMA, která slouží pro rychlé a přehledné sledování denního příjmu kalorií a živin.
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## O aplikaci
 
-## Need an official Svelte framework?
+SOMA je navržena tak, aby co nejvíce zjednodušila proces zápisu jídla. Uživatelé mají k dispozici přehledný deník, katalog potravin a analytické grafy, které pomáhají udržovat nastavené výživové cíle.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+<p align="center">
+  <img src="./docs/README.assets/Screenshot From 2026-03-30 19-55-00.png" alt="Dashboard" width="48%" />
+  <img src="./docs/README.assets/Screenshot From 2026-03-30 19-56-22.png" alt="Updating sections" width="48%" />
+</p>
 
-## Technical considerations
+### Hlavní funkce
 
-**Why use this over SvelteKit?**
+- **Deník:** Přehled zkonzumovaných potravin pro konkrétní dny s možností úprav a mazání.
+- **Lednice:** Rozsáhlá databáze potravin s možností vyhledávání a vytváření vlastních položek.
+- **Cíle:** Nastavení individuálních limitů pro kalorie, bílkoviny, sacharidy, tuky a další mikroživiny.
+- **Grafy:** Týdenní analýza příjmu živin pro sledování dlouhodobého progresu.
+- **Offline režim:** Základní podpora pro fungování aplikace i při výpadku sítě.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## Technologie
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+Projekt je postaven na moderních webových standardech:
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+- **Vue.js 3:** Frontendový framework (Composition API).
+- **TypeScript:** Typová kontrola pro stabilnější kód.
+- **Vite:** Nástroj pro rychlý vývoj a sestavení aplikace.
+- **Firebase:** Autentizace uživatelů, úložiště obrázků a real-time databáze.
+- **Čisté CSS:** Styling bez použití externích frameworků (využívá Flexbox a CSS proměnné).

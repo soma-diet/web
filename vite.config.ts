@@ -1,7 +1,34 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { fileURLToPath, URL } from "node:url";
+
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
-})
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes("macro-bar"),
+        },
+      },
+    }),
+
+    vueDevTools(),
+  ],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://soma.skaba.dev",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+});

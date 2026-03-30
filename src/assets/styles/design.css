@@ -1,0 +1,130 @@
+/* #region Bevel borders */
+/* --- Bevel borders vygenerovano s Gemini --- */
+
+/* -- vlastnosti se dedi na potomky !! */
+.bevel {
+  --b: var(--bevel-size);
+  clip-path: polygon(var(--tl1, 0% 0%), var(--tl2, 0% 0%),
+      var(--tr1, 100% 0%), var(--tr2, 100% 0%),
+      var(--br1, 100% 100%), var(--br2, 100% 100%),
+      var(--bl1, 0% 100%), var(--bl2, 0% 100%));
+}
+
+.bevel-tl {
+  --tl1: 0% var(--b);
+  --tl2: var(--b) 0%;
+}
+
+.bevel-tr {
+  --tr1: calc(100% - var(--b)) 0%;
+  --tr2: 100% var(--b);
+}
+
+.bevel-br {
+  --br1: 100% calc(100% - var(--b));
+  --br2: calc(100% - var(--b)) 100%;
+}
+
+.bevel-bl {
+  --bl1: var(--b) 100%;
+  --bl2: 0% calc(100% - var(--b));
+}
+
+.bevel-all {
+  --tl1: 0% var(--b);
+  --tl2: var(--b) 0%;
+  --tr1: calc(100% - var(--b)) 0%;
+  --tr2: 100% var(--b);
+  --br1: 100% calc(100% - var(--b));
+  --br2: calc(100% - var(--b)) 100%;
+  --bl1: var(--b) 100%;
+  --bl2: 0% calc(100% - var(--b));
+}
+
+/* #endregion */
+
+.highlight {
+  filter: drop-shadow(0 0 10px var(--text-main));
+}
+
+
+.accent-heading {
+  font-size: 76%;
+  font-weight: 600;
+  color: var(--color-accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+
+  @media (min-width: 2560px) {
+    font-size: 140%;
+  }
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  height: 1.2rem;
+  text-transform: uppercase;
+
+  /* carka pred nazvem */
+  &::before {
+    /* prazdny */
+    content: "";
+    width: 0.2rem;
+    height: 1.5rem;
+    background-color: var(--color-accent);
+  }
+
+  @media (min-width: 2560px) {
+    font-size: 2rem;
+
+    &::before {
+      height: 2.5rem;
+    }
+  }
+}
+
+.input-field {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  padding: 0.75rem 1rem;
+  color: var(--text-main);
+
+  @media (min-width: 2560px) {
+    padding: 1rem 1.5rem;
+  }
+}
+
+.input-field:focus,
+select.input-field:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.input-field:hover:not(:focus) {
+  border-color: var(--text-dim);
+}
+
+/* prebarvit date ikonku v date inputu na bilo */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+.outlined {
+  border: 1px solid var(--border-main);
+  background-color: var(--bg-body);
+}
+
+.invalid {
+  border-color: var(--color-accent);
+}
+
+.error-text {
+  color: var(--color-accent);
+  font-size: 80%;
+  font-family: var(--font-data);
+  text-transform: lowercase;
+  margin-top: 0.25rem;
+}
