@@ -7,12 +7,12 @@ const props = defineProps<{
 </script>
 <template>
   <OutlineButton class="btn">
-    <div class="row center wrapper">
-      <div class="icon middle">
+    <span class="row center wrapper">
+      <span class="icon middle">
         <slot name="svg" />
-      </div>
+      </span>
       <span class="label">{{ label }}</span>
-    </div>
+    </span>
   </OutlineButton>
 </template>
 
@@ -32,7 +32,7 @@ const props = defineProps<{
     object-fit: contain;
   }
 
-  span {
+  .label {
     flex-grow: 1;
     white-space: nowrap;
     overflow: hidden;

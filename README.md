@@ -12,11 +12,10 @@ Tento repozitář obsahuje webové rozhraní aplikace SOMA, která slouží pro 
 
 SOMA je navržena tak, aby co nejvíce zjednodušila proces zápisu jídla. Uživatelé mají k dispozici přehledný deník, katalog potravin a analytické grafy, které pomáhají udržovat nastavené výživové cíle.
 
-<div align="center" height="200px">
-  <img src="" alt="Sign In page" width="100%"></img>
-  <img src="" alt="Dashboard" width="100%"></img>
-  <img src="" alt="Updating sections" width="100%"></img>
-</div>
+<p align="center">
+  <img src="./docs/README.assets/Screenshot From 2026-03-30 19-55-00.png" alt="Dashboard" width="48%" />
+  <img src="./docs/README.assets/Screenshot From 2026-03-30 19-56-22.png" alt="Updating sections" width="48%" />
+</p>
 
 ### Hlavní funkce
 

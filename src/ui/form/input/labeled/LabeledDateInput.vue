@@ -29,7 +29,7 @@ const maxDateCap: string = makeDateString(todayDate);
 </script>
 
 <template>
-  <label :id="id" class="accent-heading">{{ props.label }}</label>
+  <label :for="id" class="accent-heading">{{ props.label }}</label>
   <input
     :id="id"
     :max="maxDateCap"

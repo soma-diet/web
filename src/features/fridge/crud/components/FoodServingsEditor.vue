@@ -47,7 +47,7 @@ const removeServingField = (index: number) => {
       />
       <LabeledNumberInput
         label="Size (g)"
-        v-model:value="formServing.size"
+        v-model="formServing.size"
         placeholder="50"
         :error="errors?.[index]?.size"
         @input="if (errors?.[index]) errors[index].size = '';"

@@ -10,7 +10,7 @@ export function entryToRequestDto(entry: LogEntry): LogEntryRequestDto {
     quantity: entry.quantity,
     timestamp: entry.timestamp,
     servingId: entry.servingId,
-    parentEntryId: null, // TODO pridat parent entry, zatim neni ani v LogEntry
+    parentEntryId: null, // rozsireni do budoucna, zatim ani neresime z backendu
   };
 }
 

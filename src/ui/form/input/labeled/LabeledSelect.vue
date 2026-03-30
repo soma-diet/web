@@ -18,7 +18,7 @@ const selectId = useId();
 <template>
   <div class="col">
     <label class="accent-heading" :for="selectId">{{ props.label }}</label>
-    <select :id="selectId" v-model="selected" class="input-field">
+    <select :id="selectId" v-model="selected" v-bind="$attrs" class="input-field">
       <option v-for="(opt, index) in options" :key="index" :value="opt.value">
         {{ opt.name }}
       </option>

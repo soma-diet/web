@@ -24,11 +24,10 @@ const placeholders = NUTRITION_KEYS.map((_) =>
     <li :key="key" v-for="(key, index) in NUTRITION_KEYS">
       <LabeledNumberInput
         :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
-        :name="key"
         :placeholder="placeholders[index]"
         :error="errors[key]"
         @input="delete errors[key]"
-        v-model:value="nutrientInput[key]"
+        v-model="nutrientInput[key]"
       />
     </li>
   </ul>

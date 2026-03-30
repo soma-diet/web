@@ -113,7 +113,7 @@ const navTitle = computed(() => {
         <LabeledNumberInput
           :error="errors.quantity"
           @input="delete errors.quantity"
-          v-model:value="quantity"
+          v-model="quantity"
           label="Amount"
           step="0.01"
           placeholder="150"
@@ -121,7 +121,6 @@ const navTitle = computed(() => {
         <LabeledSelect
           label="Serving"
           v-model:selected="selectedServing"
-          :required="true"
           :options="
             servings.map((serving) => ({ name: serving.name, value: serving }))
           "

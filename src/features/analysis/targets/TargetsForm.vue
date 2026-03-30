@@ -107,7 +107,7 @@ onMounted(() => {
     >
       <LabeledNumberInput
         label="Energy (kJ)"
-        v-model:value="kJ"
+        v-model="kJ"
         placeholder="Choose a daily target"
         :error="errors.kj"
         @input="delete errors.kj"
@@ -116,7 +116,7 @@ onMounted(() => {
         :key="key"
         v-for="key in NUTRITION_KEYS"
         :label="NUTRIENT_DISPLAY_NAMES[key] ?? key"
-        v-model:value="targetsState.dailyTargets[key]"
+        v-model="targetsState.dailyTargets[key]"
         placeholder="Choose a daily target"
         :error="errors[key]"
         @input="delete errors[key]"

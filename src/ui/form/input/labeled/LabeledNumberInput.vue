@@ -5,7 +5,6 @@ import LabeledInput from "./LabeledInput.vue";
 const props = withDefaults(
   defineProps<{
     label: string;
-    name?: string;
     step?: string;
     error?: string;
   }>(),
@@ -14,7 +13,7 @@ const props = withDefaults(
   },
 );
 
-const inputModel = defineModel<number | string | null>("value");
+const inputModel = defineModel<number | string | null>();
 </script>
 
 <template>

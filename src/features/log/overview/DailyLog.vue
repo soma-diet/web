@@ -46,7 +46,8 @@ const dateString = computed(() => {
       </OutlineButton>
       <h2 class="section-title">{{ dateString }}</h2>
     </div>
-    <OutlineButton v-show="!isTodaySelected" @click="moveDate(false)">
+    <!-- <OutlineButton v-show="!isTodaySelected" @click="moveDate(false)"> -->
+    <OutlineButton v-show="true" @click="moveDate(false)">
       <ForwardArrowIcon />
     </OutlineButton>
   </nav>

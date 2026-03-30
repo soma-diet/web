@@ -15,7 +15,7 @@ const emit = defineEmits(["click"]);
 
 <template>
   <button class="apart center" @click="emit('click')">
-    <div class="left center details">
+    <span class="left center details">
       <FoodIcon
         class="icon"
         v-if="props.itemType == TrackableType.FOOD"
@@ -25,16 +25,16 @@ const emit = defineEmits(["click"]);
         v-else-if="props.itemType == TrackableType.RECIPE"
       ></RecipeIcon>
 
-      <div class="col left info">
-        <h6 class="item-name">{{ props.name }}</h6>
+      <span class="col left info">
+        <span class="item-name">{{ props.name }}</span>
         <span class="meta">{{ props.subtext }}</span>
-      </div>
-    </div>
+      </span>
+    </span>
 
-    <div v-if="props.kcal" class="col right nutrient-data">
+    <span v-if="props.kcal" class="col right nutrient-data">
       <span class="value">{{ props.kcal }}</span>
       <span class="unit">KCAL</span>
-    </div>
+    </span>
   </button>
 </template>
 
